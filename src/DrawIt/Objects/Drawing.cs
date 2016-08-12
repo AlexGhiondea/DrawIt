@@ -33,7 +33,13 @@ namespace DrawIt
 
         internal void RemoveSegmentAtPoint(Point point, int gridSize)
         {
-            foreach (var toRemove in GetSegmentAtPoint(point, gridSize))
+            var segment = GetSegmentAtPoint(point, gridSize);
+            if (segment == null)
+            {
+                return;
+            }
+
+            foreach (var toRemove in segment)
             {
                 Segments.Remove(toRemove);
                 _hasChanges = true;
