@@ -96,7 +96,6 @@ namespace DrawIt
             {
                 segment.Draw(gridSize, g);
             }
-
         }
 
         internal void Save(string fileName)
@@ -104,6 +103,7 @@ namespace DrawIt
             try
             {
                 var s = JsonSerializer.CreateDefault();
+                s.TypeNameHandling = TypeNameHandling.All;
                 using (StreamWriter sw = new StreamWriter(fileName))
                 using (JsonWriter jw = new JsonTextWriter(sw))
                 {

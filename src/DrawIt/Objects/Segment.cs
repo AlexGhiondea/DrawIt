@@ -36,7 +36,7 @@ namespace DrawIt
     //    }
     //}
 
-    public abstract class Segment 
+    public class Segment
     {
         public Entry Start;
         public Entry End;
@@ -49,6 +49,6 @@ namespace DrawIt
             this.Color = color;
         }
 
-        public abstract void Draw(int gridSize, Graphics g);
+        public virtual void Draw(int gridSize, Graphics g) { }
     }
 }

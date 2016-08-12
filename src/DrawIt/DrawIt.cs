@@ -42,7 +42,7 @@ namespace DrawIt
             {
                 sfd.AddExtension = true;
                 sfd.DefaultExt = ".dit";
-                sfd.Filter = "*.dit|*.dit";
+                sfd.Filter = "DrawIt project (*.dit)|*.dit";
                 if (sfd.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                 {
                     string fileName = sfd.FileName;
@@ -212,6 +212,7 @@ namespace DrawIt
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.CheckFileExists = true;
+                ofd.Filter = "DrawIt project (*.dit)|*.dit";
                 if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     string fileName = ofd.FileName;
@@ -226,6 +227,7 @@ namespace DrawIt
             try
             {
                 var s = JsonSerializer.CreateDefault();
+                s.TypeNameHandling = TypeNameHandling.All;
                 using (StreamReader sw = new StreamReader(fileName))
                 using (JsonReader jr = new JsonTextReader(sw))
                 {
@@ -265,7 +267,7 @@ namespace DrawIt
 
             stsDocData.Text = string.Format("Unit: {0}, Ratio: {1}", _drawing.Unit, _drawing.ConversionRatio);
         }
- 
+
         private void DrawIt_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
