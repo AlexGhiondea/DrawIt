@@ -5,11 +5,22 @@ namespace DrawIt
 {
     public class Measurement : Segment
     {
+        public double ConversionRate;
+        public string Unit;
+
+        public Measurement(Entry start, Entry end, Color color, MeasurementLocation location, double rate, string unit)
+            : base(start, end, color)
+        {
+            this.ConversionRate = rate;
+            this.Unit = unit;
+            this.Location = location;
+        }
+
         private static Font measureFont = new Font("Calibri", 10, FontStyle.Bold);
         private static Pen measurePen = new Pen(new SolidBrush(Color.Green), 1f);
         public MeasurementLocation Location;
 
-        public void Draw(Graphics g, int gridSize, double conversion, string unit)
+        public override void Draw(int gridSize, Graphics g)
         {
             // we only support measurements on horizontal and vertical lines
             bool horizontal = Start.Y == End.Y;
@@ -24,7 +35,7 @@ namespace DrawIt
             float middle;
             PointF StartText;
 
-            string text = string.Format("{0} {1}", distanceInGridSize * conversion, unit);
+            string text = string.Format("{0} {1}", distanceInGridSize * ConversionRate, Unit);
             SizeF textSize = g.MeasureString(text, measureFont);
 
             Point StartPoint = Start.ToPoint(gridSize);

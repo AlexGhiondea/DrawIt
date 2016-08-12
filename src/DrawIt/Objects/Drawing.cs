@@ -25,7 +25,7 @@ namespace DrawIt
             Segments = new List<Segment>();
         }
 
-        internal void AddToCurrentSegment(Line newLine)
+        internal void AddSegment(Line newLine)
         {
             Segments.Add(newLine);
             _hasChanges = true;
@@ -94,14 +94,7 @@ namespace DrawIt
         {
             foreach (var segment in Segments)
             {
-                if (segment is Line)
-                {
-                    (segment as Line).Draw(gridSize, g);
-                }
-                else if (segment is Measurement)
-                {
-                    (segment as Measurement).Draw(g, gridSize, ConversionRatio, Unit);
-                }
+                segment.Draw(gridSize, g);
             }
 
         }

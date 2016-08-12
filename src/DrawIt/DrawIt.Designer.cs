@@ -141,7 +141,7 @@
             this.rtbDraw.AutoSize = true;
             this.rtbDraw.Checked = true;
             this.rtbDraw.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbDraw.Location = new System.Drawing.Point(12, 35);
+            this.rtbDraw.Location = new System.Drawing.Point(12, 36);
             this.rtbDraw.Name = "rtbDraw";
             this.rtbDraw.Size = new System.Drawing.Size(70, 27);
             this.rtbDraw.TabIndex = 1;
@@ -154,7 +154,7 @@
             // 
             this.rtbMeasure.AutoSize = true;
             this.rtbMeasure.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbMeasure.Location = new System.Drawing.Point(82, 35);
+            this.rtbMeasure.Location = new System.Drawing.Point(82, 36);
             this.rtbMeasure.Name = "rtbMeasure";
             this.rtbMeasure.Size = new System.Drawing.Size(96, 27);
             this.rtbMeasure.TabIndex = 2;

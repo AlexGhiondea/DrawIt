@@ -83,6 +83,14 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="DrawIt.DrawSurface.Designer.cs">
+      <DependentUpon>DrawIt.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </Compile>
+    <Compile Include="DrawIt.Menus.Designer.cs" >
+      <DependentUpon>DrawIt.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </Compile>
     <Compile Include="Objects\Drawing.cs" />
     <Compile Include="DrawIt.cs">
       <SubType>Form</SubType>
