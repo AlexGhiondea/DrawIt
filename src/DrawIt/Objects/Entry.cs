@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace DrawIt
 {
@@ -33,6 +34,11 @@ namespace DrawIt
             if (other == null) return false;
 
             return this.X == other.X && this.Y == other.Y;
+        }
+
+        public Entry Clone()
+        {
+            return new Entry(X, Y);
         }
     }
 }

@@ -10,8 +10,7 @@ namespace DrawIt
     public class Drawing
     {
         private bool _hasChanges;
-        public List<Measurement> Measurements;
-        public List<Line> Segments;
+        public List<Segment> Segments;
 
         public string Unit;
         public double ConversionRatio;
@@ -23,8 +22,7 @@ namespace DrawIt
             ConversionRatio = ratio;
             Unit = unit;
 
-            Measurements = new List<Measurement>();
-            Segments = new List<Line>();
+            Segments = new List<Segment>();
         }
 
         internal void AddToCurrentSegment(Line newLine)
@@ -35,25 +33,25 @@ namespace DrawIt
 
         internal void RemoveSegmentAtPoint(Point point, int gridSize)
         {
+            foreach (var toRemove in GetSegmentAtPoint(point, gridSize))
+            {
+                Segments.Remove(toRemove);
+                _hasChanges = true;
+            }
+        }
+
+        internal List<Segment> GetSegmentAtPoint(Point point, int gridSize)
+        {
+            List<Segment> segments = new List<Segment>();
             for (int i = 0; i < Segments.Count; i++)
             {
                 if (PointOnLineSegment(Segments[i].Start.ToPoint(gridSize), Segments[i].End.ToPoint(gridSize), point, 4 /*This should come from the actual segment*/))
                 {
-                    Segments.RemoveAt(i);
-                    _hasChanges = true;
+                    segments.Add(Segments[i]);
                 }
             }
 
-            // check the measurements as well
-            for (int i = 0; i < Measurements.Count; i++)
-            {
-                if (PointOnLineSegment(Measurements[i].Start.ToPoint(gridSize), Measurements[i].End.ToPoint(gridSize), point, 2 /* this should come from the segment itslef s_measurePen.Width*/))
-                {
-                    Measurements.RemoveAt(i);
-                    _hasChanges = true;
-                    i--; // still need to process the rest of the list
-                }
-            }
+            return segments.Count > 0 ? segments : null;
         }
 
         private static bool PointOnLineSegment(Point pt1, Point pt2, Point pt, double epsilon)
@@ -82,30 +80,30 @@ namespace DrawIt
                 return;
             }
 
-            Measurements.Add(measurement);
+            Segments.Add(measurement);
+
             _hasChanges = true;
         }
 
         internal void Draw(int gridSize, Graphics g)
         {
             DrawUserSegments(gridSize, g);
-            DrawMeasurements(gridSize, g);
         }
 
         private void DrawUserSegments(int gridSize, Graphics g)
         {
             foreach (var segment in Segments)
             {
-                segment.Draw(gridSize, g);
+                if (segment is Line)
+                {
+                    (segment as Line).Draw(gridSize, g);
+                }
+                else if (segment is Measurement)
+                {
+                    (segment as Measurement).Draw(g, gridSize, ConversionRatio, Unit);
+                }
             }
-        }
 
-        private void DrawMeasurements(int gridSize, Graphics g)
-        {
-            foreach (var measurement in Measurements)
-            {
-                measurement.Draw(g, gridSize, ConversionRatio, Unit);
-            }
         }
 
         internal void Save(string fileName)
@@ -128,17 +126,7 @@ namespace DrawIt
 
         internal void TranslateDrawing(int x, int y)
         {
-            foreach (var lineEntry in Segments)
-            {
-                lineEntry.Start.Adjust(x, y);
-                lineEntry.End.Adjust(x, y);
-            }
-
-            foreach (var measure in Measurements)
-            {
-                measure.Start.Adjust(x, y);
-                measure.End.Adjust(x, y);
-            }
+            TranslateSegments(Segments, x, y);
         }
 
         internal Size GetContainingRectangle(int gridSize)
@@ -156,20 +144,20 @@ namespace DrawIt
                 if (segment.End.Y > maxHeight) maxHeight = segment.End.Y;
             }
 
-            foreach (var segment in Measurements)
-            {
-                if (segment.Start.X > maxWidth) maxWidth = segment.Start.X;
-                if (segment.End.X > maxWidth) maxWidth = segment.End.X;
-
-                if (segment.Start.Y > maxHeight) maxHeight = segment.Start.Y;
-                if (segment.End.Y > maxHeight) maxHeight = segment.End.Y;
-            }
-
             // for good measure, add 10% more grid sizes.
             maxWidth = (int)(maxWidth * 1.1);
             maxHeight = (int)(maxHeight * 1.1);
 
             return new Size(maxWidth * gridSize, maxHeight * gridSize);
+        }
+
+        internal void TranslateSegments(List<Segment> _segmentsToMove, int x, int y)
+        {
+            foreach (var lineEntry in _segmentsToMove)
+            {
+                lineEntry.Start.Adjust(x, y);
+                lineEntry.End.Adjust(x, y);
+            }
         }
     }
 }

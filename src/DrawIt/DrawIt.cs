@@ -52,6 +52,8 @@ namespace DrawIt
             }
         }
 
+        private List<Segment> _segmentsToMove = null;
+
         private void drawSurface_MouseDown(object sender, MouseEventArgs e)
         {
             tssActiveStatus.Text = string.Empty;
@@ -80,9 +82,7 @@ namespace DrawIt
                 Cursor = Cursors.SizeAll;
 
                 // see if there is anything under the cursor at this point.
-
-                
-
+                _segmentsToMove = _drawing.GetSegmentAtPoint(new Point(e.X, e.Y), gridSize);
             }
 
             if (_state == EditorState.Delete)
@@ -105,7 +105,7 @@ namespace DrawIt
             if (_state == EditorState.Draw)
             {
                 DrawObject obj = (DrawObject)cboDrawElements.SelectedItem;
-                DrawObjectToDrawing(x, y, obj);
+                AddObjectToDrawing(x, y, obj);
             }
             else if (_state == EditorState.Measure)
             {
@@ -126,7 +126,7 @@ namespace DrawIt
             drawSurface.Refresh();
         }
 
-        private void DrawObjectToDrawing(int x, int y, DrawObject obj)
+        private void AddObjectToDrawing(int x, int y, DrawObject obj)
         {
             switch (obj)
             {
@@ -135,7 +135,7 @@ namespace DrawIt
                         // create a line from the 2 points.
                         _drawing.AddToCurrentSegment(new Line()
                         {
-                            Start = previousEntry,
+                            Start = previousEntry.Clone(),
                             End = new Entry(x, y),
                             Color = lblDrawColor.BackColor,
                             Width = (float)nupDrawWidth.Value
@@ -150,7 +150,7 @@ namespace DrawIt
 
                         _drawing.AddToCurrentSegment(new Line()
                         {
-                            Start = previousEntry,
+                            Start = previousEntry.Clone(),
                             End = new Entry(previousEntry.X, y),
                             Color = lblDrawColor.BackColor,
                             Width = (float)nupDrawWidth.Value
@@ -158,7 +158,7 @@ namespace DrawIt
 
                         _drawing.AddToCurrentSegment(new Line()
                         {
-                            Start = previousEntry,
+                            Start = previousEntry.Clone(),
                             End = new Entry(x, previousEntry.Y),
                             Color = lblDrawColor.BackColor,
                             Width = (float)nupDrawWidth.Value
@@ -511,7 +511,17 @@ namespace DrawIt
                 Debug.WriteLine(translateX);
                 Debug.WriteLine(translateY);
 
-                _drawing.TranslateDrawing(translateX, translateY);
+                // do we move everything or just a few segments?
+
+                if (_segmentsToMove == null)
+                {
+                    _drawing.TranslateDrawing(translateX, translateY);
+                }
+                else
+                {
+                    _drawing.TranslateSegments(_segmentsToMove, translateX, translateY);
+                }
+
 
                 previousEntry = null;
 
