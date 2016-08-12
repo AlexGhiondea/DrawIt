@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using DrawIt.Objects;
+using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -54,6 +56,7 @@ namespace DrawIt
         {
             tssActiveStatus.Text = string.Empty;
 
+            // if right click, cancel the previous segment and start a new one.
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
                 if (_state == EditorState.Draw)
@@ -96,16 +99,68 @@ namespace DrawIt
 
             if (_state == EditorState.Draw)
             {
-                // create a line from the 2 points.
-                _drawing.AddToCurrentSegment(new Line()
+                DrawObject obj = (DrawObject)cboDrawElements.SelectedItem;
+                switch (obj)
                 {
-                    Start = previousEntry,
-                    End = new Entry(x, y),
-                    Color = lblDrawColor.BackColor,
-                    Width = (float)nupDrawWidth.Value
-                });
+                    case DrawObject.Line:
+                        {
+                            // create a line from the 2 points.
+                            _drawing.AddToCurrentSegment(new Line()
+                            {
+                                Start = previousEntry,
+                                End = new Entry(x, y),
+                                Color = lblDrawColor.BackColor,
+                                Width = (float)nupDrawWidth.Value
+                            });
 
-                previousEntry = new Entry(x, y);
+                            previousEntry = new Entry(x, y);
+                            break;
+                        }
+                    case DrawObject.Rectangle:
+                        {
+                            // we need to create 4 segments.
+
+                            _drawing.AddToCurrentSegment(new Line()
+                            {
+                                Start = previousEntry,
+                                End = new Entry(previousEntry.X, y),
+                                Color = lblDrawColor.BackColor,
+                                Width = (float)nupDrawWidth.Value
+                            });
+
+                            _drawing.AddToCurrentSegment(new Line()
+                            {
+                                Start = previousEntry,
+                                End = new Entry(x, previousEntry.Y),
+                                Color = lblDrawColor.BackColor,
+                                Width = (float)nupDrawWidth.Value
+                            });
+
+                            _drawing.AddToCurrentSegment(new Line()
+                            {
+                                Start = new Entry(previousEntry.X, y),
+                                End = new Entry(x,y),
+                                Color = lblDrawColor.BackColor,
+                                Width = (float)nupDrawWidth.Value
+                            });
+
+                            _drawing.AddToCurrentSegment(new Line()
+                            {
+                                Start = new Entry(x, previousEntry.Y),
+                                End = new Entry(x, y),
+                                Color = lblDrawColor.BackColor,
+                                Width = (float)nupDrawWidth.Value
+                            });
+
+
+                            previousEntry = null;
+                            break;
+                        }
+                    default:
+                        break;
+                }
+
+
             }
             else if (_state == EditorState.Measure)
             {
@@ -244,6 +299,17 @@ namespace DrawIt
             cboVerticalAlignment.Items.Add(MeasurementLocation.Left);
             cboVerticalAlignment.Items.Add(MeasurementLocation.Right);
             cboVerticalAlignment.SelectedItem = MeasurementLocation.Right;
+
+            // populate the list of objects it can draw.
+            Array enumValues = Enum.GetValues(typeof(DrawObject));
+
+            IEnumerator enumerator = enumValues.GetEnumerator();
+
+            while (enumerator.MoveNext())
+            {
+                cboDrawElements.Items.Add(enumerator.Current);
+            }
+            cboDrawElements.SelectedItem = DrawObject.Line;
 
             CreateNewDocument(new Drawing(1, "in"));
 
@@ -539,6 +605,12 @@ namespace DrawIt
         private void DrawIt_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        private void cboDrawElements_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (_drawing != null)
+                CreateNewSegment();
         }
     }
 }

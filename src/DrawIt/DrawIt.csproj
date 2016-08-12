@@ -97,6 +97,7 @@
     <Compile Include="NewDrawing.Designer.cs">
       <DependentUpon>NewDrawing.cs</DependentUpon>
     </Compile>
+    <Compile Include="Objects\DrawObject.cs" />
     <Compile Include="Objects\Entry.cs" />
     <Compile Include="Objects\Measurement.cs" />
     <Compile Include="Objects\Line.cs" />

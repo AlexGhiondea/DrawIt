@@ -65,6 +65,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lblMeasureColor = new System.Windows.Forms.Label();
             this.rbMove = new System.Windows.Forms.RadioButton();
+            this.cboDrawElements = new System.Windows.Forms.ComboBox();
             lblHorizontal = new System.Windows.Forms.Label();
             lblVertical = new System.Windows.Forms.Label();
             lblZoom = new System.Windows.Forms.Label();
@@ -127,11 +128,11 @@
             // 
             // btnNewSegment
             // 
-            this.btnNewSegment.Location = new System.Drawing.Point(207, 17);
+            this.btnNewSegment.Location = new System.Drawing.Point(298, 17);
             this.btnNewSegment.Name = "btnNewSegment";
             this.btnNewSegment.Size = new System.Drawing.Size(73, 23);
             this.btnNewSegment.TabIndex = 3;
-            this.btnNewSegment.Text = "New Line";
+            this.btnNewSegment.Text = "New";
             this.btnNewSegment.UseVisualStyleBackColor = true;
             this.btnNewSegment.Click += new System.EventHandler(this.btnNewSegment_Click);
             // 
@@ -386,6 +387,7 @@
             // 
             this.grpDraw.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpDraw.Controls.Add(this.cboDrawElements);
             this.grpDraw.Controls.Add(this.label2);
             this.grpDraw.Controls.Add(this.label1);
             this.grpDraw.Controls.Add(this.btnNewSegment);
@@ -466,6 +468,16 @@
             this.rbMove.UseVisualStyleBackColor = true;
             this.rbMove.CheckedChanged += new System.EventHandler(this.rtbDraw_CheckedChanged);
             // 
+            // cboDrawElements
+            // 
+            this.cboDrawElements.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDrawElements.FormattingEnabled = true;
+            this.cboDrawElements.Location = new System.Drawing.Point(171, 17);
+            this.cboDrawElements.Name = "cboDrawElements";
+            this.cboDrawElements.Size = new System.Drawing.Size(121, 23);
+            this.cboDrawElements.TabIndex = 23;
+            this.cboDrawElements.SelectedValueChanged += new System.EventHandler(this.cboDrawElements_SelectedValueChanged);
+            // 
             // DrawIt
             // 
             this.AllowDrop = true;
@@ -481,8 +493,8 @@
             this.Controls.Add(this.rtbDraw);
             this.Controls.Add(this.drawSurface);
             this.Controls.Add(this.rbMove);
-            this.Controls.Add(this.grpMeasure);
             this.Controls.Add(this.grpDraw);
+            this.Controls.Add(this.grpMeasure);
             this.KeyPreview = true;
             this.MainMenuStrip = this.mnuMainMenu;
             this.Name = "DrawIt";
@@ -542,6 +554,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pngToolStripMenuItem;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cboDrawElements;
     }
 }
 
