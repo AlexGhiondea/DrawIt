@@ -11,9 +11,7 @@ namespace DrawIt
     {
         private bool _hasChanges;
         public List<Measurement> Measurements;
-        public List<List<Line>> Segments;
-
-        private List<Line> _currentLine;
+        public List<Line> Segments;
 
         public string Unit;
         public double ConversionRatio;
@@ -26,43 +24,23 @@ namespace DrawIt
             Unit = unit;
 
             Measurements = new List<Measurement>();
-            Segments = new List<List<Line>>();
-        }
-
-        internal void NewSequence()
-        {
-            if (_currentLine == null)
-            {
-                _currentLine = new List<Line>();
-                Segments.Add(_currentLine);
-            }
-            else if (_currentLine.Count != 0)
-            {
-                _currentLine = new List<Line>();
-                Segments.Add(_currentLine);
-
-            }
+            Segments = new List<Line>();
         }
 
         internal void AddToCurrentSegment(Line newLine)
         {
-            _currentLine.Add(newLine);
+            Segments.Add(newLine);
             _hasChanges = true;
         }
 
         internal void RemoveSegmentAtPoint(Point point, int gridSize)
         {
-            for (int j = 0; j < Segments.Count; j++)
+            for (int i = 0; i < Segments.Count; i++)
             {
-                var segment = Segments[j];
-
-                for (int i = 0; i < segment.Count; i++)
+                if (PointOnLineSegment(Segments[i].Start.ToPoint(gridSize), Segments[i].End.ToPoint(gridSize), point, 4 /*This should come from the actual segment*/))
                 {
-                    if (PointOnLineSegment(segment[i].Start.ToPoint(gridSize), segment[i].End.ToPoint(gridSize), point, 4 /*This should come from the actual segment*/))
-                    {
-                        segment.RemoveAt(i);
-                        _hasChanges = true;
-                    }
+                    Segments.RemoveAt(i);
+                    _hasChanges = true;
                 }
             }
 
@@ -76,8 +54,6 @@ namespace DrawIt
                     i--; // still need to process the rest of the list
                 }
             }
-
-
         }
 
         private static bool PointOnLineSegment(Point pt1, Point pt2, Point pt, double epsilon)
@@ -118,12 +94,9 @@ namespace DrawIt
 
         private void DrawUserSegments(int gridSize, Graphics g)
         {
-            foreach (var segmentList in Segments)
+            foreach (var segment in Segments)
             {
-                foreach (var segment in segmentList)
-                {
-                    segment.Draw(gridSize, g);
-                }
+                segment.Draw(gridSize, g);
             }
         }
 
@@ -155,21 +128,15 @@ namespace DrawIt
 
         internal void TranslateDrawing(int x, int y)
         {
-            // TODO: Make sure we don't run below 0 at any point!
-
-            foreach (var segment in Segments)
+            foreach (var lineEntry in Segments)
             {
-                foreach (var lineEntry in segment)
-                {
-                    lineEntry.Start.Adjust(x, y);
-                    lineEntry.End.Adjust(x, y);
-                }
+                lineEntry.Start.Adjust(x, y);
+                lineEntry.End.Adjust(x, y);
             }
 
             foreach (var measure in Measurements)
             {
                 measure.Start.Adjust(x, y);
-
                 measure.End.Adjust(x, y);
             }
         }
@@ -180,16 +147,13 @@ namespace DrawIt
             int maxWidth = 0;
             int maxHeight = 0;
 
-            foreach (var list in Segments)
+            foreach (var segment in Segments)
             {
-                foreach (var segment in list)
-                {
-                    if (segment.Start.X > maxWidth) maxWidth = segment.Start.X;
-                    if (segment.End.X > maxWidth) maxWidth = segment.End.X;
+                if (segment.Start.X > maxWidth) maxWidth = segment.Start.X;
+                if (segment.End.X > maxWidth) maxWidth = segment.End.X;
 
-                    if (segment.Start.Y > maxHeight) maxHeight = segment.Start.Y;
-                    if (segment.End.Y > maxHeight) maxHeight = segment.End.Y;
-                }
+                if (segment.Start.Y > maxHeight) maxHeight = segment.Start.Y;
+                if (segment.End.Y > maxHeight) maxHeight = segment.End.Y;
             }
 
             foreach (var segment in Measurements)

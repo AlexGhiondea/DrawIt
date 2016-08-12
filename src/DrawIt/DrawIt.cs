@@ -78,6 +78,11 @@ namespace DrawIt
             if (_state == EditorState.Move)
             {
                 Cursor = Cursors.SizeAll;
+
+                // see if there is anything under the cursor at this point.
+
+                
+
             }
 
             if (_state == EditorState.Delete)
@@ -100,67 +105,7 @@ namespace DrawIt
             if (_state == EditorState.Draw)
             {
                 DrawObject obj = (DrawObject)cboDrawElements.SelectedItem;
-                switch (obj)
-                {
-                    case DrawObject.Line:
-                        {
-                            // create a line from the 2 points.
-                            _drawing.AddToCurrentSegment(new Line()
-                            {
-                                Start = previousEntry,
-                                End = new Entry(x, y),
-                                Color = lblDrawColor.BackColor,
-                                Width = (float)nupDrawWidth.Value
-                            });
-
-                            previousEntry = new Entry(x, y);
-                            break;
-                        }
-                    case DrawObject.Rectangle:
-                        {
-                            // we need to create 4 segments.
-
-                            _drawing.AddToCurrentSegment(new Line()
-                            {
-                                Start = previousEntry,
-                                End = new Entry(previousEntry.X, y),
-                                Color = lblDrawColor.BackColor,
-                                Width = (float)nupDrawWidth.Value
-                            });
-
-                            _drawing.AddToCurrentSegment(new Line()
-                            {
-                                Start = previousEntry,
-                                End = new Entry(x, previousEntry.Y),
-                                Color = lblDrawColor.BackColor,
-                                Width = (float)nupDrawWidth.Value
-                            });
-
-                            _drawing.AddToCurrentSegment(new Line()
-                            {
-                                Start = new Entry(previousEntry.X, y),
-                                End = new Entry(x,y),
-                                Color = lblDrawColor.BackColor,
-                                Width = (float)nupDrawWidth.Value
-                            });
-
-                            _drawing.AddToCurrentSegment(new Line()
-                            {
-                                Start = new Entry(x, previousEntry.Y),
-                                End = new Entry(x, y),
-                                Color = lblDrawColor.BackColor,
-                                Width = (float)nupDrawWidth.Value
-                            });
-
-
-                            previousEntry = null;
-                            break;
-                        }
-                    default:
-                        break;
-                }
-
-
+                DrawObjectToDrawing(x, y, obj);
             }
             else if (_state == EditorState.Measure)
             {
@@ -179,6 +124,68 @@ namespace DrawIt
             }
 
             drawSurface.Refresh();
+        }
+
+        private void DrawObjectToDrawing(int x, int y, DrawObject obj)
+        {
+            switch (obj)
+            {
+                case DrawObject.Line:
+                    {
+                        // create a line from the 2 points.
+                        _drawing.AddToCurrentSegment(new Line()
+                        {
+                            Start = previousEntry,
+                            End = new Entry(x, y),
+                            Color = lblDrawColor.BackColor,
+                            Width = (float)nupDrawWidth.Value
+                        });
+
+                        previousEntry = new Entry(x, y);
+                        break;
+                    }
+                case DrawObject.Rectangle:
+                    {
+                        // we need to create 4 segments.
+
+                        _drawing.AddToCurrentSegment(new Line()
+                        {
+                            Start = previousEntry,
+                            End = new Entry(previousEntry.X, y),
+                            Color = lblDrawColor.BackColor,
+                            Width = (float)nupDrawWidth.Value
+                        });
+
+                        _drawing.AddToCurrentSegment(new Line()
+                        {
+                            Start = previousEntry,
+                            End = new Entry(x, previousEntry.Y),
+                            Color = lblDrawColor.BackColor,
+                            Width = (float)nupDrawWidth.Value
+                        });
+
+                        _drawing.AddToCurrentSegment(new Line()
+                        {
+                            Start = new Entry(previousEntry.X, y),
+                            End = new Entry(x, y),
+                            Color = lblDrawColor.BackColor,
+                            Width = (float)nupDrawWidth.Value
+                        });
+
+                        _drawing.AddToCurrentSegment(new Line()
+                        {
+                            Start = new Entry(x, previousEntry.Y),
+                            End = new Entry(x, y),
+                            Color = lblDrawColor.BackColor,
+                            Width = (float)nupDrawWidth.Value
+                        });
+
+                        previousEntry = null;
+                        break;
+                    }
+                default:
+                    break;
+            }
         }
 
         private int SnapToClosest(int actual)
@@ -222,7 +229,6 @@ namespace DrawIt
         private void CreateNewSegment()
         {
             previousEntry = null;
-            _drawing.NewSequence();
         }
 
         private void ShowNewDocumentDialog()
