@@ -96,6 +96,35 @@ namespace DrawIt
             DrawUserSegments(gridSize, g);
         }
 
+        internal void DrawWithTranslation(int gridSize, Graphics g, Entry translateBy)
+        {
+            Drawing translatedDrawing = this.Clone();
+
+            translatedDrawing.TranslateDrawing(-translateBy.X, -translateBy.Y);
+
+            translatedDrawing.Draw(gridSize, g);
+        }
+
+        internal Drawing Clone()
+        {
+            Drawing newDrawing = new Drawing(this.ConversionRatio, this.Unit);
+            foreach (var item in Segments)
+            {
+                if (item is Line)
+                {
+                    Line l = item as Line;
+                    newDrawing.AddSegment(new Line(l.Start.Clone(), l.End.Clone(), l.Color, l.Width));
+                }
+                else if (item is Measurement)
+                {
+                    Measurement m = item as Measurement;
+                    newDrawing.AddMeasurement(new Measurement(m.Start.Clone(), m.End.Clone(), m.Color, m.Location, m.ConversionRate, m.Unit));
+                }
+            }
+
+            return newDrawing;
+        }
+
         private void DrawUserSegments(int gridSize, Graphics g)
         {
             foreach (var segment in Segments)
@@ -128,11 +157,14 @@ namespace DrawIt
             TranslateSegments(Segments, x, y);
         }
 
-        internal Size GetContainingRectangle(int gridSize)
+        internal Size GetContainingRectangle(int gridSize, out Entry startPoint)
         {
             // find the max X,Y
             int maxWidth = 0;
             int maxHeight = 0;
+
+            int minX = Int32.MaxValue;
+            int minY = Int32.MaxValue;
 
             foreach (var segment in Segments)
             {
@@ -141,6 +173,27 @@ namespace DrawIt
 
                 if (segment.Start.Y > maxHeight) maxHeight = segment.Start.Y;
                 if (segment.End.Y > maxHeight) maxHeight = segment.End.Y;
+
+                // see if we have entries below (0,0)
+
+                if (segment.Start.X < minX) minX = segment.Start.X;
+                if (segment.End.X < minX) minX = segment.End.X;
+
+                if (segment.Start.Y < minY) minY = segment.Start.Y;
+                if (segment.End.Y < minY) minY = segment.End.Y;
+            }
+
+            // add 30% more to make the drawing look nicer.
+            minX = (int)(minX * 1.3);
+            minY = (int)(minY * 1.3);
+
+            startPoint = new Entry(Math.Min(0, minX), Math.Min(0, minY));
+
+            // we need to account for elements that you cannot see as they are below (0,0)
+            if (minY < 0 || minX < 0)
+            {
+                maxWidth += minX;
+                maxHeight += minY;
             }
 
             // for good measure, add 10% more grid sizes.

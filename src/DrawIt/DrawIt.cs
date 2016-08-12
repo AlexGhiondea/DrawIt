@@ -307,7 +307,9 @@ namespace DrawIt
         private void DrawToFile(ImageFormat format, string fileName)
         {
             // I want to get the largest between the size of the screen and the size that needs to be drawn.
-            Size requiredSize = _drawing.GetContainingRectangle(gridSize);
+
+            Entry startPoint;
+            Size requiredSize = _drawing.GetContainingRectangle(gridSize, out startPoint);
             Size saveSize = new Size(
                 Math.Max(requiredSize.Width, drawSurface.Width),
                 Math.Max(requiredSize.Height, drawSurface.Height));
@@ -320,7 +322,10 @@ namespace DrawIt
                 g.FillRectangle(Brushes.White, 0, 0, bmp.Width, bmp.Height);
 
                 DrawGrid(saveRectangle.Size, g);
-                _drawing.Draw(gridSize, g);
+
+                // we need to translate the drawing if we have entries that are hidden
+
+                _drawing.DrawWithTranslation(gridSize, g, startPoint);
 
                 //drawSurface.DrawToBitmap(bmp, saveRectangle);
                 bmp.Save(fileName, format);
