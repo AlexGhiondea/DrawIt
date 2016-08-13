@@ -59,13 +59,13 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grpDraw = new System.Windows.Forms.GroupBox();
+            this.cboDrawElements = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.grpMeasure = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lblMeasureColor = new System.Windows.Forms.Label();
             this.rbMove = new System.Windows.Forms.RadioButton();
-            this.cboDrawElements = new System.Windows.Forms.ComboBox();
             lblHorizontal = new System.Windows.Forms.Label();
             lblVertical = new System.Windows.Forms.Label();
             lblZoom = new System.Windows.Forms.Label();
@@ -400,6 +400,16 @@
             this.grpDraw.TabIndex = 24;
             this.grpDraw.TabStop = false;
             // 
+            // cboDrawElements
+            // 
+            this.cboDrawElements.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDrawElements.FormattingEnabled = true;
+            this.cboDrawElements.Location = new System.Drawing.Point(171, 17);
+            this.cboDrawElements.Name = "cboDrawElements";
+            this.cboDrawElements.Size = new System.Drawing.Size(121, 23);
+            this.cboDrawElements.TabIndex = 23;
+            this.cboDrawElements.SelectedValueChanged += new System.EventHandler(this.cboDrawElements_SelectedValueChanged);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -468,16 +478,6 @@
             this.rbMove.UseVisualStyleBackColor = true;
             this.rbMove.CheckedChanged += new System.EventHandler(this.rtbDraw_CheckedChanged);
             // 
-            // cboDrawElements
-            // 
-            this.cboDrawElements.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboDrawElements.FormattingEnabled = true;
-            this.cboDrawElements.Location = new System.Drawing.Point(171, 17);
-            this.cboDrawElements.Name = "cboDrawElements";
-            this.cboDrawElements.Size = new System.Drawing.Size(121, 23);
-            this.cboDrawElements.TabIndex = 23;
-            this.cboDrawElements.SelectedValueChanged += new System.EventHandler(this.cboDrawElements_SelectedValueChanged);
-            // 
             // DrawIt
             // 
             this.AllowDrop = true;
@@ -499,6 +499,7 @@
             this.MainMenuStrip = this.mnuMainMenu;
             this.Name = "DrawIt";
             this.Text = "DrawIt!";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DrawIt_FormClosing);
             this.Load += new System.EventHandler(this.DrawIt_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.DrawIt_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.DrawIt_DragEnter);

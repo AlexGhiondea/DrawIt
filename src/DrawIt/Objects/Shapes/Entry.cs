@@ -36,6 +36,11 @@ namespace DrawIt
             return this.X == other.X && this.Y == other.Y;
         }
 
+        public override int GetHashCode()
+        {
+            return X.GetHashCode() ^ Y.GetHashCode();
+        }
+
         public Entry Clone()
         {
             return new Entry(X, Y);

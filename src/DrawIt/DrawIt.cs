@@ -52,7 +52,7 @@ namespace DrawIt
             }
         }
 
-        private List<Segment> _segmentsToMove = null;
+        private List<Shape> _shapesToMove = null;
 
         private void AddObjectToDrawing(int x, int y, DrawObject obj)
         {
@@ -324,8 +324,9 @@ namespace DrawIt
                 DrawGrid(saveRectangle.Size, g);
 
                 // we need to translate the drawing if we have entries that are hidden
-
-                _drawing.DrawWithTranslation(gridSize, g, startPoint);
+                Drawing translatedDrawing = _drawing.Clone();
+                translatedDrawing.TranslateDrawing(-startPoint.X, -startPoint.Y);
+                translatedDrawing.Draw(gridSize, g);
 
                 //drawSurface.DrawToBitmap(bmp, saveRectangle);
                 bmp.Save(fileName, format);
@@ -359,6 +360,17 @@ namespace DrawIt
         {
             if (_drawing != null)
                 CreateNewSegment();
+        }
+
+        private void DrawIt_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_drawing.HasChanges())
+            {
+                if (MessageBox.Show("Exit without saving changes?", "Are you sure?", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+                {
+                    e.Cancel = true;
+                }
+            }
         }
     }
 }

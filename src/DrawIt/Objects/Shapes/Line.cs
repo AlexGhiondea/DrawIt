@@ -4,12 +4,9 @@ namespace DrawIt
 {
     public class Line : Segment
     {
-        public float Width;
-
         public Line(Entry start, Entry end, Color color, float width)
-            :base(start, end, color)
+            :base(start, end, color, width)
         {
-            this.Width = width;
         }
 
         public override void Draw(int gridSize, Graphics g)

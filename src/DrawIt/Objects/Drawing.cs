@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace DrawIt
@@ -10,7 +12,7 @@ namespace DrawIt
     public class Drawing
     {
         private bool _hasChanges;
-        public List<Segment> Segments;
+        public List<Shape> Shapes;
 
         public string Unit;
         public double ConversionRatio;
@@ -22,12 +24,12 @@ namespace DrawIt
             ConversionRatio = ratio;
             Unit = unit;
 
-            Segments = new List<Segment>();
+            Shapes = new List<Shape>();
         }
 
         internal void AddSegment(Line newLine)
         {
-            Segments.Add(newLine);
+            Shapes.Add(newLine);
             _hasChanges = true;
         }
 
@@ -41,42 +43,23 @@ namespace DrawIt
 
             foreach (var toRemove in segment)
             {
-                Segments.Remove(toRemove);
+                Shapes.Remove(toRemove);
                 _hasChanges = true;
             }
         }
 
-        internal List<Segment> GetSegmentAtPoint(Point point, int gridSize)
+        internal List<Shape> GetSegmentAtPoint(Point point, int gridSize)
         {
-            List<Segment> segments = new List<Segment>();
-            for (int i = 0; i < Segments.Count; i++)
+            List<Shape> segments = new List<Shape>();
+            for (int i = 0; i < Shapes.Count; i++)
             {
-                if (PointOnLineSegment(Segments[i].Start.ToPoint(gridSize), Segments[i].End.ToPoint(gridSize), point, 4 /*This should come from the actual segment*/))
+                if (Shapes[i].ContainsPoint(gridSize, point))
                 {
-                    segments.Add(Segments[i]);
+                    segments.Add(Shapes[i]);
                 }
             }
 
             return segments.Count > 0 ? segments : null;
-        }
-
-        private static bool PointOnLineSegment(Point pt1, Point pt2, Point pt, double epsilon)
-        {
-            if (pt.X - Math.Max(pt1.X, pt2.X) > epsilon ||
-                Math.Min(pt1.X, pt2.X) - pt.X > epsilon ||
-                pt.Y - Math.Max(pt1.Y, pt2.Y) > epsilon ||
-                Math.Min(pt1.Y, pt2.Y) - pt.Y > epsilon)
-                return false;
-
-            if (Math.Abs(pt2.X - pt1.X) < epsilon)
-                return Math.Abs(pt1.X - pt.X) < epsilon || Math.Abs(pt2.X - pt.X) < epsilon;
-            if (Math.Abs(pt2.Y - pt1.Y) < epsilon)
-                return Math.Abs(pt1.Y - pt.Y) < epsilon || Math.Abs(pt2.Y - pt.Y) < epsilon;
-
-            double x = pt1.X + (pt.Y - pt1.Y) * (pt2.X - pt1.X) / (pt2.Y - pt1.Y);
-            double y = pt1.Y + (pt.X - pt1.X) * (pt2.Y - pt1.Y) / (pt2.X - pt1.X);
-
-            return Math.Abs(pt.X - x) < epsilon || Math.Abs(pt.Y - y) < epsilon;
         }
 
         internal void AddMeasurement(Measurement measurement)
@@ -86,7 +69,7 @@ namespace DrawIt
                 return;
             }
 
-            Segments.Add(measurement);
+            Shapes.Add(measurement);
 
             _hasChanges = true;
         }
@@ -96,29 +79,22 @@ namespace DrawIt
             DrawUserSegments(gridSize, g);
         }
 
-        internal void DrawWithTranslation(int gridSize, Graphics g, Entry translateBy)
-        {
-            Drawing translatedDrawing = this.Clone();
-
-            translatedDrawing.TranslateDrawing(-translateBy.X, -translateBy.Y);
-
-            translatedDrawing.Draw(gridSize, g);
-        }
-
         internal Drawing Clone()
         {
             Drawing newDrawing = new Drawing(this.ConversionRatio, this.Unit);
-            foreach (var item in Segments)
+            foreach (var item in Shapes)
             {
-                if (item is Line)
-                {
-                    Line l = item as Line;
-                    newDrawing.AddSegment(new Line(l.Start.Clone(), l.End.Clone(), l.Color, l.Width));
-                }
-                else if (item is Measurement)
+                // measurement derives from line, so check it first
+                // TODO: implement clone at the shape level
+                if (item is Measurement)
                 {
                     Measurement m = item as Measurement;
                     newDrawing.AddMeasurement(new Measurement(m.Start.Clone(), m.End.Clone(), m.Color, m.Location, m.ConversionRate, m.Unit));
+                }
+                else if (item is Line)
+                {
+                    Line l = item as Line;
+                    newDrawing.AddSegment(new Line(l.Start.Clone(), l.End.Clone(), l.Color, l.Width));
                 }
             }
 
@@ -127,7 +103,7 @@ namespace DrawIt
 
         private void DrawUserSegments(int gridSize, Graphics g)
         {
-            foreach (var segment in Segments)
+            foreach (var segment in Shapes)
             {
                 segment.Draw(gridSize, g);
             }
@@ -151,10 +127,10 @@ namespace DrawIt
                 MessageBox.Show("Could not save to file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        
         internal void TranslateDrawing(int x, int y)
         {
-            TranslateSegments(Segments, x, y);
+            TranslateSegments(Shapes, x, y);
         }
 
         internal Size GetContainingRectangle(int gridSize, out Entry startPoint)
@@ -166,21 +142,16 @@ namespace DrawIt
             int minX = Int32.MaxValue;
             int minY = Int32.MaxValue;
 
-            foreach (var segment in Segments)
+            foreach (var segment in Shapes)
             {
-                if (segment.Start.X > maxWidth) maxWidth = segment.Start.X;
-                if (segment.End.X > maxWidth) maxWidth = segment.End.X;
+                Container bounds = segment.GetBounds();
 
-                if (segment.Start.Y > maxHeight) maxHeight = segment.Start.Y;
-                if (segment.End.Y > maxHeight) maxHeight = segment.End.Y;
+                // see if the current bounds are larger that what we saw so far.
+                if (bounds.BottomRight.X > maxWidth) maxWidth = bounds.BottomRight.X;
+                if (bounds.BottomRight.Y > maxHeight) maxHeight = bounds.BottomRight.Y;
 
-                // see if we have entries below (0,0)
-
-                if (segment.Start.X < minX) minX = segment.Start.X;
-                if (segment.End.X < minX) minX = segment.End.X;
-
-                if (segment.Start.Y < minY) minY = segment.Start.Y;
-                if (segment.End.Y < minY) minY = segment.End.Y;
+                if (bounds.TopLeft.X < minX) minX = bounds.TopLeft.X;
+                if (bounds.TopLeft.Y < minY) minY = bounds.TopLeft.Y;
             }
 
             // add 30% more to make the drawing look nicer.
@@ -192,23 +163,24 @@ namespace DrawIt
             // we need to account for elements that you cannot see as they are below (0,0)
             if (minY < 0 || minX < 0)
             {
-                maxWidth += minX;
-                maxHeight += minY;
+                maxWidth += Math.Abs(minX);
+                maxHeight += Math.Abs(minY);
             }
 
             // for good measure, add 10% more grid sizes.
             maxWidth = (int)(maxWidth * 1.1);
             maxHeight = (int)(maxHeight * 1.1);
 
+            System.Diagnostics.Debug.WriteLine("Container size: w:{0},h:{1}", maxWidth, maxHeight);
+
             return new Size(maxWidth * gridSize, maxHeight * gridSize);
         }
 
-        internal void TranslateSegments(List<Segment> _segmentsToMove, int x, int y)
+        internal void TranslateSegments(List<Shape> _shapesToMove, int x, int y)
         {
-            foreach (var lineEntry in _segmentsToMove)
+            foreach (var shape in _shapesToMove)
             {
-                lineEntry.Start.Adjust(x, y);
-                lineEntry.End.Adjust(x, y);
+                shape.Translate(x, y);
             }
         }
     }

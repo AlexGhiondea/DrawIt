@@ -3,13 +3,14 @@ using System.Drawing;
 
 namespace DrawIt
 {
-    public class Measurement : Segment
+    public class Measurement : Line
     {
         public double ConversionRate;
         public string Unit;
+        private const float MeasurementWidth = 1f;
 
         public Measurement(Entry start, Entry end, Color color, MeasurementLocation location, double rate, string unit)
-            : base(start, end, color)
+            : base(start, end, color, MeasurementWidth)
         {
             this.ConversionRate = rate;
             this.Unit = unit;
@@ -17,7 +18,7 @@ namespace DrawIt
         }
 
         private static Font measureFont = new Font("Calibri", 10, FontStyle.Bold);
-        private static Pen measurePen = new Pen(new SolidBrush(Color.Green), 1f);
+        private static Pen measurePen = new Pen(new SolidBrush(Color.Green), MeasurementWidth);
         public MeasurementLocation Location;
 
         public override void Draw(int gridSize, Graphics g)

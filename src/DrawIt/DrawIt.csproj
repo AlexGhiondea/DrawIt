@@ -106,12 +106,14 @@
       <DependentUpon>NewDrawing.cs</DependentUpon>
     </Compile>
     <Compile Include="Objects\DrawObject.cs" />
-    <Compile Include="Objects\Entry.cs" />
-    <Compile Include="Objects\Measurement.cs" />
-    <Compile Include="Objects\Line.cs" />
+    <Compile Include="Objects\Container.cs" />
+    <Compile Include="Objects\Shapes\Entry.cs" />
+    <Compile Include="Objects\Shapes\Measurement.cs" />
+    <Compile Include="Objects\Shapes\Line.cs" />
     <Compile Include="Objects\EditorState.cs" />
     <Compile Include="Objects\MeasurementLocation.cs" />
-    <Compile Include="Objects\Segment.cs" />
+    <Compile Include="Objects\Shapes\Shape.cs" />
+    <Compile Include="Objects\Shapes\Segment.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="About.resx">
