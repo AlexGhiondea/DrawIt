@@ -9,6 +9,6 @@ namespace DrawIt.Objects
     public enum DrawObject
     {
         Line,
-        Rectangle
+        Rectangle,
     }
 }

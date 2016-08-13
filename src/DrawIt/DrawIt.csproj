@@ -114,6 +114,7 @@
     <Compile Include="Objects\MeasurementLocation.cs" />
     <Compile Include="Objects\Shapes\Shape.cs" />
     <Compile Include="Objects\Shapes\Segment.cs" />
+    <Compile Include="Objects\Shapes\Text.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="About.resx">

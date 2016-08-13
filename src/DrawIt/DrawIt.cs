@@ -1,4 +1,5 @@
 ﻿using DrawIt.Objects;
+using DrawIt.Objects.Shapes;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -61,7 +62,7 @@ namespace DrawIt
                 case DrawObject.Line:
                     {
                         // create a line from the 2 points.
-                        _drawing.AddSegment(new Line(previousEntry.Clone(), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
+                        _drawing.AddShape(new Line(previousEntry.Clone(), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
 
                         previousEntry = new Entry(x, y);
                         break;
@@ -69,10 +70,10 @@ namespace DrawIt
                 case DrawObject.Rectangle:
                     {
                         // we need to create 4 segments.
-                        _drawing.AddSegment(new Line(previousEntry.Clone(), new Entry(previousEntry.X, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
-                        _drawing.AddSegment(new Line(previousEntry.Clone(), new Entry(x, previousEntry.Y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
-                        _drawing.AddSegment(new Line(new Entry(previousEntry.X, y), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
-                        _drawing.AddSegment(new Line(new Entry(x, previousEntry.Y), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
+                        _drawing.AddShape(new Line(previousEntry.Clone(), new Entry(previousEntry.X, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
+                        _drawing.AddShape(new Line(previousEntry.Clone(), new Entry(x, previousEntry.Y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
+                        _drawing.AddShape(new Line(new Entry(previousEntry.X, y), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
+                        _drawing.AddShape(new Line(new Entry(x, previousEntry.Y), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
 
                         previousEntry = null;
                         break;
@@ -132,7 +133,8 @@ namespace DrawIt
             if (radioButton == rtbDraw) _state = EditorState.Draw;
             else if (radioButton == rtbMeasure) _state = EditorState.Measure;
             else if (radioButton == rtbDelete) _state = EditorState.Delete;
-            else if (radioButton == rbMove) _state = EditorState.Move;
+            else if (radioButton == rtbMove) _state = EditorState.Move;
+            else if (radioButton == rtbText) _state = EditorState.Text;
             else throw new InvalidOperationException("Unknown state");
 
             // get rid of temporary line
@@ -142,17 +144,19 @@ namespace DrawIt
             {
                 case EditorState.Draw:
                     {
-                        grpDraw.Visible = true;
-                        grpMeasure.Visible = false;
-
+                        ShowControl(grpDraw);
                         CreateNewSegment();
                         break;
                     }
                 case EditorState.Measure:
                     {
-                        grpDraw.Visible = false;
-                        grpMeasure.Visible = true;
-
+                        ShowControl(grpMeasure);
+                        previousEntry = null;
+                        break;
+                    }
+                case EditorState.Text:
+                    {
+                        ShowControl(grpText);
                         previousEntry = null;
                         break;
                     }
@@ -160,9 +164,27 @@ namespace DrawIt
                 case EditorState.Delete:
                     {
                         previousEntry = null;
-                        grpDraw.Visible = grpMeasure.Visible = false;
+
+                        ShowControl<GroupBox>(null);
+
                         break;
                     }
+            }
+        }
+
+        private void ShowControl<TControl>(TControl control)
+            where TControl : Control
+        {
+            foreach (var item in this.Controls.OfType<TControl>())
+            {
+                if (item == control)
+                {
+                    item.Visible = true;
+                }
+                else
+                {
+                    item.Visible = false;
+                }
             }
         }
 
@@ -370,6 +392,19 @@ namespace DrawIt
                 {
                     e.Cancel = true;
                 }
+            }
+        }
+
+        private Font _textFont = new Font("Calibri", 10f);
+
+        private void lblFont_Click(object sender, EventArgs e)
+        {
+            FontDialog fd = new FontDialog();
+            fd.Font = _textFont;
+            if (fd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                _textFont = fd.Font;
+                lblFont.Text = string.Format("{0}, {1}", _textFont.Name, _textFont.Size);
             }
         }
     }

@@ -27,9 +27,9 @@ namespace DrawIt
             Shapes = new List<Shape>();
         }
 
-        internal void AddSegment(Line newLine)
+        internal void AddShape(Shape shape)
         {
-            Shapes.Add(newLine);
+            Shapes.Add(shape);
             _hasChanges = true;
         }
 
@@ -94,7 +94,7 @@ namespace DrawIt
                 else if (item is Line)
                 {
                     Line l = item as Line;
-                    newDrawing.AddSegment(new Line(l.Start.Clone(), l.End.Clone(), l.Color, l.Width));
+                    newDrawing.AddShape(new Line(l.Start.Clone(), l.End.Clone(), l.Color, l.Width));
                 }
             }
 

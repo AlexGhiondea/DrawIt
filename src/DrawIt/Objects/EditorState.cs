@@ -6,6 +6,7 @@ namespace DrawIt{
         Draw,
         Measure,
         Delete,
-        Move
+        Move,
+        Text
     }
 }
