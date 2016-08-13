@@ -127,7 +127,7 @@ namespace DrawIt
                 MessageBox.Show("Could not save to file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        
+
         internal void TranslateDrawing(int x, int y)
         {
             TranslateSegments(Shapes, x, y);
@@ -181,6 +181,10 @@ namespace DrawIt
             foreach (var shape in _shapesToMove)
             {
                 shape.Translate(x, y);
+            }
+            if (_shapesToMove.Count > 0)
+            {
+                _hasChanges = true;
             }
         }
     }
