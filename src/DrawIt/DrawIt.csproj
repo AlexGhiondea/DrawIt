@@ -107,7 +107,7 @@
     </Compile>
     <Compile Include="Objects\DrawObject.cs" />
     <Compile Include="Objects\Container.cs" />
-    <Compile Include="Objects\Shapes\Entry.cs" />
+    <Compile Include="Objects\Entry.cs" />
     <Compile Include="Objects\Shapes\Measurement.cs" />
     <Compile Include="Objects\Shapes\Line.cs" />
     <Compile Include="Objects\EditorState.cs" />

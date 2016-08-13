@@ -46,6 +46,7 @@ namespace DrawIt.Objects.Shapes
         public override void Translate(int x, int y)
         {
             Start.Adjust(x, y);
+            End.Adjust(x, y);
         }
 
         public override Container GetBounds()
