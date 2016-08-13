@@ -26,13 +26,6 @@ namespace DrawIt
         }
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_drawing.HasChanges())
-            {
-                if (MessageBox.Show("Exit without saving changes?", "Are you sure?", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
-                {
-                    return;
-                }
-            }
             this.Close();
         }
 
