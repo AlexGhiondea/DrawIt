@@ -62,5 +62,10 @@ namespace DrawIt.Objects.Shapes
             bounds.BottomRight = new Entry(rightMostPoint, bottomMostPoint);
             return bounds;
         }
+
+        public override Shape DeepClone()
+        {
+            return new Text(Start.Clone(), End.Clone(), String, Size, Font, Color);
+        }
     }
 }

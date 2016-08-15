@@ -14,5 +14,10 @@ namespace DrawIt
             Pen pen = new Pen(new SolidBrush(Color), Width);
             g.DrawLine(pen, Start.ToPoint(gridSize), End.ToPoint(gridSize));
         }
+
+        public override Shape DeepClone()
+        {
+            return new Line(Start.Clone(), End.Clone(), Color, Width);
+        }
     }
 }

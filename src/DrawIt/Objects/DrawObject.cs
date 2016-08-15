@@ -10,5 +10,6 @@ namespace DrawIt.Objects
     {
         Line,
         Rectangle,
+        Circle
     }
 }

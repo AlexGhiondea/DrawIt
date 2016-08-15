@@ -147,12 +147,11 @@
             // 
             // rtbDraw
             // 
-            this.rtbDraw.AutoSize = true;
             this.rtbDraw.Checked = true;
             this.rtbDraw.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbDraw.Location = new System.Drawing.Point(16, 40);
+            this.rtbDraw.Location = new System.Drawing.Point(16, 39);
             this.rtbDraw.Name = "rtbDraw";
-            this.rtbDraw.Size = new System.Drawing.Size(70, 27);
+            this.rtbDraw.Size = new System.Drawing.Size(78, 28);
             this.rtbDraw.TabIndex = 1;
             this.rtbDraw.TabStop = true;
             this.rtbDraw.Text = "Draw";
@@ -161,11 +160,10 @@
             // 
             // rtbMeasure
             // 
-            this.rtbMeasure.AutoSize = true;
             this.rtbMeasure.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbMeasure.Location = new System.Drawing.Point(86, 40);
+            this.rtbMeasure.Location = new System.Drawing.Point(86, 39);
             this.rtbMeasure.Name = "rtbMeasure";
-            this.rtbMeasure.Size = new System.Drawing.Size(96, 27);
+            this.rtbMeasure.Size = new System.Drawing.Size(97, 28);
             this.rtbMeasure.TabIndex = 2;
             this.rtbMeasure.Text = "Measure";
             this.rtbMeasure.UseVisualStyleBackColor = true;
@@ -244,7 +242,7 @@
             this.rtbDelete.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbDelete.Location = new System.Drawing.Point(182, 39);
             this.rtbDelete.Name = "rtbDelete";
-            this.rtbDelete.Size = new System.Drawing.Size(76, 28);
+            this.rtbDelete.Size = new System.Drawing.Size(70, 28);
             this.rtbDelete.TabIndex = 3;
             this.rtbDelete.Text = "Delete";
             this.rtbDelete.UseVisualStyleBackColor = true;
@@ -551,7 +549,7 @@
             this.rtbMove.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbMove.Location = new System.Drawing.Point(258, 39);
             this.rtbMove.Name = "rtbMove";
-            this.rtbMove.Size = new System.Drawing.Size(69, 28);
+            this.rtbMove.Size = new System.Drawing.Size(68, 28);
             this.rtbMove.TabIndex = 4;
             this.rtbMove.Text = "Move";
             this.rtbMove.UseVisualStyleBackColor = true;
@@ -575,7 +573,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 391);
-            this.Controls.Add(this.grpText);
             this.Controls.Add(this.tbZoom);
             this.Controls.Add(lblZoom);
             this.Controls.Add(this.rtbDelete);
@@ -588,6 +585,7 @@
             this.Controls.Add(this.grpDraw);
             this.Controls.Add(this.grpMeasure);
             this.Controls.Add(this.rtbText);
+            this.Controls.Add(this.grpText);
             this.KeyPreview = true;
             this.MainMenuStrip = this.mnuMainMenu;
             this.Name = "DrawIt";

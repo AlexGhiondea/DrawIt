@@ -84,5 +84,18 @@ namespace DrawIt
 
             g.DrawString(text, measureFont, new SolidBrush(Color), StartText);
         }
+
+        public override Shape DeepClone()
+        {
+            return new Measurement(Start.Clone(), End.Clone(), Color, Location, ConversionRate, Unit);
+        }
+
+        public override Container GetBounds()
+        {
+            Container c = base.GetBounds();
+            c.TopLeft.Adjust(0, -1);
+            c.BottomRight.Adjust(0, 2);
+            return c;
+        }
     }
 }

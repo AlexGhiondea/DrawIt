@@ -84,18 +84,7 @@ namespace DrawIt
             Drawing newDrawing = new Drawing(this.ConversionRatio, this.Unit);
             foreach (var item in Shapes)
             {
-                // measurement derives from line, so check it first
-                // TODO: implement clone at the shape level
-                if (item is Measurement)
-                {
-                    Measurement m = item as Measurement;
-                    newDrawing.AddMeasurement(new Measurement(m.Start.Clone(), m.End.Clone(), m.Color, m.Location, m.ConversionRate, m.Unit));
-                }
-                else if (item is Line)
-                {
-                    Line l = item as Line;
-                    newDrawing.AddShape(new Line(l.Start.Clone(), l.End.Clone(), l.Color, l.Width));
-                }
+                newDrawing.AddShape(item.DeepClone());
             }
 
             return newDrawing;
@@ -154,9 +143,9 @@ namespace DrawIt
                 if (bounds.TopLeft.Y < minY) minY = bounds.TopLeft.Y;
             }
 
-            // add 30% more to make the drawing look nicer.
-            minX = (int)(minX * 1.3);
-            minY = (int)(minY * 1.3);
+            // add 30% more to make the drawing look nicer. (at at least 2 grid elements).
+            minX = (int)(minX * 1.3) != minX ? (int)(minX * 1.3) : minX - 2;
+            minY = (int)(minY * 1.3) != minY ? (int)(minY * 1.3) : minY - 2;
 
             startPoint = new Entry(Math.Min(0, minX), Math.Min(0, minY));
 

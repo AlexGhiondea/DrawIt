@@ -78,6 +78,24 @@ namespace DrawIt
                         previousEntry = null;
                         break;
                     }
+                case DrawObject.Circle:
+                    {
+                        int deltaX = x - previousEntry.X;
+                        int deltaY = y - previousEntry.Y;
+
+                        int radius = (int)Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                        if (deltaX == 0 && deltaY == 0)
+                        {
+                            // we can't draw a circle with 0 radius
+                            return;
+                        }
+
+                        _drawing.AddShape(new Circle(previousEntry.Clone(), radius, (float)nupDrawWidth.Value, lblDrawColor.BackColor));
+
+                        previousEntry = null;
+                        break; ;
+                    }
                 default:
                     break;
             }
@@ -94,13 +112,13 @@ namespace DrawIt
         private void btnNewSegment_Click(object sender, EventArgs e)
         {
             // make sure the temporary line is gone.
-            drawSurface.Refresh();
             CreateNewSegment();
         }
 
         private void CreateNewSegment()
         {
             previousEntry = null;
+            drawSurface.Refresh();
         }
 
         private void ShowNewDocumentDialog()
@@ -256,7 +274,6 @@ namespace DrawIt
                     _drawing = s.Deserialize<Drawing>(jr);
 
                     CreateNewSegment();
-                    drawSurface.Refresh();
                 }
 
                 tssActiveStatus.Text = "Loaded " + fileName;
@@ -285,7 +302,7 @@ namespace DrawIt
         {
             _drawing = newDrawing;
             CreateNewSegment();
-            drawSurface.Refresh();
+            //drawSurface.Refresh();
 
             stsDocData.Text = string.Format("Unit: {0}, Ratio: {1}", _drawing.Unit, _drawing.ConversionRatio);
         }
@@ -294,16 +311,7 @@ namespace DrawIt
         {
             if (e.KeyCode == Keys.Escape)
             {
-                if (rtbDraw.Checked)
-                {
-                    CreateNewSegment();
-                }
-                else
-                {
-                    previousEntry = null;
-                }
-
-                drawSurface.Refresh();
+                CreateNewSegment();
             }
         }
 

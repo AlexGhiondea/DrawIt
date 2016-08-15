@@ -17,5 +17,7 @@ namespace DrawIt
         public abstract void Translate(int x, int y);
 
         public abstract Container GetBounds();
+
+        public abstract Shape DeepClone();
     }
 }
