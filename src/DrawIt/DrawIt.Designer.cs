@@ -573,6 +573,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 391);
+            this.Controls.Add(this.grpText);
             this.Controls.Add(this.tbZoom);
             this.Controls.Add(lblZoom);
             this.Controls.Add(this.rtbDelete);
@@ -585,7 +586,6 @@
             this.Controls.Add(this.grpDraw);
             this.Controls.Add(this.grpMeasure);
             this.Controls.Add(this.rtbText);
-            this.Controls.Add(this.grpText);
             this.KeyPreview = true;
             this.MainMenuStrip = this.mnuMainMenu;
             this.Name = "DrawIt";
