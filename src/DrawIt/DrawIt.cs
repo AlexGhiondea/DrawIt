@@ -356,7 +356,7 @@ namespace DrawIt
                 // we need to translate the drawing if we have entries that are hidden
                 Drawing translatedDrawing = _drawing.Clone();
                 translatedDrawing.TranslateDrawing(-startPoint.X, -startPoint.Y);
-                translatedDrawing.Draw(gridSize, g);
+                translatedDrawing.Draw(gridSize, g);             
 
                 //drawSurface.DrawToBitmap(bmp, saveRectangle);
                 bmp.Save(fileName, format);

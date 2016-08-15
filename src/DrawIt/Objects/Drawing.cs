@@ -124,6 +124,12 @@ namespace DrawIt
 
         internal Size GetContainingRectangle(int gridSize, out Entry startPoint)
         {
+            if (Shapes.Count == 0)
+            {
+                startPoint = new Entry(0, 0);
+                return new Size(0, 0);
+            }
+
             // find the max X,Y
             int maxWidth = 0;
             int maxHeight = 0;
