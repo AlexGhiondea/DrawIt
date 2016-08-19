@@ -19,26 +19,7 @@ namespace DrawIt
 
         public override bool ContainsPoint(int gridSize, Point p)
         {
-            return PointOnLineSegment(Start.ToPoint(gridSize), End.ToPoint(gridSize), p, Width);
-        }
-
-        private static bool PointOnLineSegment(Point left, Point right, Point pt, double epsilon)
-        {
-            if (pt.X - Math.Max(left.X, right.X) > epsilon ||
-                Math.Min(left.X, right.X) - pt.X > epsilon ||
-                pt.Y - Math.Max(left.Y, right.Y) > epsilon ||
-                Math.Min(left.Y, right.Y) - pt.Y > epsilon)
-                return false;
-
-            if (Math.Abs(right.X - left.X) < epsilon)
-                return Math.Abs(left.X - pt.X) < epsilon || Math.Abs(right.X - pt.X) < epsilon;
-            if (Math.Abs(right.Y - left.Y) < epsilon)
-                return Math.Abs(left.Y - pt.Y) < epsilon || Math.Abs(right.Y - pt.Y) < epsilon;
-
-            double x = left.X + (pt.Y - left.Y) * (right.X - left.X) / (right.Y - left.Y);
-            double y = left.Y + (pt.X - left.X) * (right.Y - left.Y) / (right.X - left.X);
-
-            return Math.Abs(pt.X - x) < epsilon || Math.Abs(pt.Y - y) < epsilon;
+            return DrawFacts.PointOnLineSegment(Start.ToPoint(gridSize), End.ToPoint(gridSize), p, Width);
         }
 
         /// <summary>

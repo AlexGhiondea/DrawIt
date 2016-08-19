@@ -69,11 +69,13 @@ namespace DrawIt
                     }
                 case DrawObject.Rectangle:
                     {
-                        // we need to create 4 segments.
-                        _drawing.AddShape(new Line(previousEntry.Clone(), new Entry(previousEntry.X, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
-                        _drawing.AddShape(new Line(previousEntry.Clone(), new Entry(x, previousEntry.Y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
-                        _drawing.AddShape(new Line(new Entry(previousEntry.X, y), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
-                        _drawing.AddShape(new Line(new Entry(x, previousEntry.Y), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
+                        _drawing.AddShape(new Rectangle(previousEntry.Clone(), new Entry(x, y), (float)nupDrawWidth.Value, lblDrawColor.BackColor));
+
+                        //// we need to create 4 segments.
+                        //_drawing.AddShape(new Line(previousEntry.Clone(), new Entry(previousEntry.X, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
+                        //_drawing.AddShape(new Line(previousEntry.Clone(), new Entry(x, previousEntry.Y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
+                        //_drawing.AddShape(new Line(new Entry(previousEntry.X, y), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
+                        //_drawing.AddShape(new Line(new Entry(x, previousEntry.Y), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
 
                         previousEntry = null;
                         break;
@@ -356,7 +358,7 @@ namespace DrawIt
                 // we need to translate the drawing if we have entries that are hidden
                 Drawing translatedDrawing = _drawing.Clone();
                 translatedDrawing.TranslateDrawing(-startPoint.X, -startPoint.Y);
-                translatedDrawing.Draw(gridSize, g);             
+                translatedDrawing.Draw(gridSize, g);
 
                 //drawSurface.DrawToBitmap(bmp, saveRectangle);
                 bmp.Save(fileName, format);

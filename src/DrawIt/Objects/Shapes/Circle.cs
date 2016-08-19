@@ -21,7 +21,7 @@ namespace DrawIt
             Pen p = new Pen(new SolidBrush(Color), Width);
             var point = new Entry(Center.X - Radius, Center.Y - Radius).ToPoint(gridSize);
 
-            g.DrawArc(p, new Rectangle(point, new Size(2 * Radius * gridSize, 2 * Radius * gridSize)), 0, 360);
+            g.DrawArc(p, new System.Drawing.Rectangle(point, new Size(2 * Radius * gridSize, 2 * Radius * gridSize)), 0, 360);
         }
 
         public override bool ContainsPoint(int gridSize, Point p)

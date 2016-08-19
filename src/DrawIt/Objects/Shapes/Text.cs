@@ -31,6 +31,8 @@ namespace DrawIt.Objects.Shapes
             g.DrawString(String, textFont, new SolidBrush(Color), Start.ToPoint(gridSize));
         }
 
+
+
         public override bool ContainsPoint(int gridSize, System.Drawing.Point p)
         {
             var startPoint = Start.ToPoint(gridSize);
