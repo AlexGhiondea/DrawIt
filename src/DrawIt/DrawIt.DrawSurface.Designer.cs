@@ -3,6 +3,7 @@ using DrawIt.Objects.Shapes;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace DrawIt
@@ -125,6 +126,8 @@ namespace DrawIt
         Pen _tempLinePen = new Pen(new SolidBrush(Color.Gray), 1);
         private void drawSurface_Paint(object sender, PaintEventArgs e)
         {
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             DrawGrid(this.Size, e.Graphics);
 
             _drawing.Draw(gridSize, e.Graphics);

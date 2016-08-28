@@ -345,6 +345,10 @@ namespace DrawIt
             using (Bitmap bmp = new Bitmap(saveRectangle.Width, saveRectangle.Height))
             using (Graphics g = Graphics.FromImage(bmp))
             {
+                // anti-aliasing
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+
                 // start  with a white background.
                 g.FillRectangle(Brushes.White, 0, 0, bmp.Width, bmp.Height);
 
