@@ -13,21 +13,23 @@ namespace DrawIt.Objects.Shapes
         public Entry End;
         public string String;
         public string Font;
+        public FontStyle Style;
         public float Size;
 
-        public Text(Entry start, Entry end, string text, float fontSize, string fontFamily, Color color)
+        public Text(Entry start, Entry end, string text, float fontSize, string fontFamily, FontStyle fontStyle, Color color)
             : base(color)
         {
             this.Start = start;
             this.String = text;
             this.Size = fontSize;
             this.Font = fontFamily;
+            this.Style = fontStyle;
             this.End = end;
         }
 
         public override void Draw(int gridSize, System.Drawing.Graphics g)
         {
-            Font textFont = new Font(Font, Size);
+            Font textFont = new Font(Font, Size, Style);
             g.DrawString(String, textFont, new SolidBrush(Color), Start.ToPoint(gridSize));
         }
 
@@ -67,7 +69,7 @@ namespace DrawIt.Objects.Shapes
 
         public override Shape DeepClone()
         {
-            return new Text(Start.Clone(), End.Clone(), String, Size, Font, Color);
+            return new Text(Start.Clone(), End.Clone(), String, Size, Font, Style, Color);
         }
     }
 }

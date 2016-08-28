@@ -466,9 +466,9 @@
             this.lblFont.AutoSize = true;
             this.lblFont.Location = new System.Drawing.Point(271, 21);
             this.lblFont.Name = "lblFont";
-            this.lblFont.Size = new System.Drawing.Size(75, 15);
+            this.lblFont.Size = new System.Drawing.Size(120, 15);
             this.lblFont.TabIndex = 25;
-            this.lblFont.Text = "Calibri, 9.75";
+            this.lblFont.Text = "Calibri, 9.75 Regular";
             this.lblFont.Click += new System.EventHandler(this.lblFont_Click);
             // 
             // label7
@@ -515,7 +515,6 @@
             this.grpMeasure.Controls.Add(this.cboVerticalAlignment);
             this.grpMeasure.Controls.Add(lblHorizontal);
             this.grpMeasure.Controls.Add(lblVertical);
-            this.grpMeasure.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.grpMeasure.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpMeasure.Location = new System.Drawing.Point(387, 24);
             this.grpMeasure.Name = "grpMeasure";
@@ -561,7 +560,7 @@
             this.rtbText.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbText.Location = new System.Drawing.Point(332, 39);
             this.rtbText.Name = "rtbText";
-            this.rtbText.Size = new System.Drawing.Size(78, 28);
+            this.rtbText.Size = new System.Drawing.Size(51, 28);
             this.rtbText.TabIndex = 26;
             this.rtbText.Text = "Text";
             this.rtbText.UseVisualStyleBackColor = true;
@@ -573,7 +572,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 391);
-            this.Controls.Add(this.grpText);
+            this.Controls.Add(this.rtbText);
             this.Controls.Add(this.tbZoom);
             this.Controls.Add(lblZoom);
             this.Controls.Add(this.rtbDelete);
@@ -583,9 +582,9 @@
             this.Controls.Add(this.rtbDraw);
             this.Controls.Add(this.drawSurface);
             this.Controls.Add(this.rtbMove);
+            this.Controls.Add(this.grpText);
             this.Controls.Add(this.grpDraw);
             this.Controls.Add(this.grpMeasure);
-            this.Controls.Add(this.rtbText);
             this.KeyPreview = true;
             this.MainMenuStrip = this.mnuMainMenu;
             this.Name = "DrawIt";

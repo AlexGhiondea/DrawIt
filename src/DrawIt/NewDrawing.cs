@@ -31,8 +31,9 @@ namespace DrawIt
                 Unit = previousDrawing.Unit;
             }
 
-            txtRatio.DataBindings.Add("Text", this, "Ratio", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtRatio.DataBindings.Add("Text", this, "Ratio", false, DataSourceUpdateMode.OnValidation);
             txtUnit.DataBindings.Add("Text", this, "Unit", false, DataSourceUpdateMode.OnPropertyChanged);
+            lblUnit.DataBindings.Add("Text", this, "Unit", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -42,8 +43,21 @@ namespace DrawIt
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            // persist the value
+            Configuration.SaveSetting(Constants.Document.MeasurementUnit, Unit);
+            Configuration.SaveSetting(Constants.Document.ConversionRate, Ratio.ToString());
+
             Document = new Drawing(Ratio, Unit);
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
+        }
+
+        private void txtRatio_Validated(object sender, EventArgs e)
+        {
+            if (Ratio <= 0)
+            {
+                MessageBox.Show(this, "Ratio cannot be negative or zero", "Error", MessageBoxButtons.OK);
+                txtRatio.Focus();
+            }
         }
     }
 }
