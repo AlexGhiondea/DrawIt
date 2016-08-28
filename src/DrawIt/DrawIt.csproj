@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -68,6 +68,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -85,6 +86,7 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
+    <Compile Include="Constants.cs" />
     <Compile Include="DrawIt.DrawSurface.Designer.cs">
       <DependentUpon>DrawIt.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -93,6 +95,9 @@
       <DependentUpon>DrawIt.cs</DependentUpon>
       <SubType>Designer</SubType>
     </Compile>
+    <Compile Include="Helpers\DrawFacts.cs" />
+    <Compile Include="Helpers\Configuration.cs" />
+    <Compile Include="Helpers\PointExtensions.cs" />
     <Compile Include="Objects\Drawing.cs" />
     <Compile Include="DrawIt.cs">
       <SubType>Form</SubType>
@@ -100,7 +105,7 @@
     <Compile Include="DrawIt.Designer.cs">
       <DependentUpon>DrawIt.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers.cs" />
+    <Compile Include="Helpers\SizeExtensions.cs" />
     <Compile Include="NewDrawing.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,7 +145,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="logo.dit" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

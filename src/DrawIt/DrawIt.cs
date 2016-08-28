@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -70,13 +71,6 @@ namespace DrawIt
                 case DrawObject.Rectangle:
                     {
                         _drawing.AddShape(new Rectangle(previousEntry.Clone(), new Entry(x, y), (float)nupDrawWidth.Value, lblDrawColor.BackColor));
-
-                        //// we need to create 4 segments.
-                        //_drawing.AddShape(new Line(previousEntry.Clone(), new Entry(previousEntry.X, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
-                        //_drawing.AddShape(new Line(previousEntry.Clone(), new Entry(x, previousEntry.Y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
-                        //_drawing.AddShape(new Line(new Entry(previousEntry.X, y), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
-                        //_drawing.AddShape(new Line(new Entry(x, previousEntry.Y), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
-
                         previousEntry = null;
                         break;
                     }
@@ -213,24 +207,26 @@ namespace DrawIt
             // setup the 2 combo-boxes for measurements.
             cboHorizontalAlignment.Items.Add(MeasurementLocation.Above);
             cboHorizontalAlignment.Items.Add(MeasurementLocation.Below);
-            cboHorizontalAlignment.SelectedItem = MeasurementLocation.Below;
 
             cboVerticalAlignment.Items.Add(MeasurementLocation.Left);
             cboVerticalAlignment.Items.Add(MeasurementLocation.Right);
-            cboVerticalAlignment.SelectedItem = MeasurementLocation.Right;
 
             // populate the list of objects it can draw.
             Array enumValues = Enum.GetValues(typeof(DrawObject));
 
             IEnumerator enumerator = enumValues.GetEnumerator();
-
             while (enumerator.MoveNext())
             {
                 cboDrawElements.Items.Add(enumerator.Current);
             }
-            cboDrawElements.SelectedItem = DrawObject.Line;
 
-            CreateNewDocument(new Drawing(1, "in"));
+            LoadUserPreferences();
+
+            // Read the configuration defaults from the app.config.
+            string unit = Configuration.GetSetting(Constants.Document.MeasurementUnit) ?? "in";
+            float conversionRate = Configuration.GetSettingOrDefault<float>(Constants.Document.ConversionRate, float.TryParse, 1);
+
+            CreateNewDocument(new Drawing(conversionRate, unit));
 
             drawSurface.MouseWheel += drawSurface_MouseWheel;
         }
@@ -304,9 +300,8 @@ namespace DrawIt
         {
             _drawing = newDrawing;
             CreateNewSegment();
-            //drawSurface.Refresh();
 
-            stsDocData.Text = string.Format("Unit: {0}, Ratio: {1}", _drawing.Unit, _drawing.ConversionRatio);
+            stsDocData.Text = string.Format("1 square = {1} {0}", _drawing.Unit, _drawing.ConversionRatio);
         }
 
         private void DrawIt_KeyUp(object sender, KeyEventArgs e)
@@ -403,9 +398,49 @@ namespace DrawIt
                     e.Cancel = true;
                 }
             }
+
+            // save settings.
+            SaveUserPreferences();
         }
 
-        private Font _textFont = new Font("Calibri", 10f);
+        private void SaveUserPreferences()
+        {
+            Configuration.SaveSetting(Constants.Measurement.BelowOrAbove, cboHorizontalAlignment.SelectedItem.ToString());
+            Configuration.SaveSetting(Constants.Measurement.LeftOrRight, cboVerticalAlignment.SelectedItem.ToString());
+            Configuration.SaveSetting(Constants.Measurement.Color, lblMeasureColor.BackColor.ToArgb().ToString());
+
+            Configuration.SaveSetting(Constants.Draw.Color, lblDrawColor.BackColor.ToArgb().ToString());
+            Configuration.SaveSetting(Constants.Draw.Width, nupDrawWidth.Value.ToString());
+            Configuration.SaveSetting(Constants.Draw.DrawObject, cboDrawElements.SelectedItem.ToString());
+
+            Configuration.SaveSetting(Constants.Text.Color, lblTextColor.BackColor.ToArgb().ToString());
+            Configuration.SaveSetting(Constants.Text.FontName, _textFont.Name);
+            Configuration.SaveSetting(Constants.Text.FontSize, _textFont.Size.ToString());
+            Configuration.SaveSetting(Constants.Text.FontStyle, _textFont.Style.ToString());
+        }
+
+        private void LoadUserPreferences()
+        {
+            // Measure
+            cboHorizontalAlignment.SelectedItem = Configuration.GetSettingOrDefault<MeasurementLocation>(Constants.Measurement.BelowOrAbove, Enum.TryParse<MeasurementLocation>, MeasurementLocation.Below);
+            cboVerticalAlignment.SelectedItem = Configuration.GetSettingOrDefault<MeasurementLocation>(Constants.Measurement.LeftOrRight, Enum.TryParse<MeasurementLocation>, MeasurementLocation.Left);
+            lblMeasureColor.BackColor = Color.FromArgb(Configuration.GetSettingOrDefault<int>(Constants.Measurement.Color, int.TryParse, unchecked((int)0xff008000))); //  green
+
+            // Draw
+            cboDrawElements.SelectedItem = Configuration.GetSettingOrDefault<DrawObject>(Constants.Draw.DrawObject, Enum.TryParse<DrawObject>, DrawObject.Line);
+            lblDrawColor.BackColor = Color.FromArgb(Configuration.GetSettingOrDefault<int>(Constants.Draw.Color, int.TryParse, unchecked((int)0xff000000))); // black
+            nupDrawWidth.Value = Configuration.GetSettingOrDefault<int>(Constants.Draw.Width, int.TryParse, 2);
+
+            // Text
+            lblTextColor.BackColor = Color.FromArgb(Configuration.GetSettingOrDefault<int>(Constants.Text.Color, int.TryParse, unchecked((int)0xff000000))); // black
+            float fontSize = Configuration.GetSettingOrDefault<float>(Constants.Text.FontSize, float.TryParse, 10f);
+            string fontName = Configuration.GetSetting(Constants.Text.FontName) ?? "Calibri";
+            FontStyle fontStyle = Configuration.GetSettingOrDefault<FontStyle>(Constants.Text.FontStyle, Enum.TryParse<FontStyle>, FontStyle.Regular);
+            _textFont = new Font(fontName, fontSize, fontStyle);
+            lblFont.Text = string.Format("{0}, {1} {2}", _textFont.Name, _textFont.Size, _textFont.Style);
+        }
+
+        private Font _textFont = null;
 
         private void lblFont_Click(object sender, EventArgs e)
         {
@@ -414,7 +449,7 @@ namespace DrawIt
             if (fd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 _textFont = fd.Font;
-                lblFont.Text = string.Format("{0}, {1}", _textFont.Name, _textFont.Size);
+                lblFont.Text = string.Format("{0}, {1} {2}", _textFont.Name, _textFont.Size, _textFont.Style);
             }
         }
     }

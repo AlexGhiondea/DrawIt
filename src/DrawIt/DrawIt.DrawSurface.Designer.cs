@@ -52,7 +52,7 @@ namespace DrawIt
 
                     var end = new Entry(txtX, txtY - 1);
 
-                    _drawing.Shapes.Add(new Text(new Entry(x, y - 1), end, txtTextToDraw.Text, _textFont.Size, _textFont.Name, lblTextColor.BackColor));
+                    _drawing.Shapes.Add(new Text(new Entry(x, y - 1), end, txtTextToDraw.Text, _textFont.Size, _textFont.Name, _textFont.Style, lblTextColor.BackColor));
                     drawSurface.Refresh();
                 }
                 return;
