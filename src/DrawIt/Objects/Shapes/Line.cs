@@ -14,7 +14,7 @@ namespace DrawIt
         public override void Draw(int gridSize, Graphics g)
         {
             Pen pen = new Pen(new SolidBrush(Color), Width);
-            g.DrawLine(pen, Start.ToPoint(gridSize), End.ToPoint(gridSize));
+            g.DrawLine(pen, Start.ToPoint(gridSize), End.ToPoint(gridSize));    
         }
 
         public override Shape DeepClone()

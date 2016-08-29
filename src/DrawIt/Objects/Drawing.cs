@@ -14,7 +14,7 @@ namespace DrawIt
         private bool _hasChanges;
         public List<Shape> Shapes;
 
-        public string Unit;
+        public string Unit { get; set; }
         public double ConversionRatio;
 
         public bool HasChanges() { return _hasChanges; }

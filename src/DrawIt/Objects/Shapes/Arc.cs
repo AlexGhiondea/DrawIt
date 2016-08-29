@@ -15,8 +15,6 @@ namespace DrawIt
 
         public override void Draw(int gridSize, Graphics g)
         {
-            Pen pen = new Pen(new SolidBrush(Color), Width);
-
             //compute the length of the line
             int deltaX = (End.X - Start.X);
             int deltaY = (End.Y - Start.Y);
@@ -89,7 +87,7 @@ namespace DrawIt
 
                 g.Transform = transformMatrix;
 
-                pen.Color = Color.Green;
+                Pen pen = new Pen(new SolidBrush(Color), Width);
                 g.DrawArc(pen, new RectangleF(start, arcSizeRotate), (float)(startDegrees), (float)(180));
 
                 g.ResetTransform();

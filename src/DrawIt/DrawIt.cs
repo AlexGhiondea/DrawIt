@@ -63,7 +63,7 @@ namespace DrawIt
                 case DrawObject.Line:
                     {
                         // only add it if we have something to add.
-                        if (previousEntry.X != x && previousEntry.Y != y)
+                        if (previousEntry.X - x != 0 || previousEntry.Y - y != 0)
                         {
                             // create a line from the 2 points.
                             _drawing.AddShape(new Line(previousEntry.Clone(), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
@@ -72,10 +72,22 @@ namespace DrawIt
                         }
                         break;
                     }
+                case DrawObject.Arc:
+                    {
+                        // only add it if we have something to add.
+                        if (previousEntry.X - x != 0 || previousEntry.Y - y != 0)
+                        {
+                            // create an arc from the 2 points and the specified width
+                            _drawing.AddShape(new Arc(previousEntry.Clone(), new Entry(x, y), (int)nupArcSize.Value, lblDrawColor.BackColor, (float)nupDrawWidth.Value));
+
+                            previousEntry = null;
+                        }
+                        break;
+                    }
                 case DrawObject.Rectangle:
                     {
                         // only add it if we have something there..
-                        if (previousEntry.X - x == 0 || previousEntry.Y -y == 0)
+                        if (previousEntry.X - x == 0 || previousEntry.Y - y == 0)
                         {
                             return;
                         }
@@ -102,6 +114,7 @@ namespace DrawIt
                         previousEntry = null;
                         break; ;
                     }
+
                 default:
                     break;
             }
@@ -239,6 +252,7 @@ namespace DrawIt
             CreateNewDocument(new Drawing(conversionRate, unit));
 
             drawSurface.MouseWheel += drawSurface_MouseWheel;
+
         }
 
         private void tbZoom_Scroll(object sender, EventArgs e)
@@ -312,6 +326,9 @@ namespace DrawIt
             CreateNewSegment();
 
             stsDocData.Text = string.Format("1 square = {1} {0}", _drawing.Unit, _drawing.ConversionRatio);
+            //setup data bindings
+            lblNupArcUnits.DataBindings.Clear();
+            lblNupArcUnits.DataBindings.Add("Text", _drawing, "Unit", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         private void DrawIt_KeyUp(object sender, KeyEventArgs e)
@@ -401,6 +418,20 @@ namespace DrawIt
         {
             if (_drawing != null)
                 CreateNewSegment();
+
+            // if drawing an arc, show the control.
+            // if drawing a line, show the new button
+            DrawObject obj = (DrawObject)cboDrawElements.SelectedItem;
+            lblNupArcUnits.Visible = false;
+            nupArcSize.Visible = false;
+            lblNupArcDescription.Visible = false;
+            if (obj == DrawObject.Arc)
+            {
+                nupArcSize.Visible = true;
+                lblNupArcUnits.Visible = true;
+                lblNupArcDescription.Visible = true;
+            }
+
         }
 
         private void DrawIt_FormClosing(object sender, FormClosingEventArgs e)
@@ -431,6 +462,8 @@ namespace DrawIt
             Configuration.SaveSetting(Constants.Text.FontName, _textFont.Name);
             Configuration.SaveSetting(Constants.Text.FontSize, _textFont.Size.ToString());
             Configuration.SaveSetting(Constants.Text.FontStyle, _textFont.Style.ToString());
+
+            Configuration.SaveSetting(Constants.Draw.Arc.Radius, nupArcSize.Value.ToString());
         }
 
         private void LoadUserPreferences()
@@ -452,6 +485,9 @@ namespace DrawIt
             FontStyle fontStyle = Configuration.GetSettingOrDefault<FontStyle>(Constants.Text.FontStyle, Enum.TryParse<FontStyle>, FontStyle.Regular);
             _textFont = new Font(fontName, fontSize, fontStyle);
             lblFont.Text = string.Format("{0}, {1} {2}", _textFont.Name, _textFont.Size, _textFont.Style);
+
+            // Arc
+            nupArcSize.Value = Configuration.GetSettingOrDefault<int>(Constants.Draw.Arc.Radius, int.TryParse, 4);
         }
 
         private Font _textFont = null;
