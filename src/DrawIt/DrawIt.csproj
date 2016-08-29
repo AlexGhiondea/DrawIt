@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationRevision>9</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -115,6 +115,7 @@
     <Compile Include="Objects\DrawObject.cs" />
     <Compile Include="Objects\Container.cs" />
     <Compile Include="Objects\Entry.cs" />
+    <Compile Include="Objects\Shapes\Arc.cs" />
     <Compile Include="Objects\Shapes\Rectangle.cs" />
     <Compile Include="Objects\Shapes\Circle.cs" />
     <Compile Include="Objects\Shapes\Measurement.cs" />

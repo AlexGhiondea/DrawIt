@@ -62,14 +62,24 @@ namespace DrawIt
             {
                 case DrawObject.Line:
                     {
-                        // create a line from the 2 points.
-                        _drawing.AddShape(new Line(previousEntry.Clone(), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
+                        // only add it if we have something to add.
+                        if (previousEntry.X != x && previousEntry.Y != y)
+                        {
+                            // create a line from the 2 points.
+                            _drawing.AddShape(new Line(previousEntry.Clone(), new Entry(x, y), lblDrawColor.BackColor, (float)nupDrawWidth.Value));
 
-                        previousEntry = new Entry(x, y);
+                            previousEntry = new Entry(x, y);
+                        }
                         break;
                     }
                 case DrawObject.Rectangle:
                     {
+                        // only add it if we have something there..
+                        if (previousEntry.X - x == 0 || previousEntry.Y -y == 0)
+                        {
+                            return;
+                        }
+
                         _drawing.AddShape(new Rectangle(previousEntry.Clone(), new Entry(x, y), (float)nupDrawWidth.Value, lblDrawColor.BackColor));
                         previousEntry = null;
                         break;

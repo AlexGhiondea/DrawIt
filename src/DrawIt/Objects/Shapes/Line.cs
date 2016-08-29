@@ -1,11 +1,13 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Diagnostics;
+using System.Drawing;
 
 namespace DrawIt
 {
     public class Line : Segment
     {
         public Line(Entry start, Entry end, Color color, float width)
-            :base(start, end, color, width)
+            : base(start, end, color, width)
         {
         }
 
