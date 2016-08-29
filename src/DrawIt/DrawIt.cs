@@ -438,7 +438,7 @@ namespace DrawIt
         {
             if (_drawing.HasChanges())
             {
-                if (MessageBox.Show("Exit without saving changes?", "Are you sure?", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+                if (MessageBox.Show("Save changes to the document?", "", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.No)
                 {
                     e.Cancel = true;
                 }
