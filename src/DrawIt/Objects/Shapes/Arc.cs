@@ -98,5 +98,27 @@ namespace DrawIt
         {
             return new Arc(Start.Clone(), End.Clone(), Radius, Color, Width);
         }
+
+        public override bool ContainsPoint(int gridSize, Point location)
+        {
+            //TODO: implement the check on a rotated ellipse
+
+            // for now, only check for the 2 points (start and end)
+
+            if ((location.X - Start.ToPoint(gridSize).X <= Width && location.X - Start.ToPoint(gridSize).X >= 0) &&
+                (location.Y - Start.ToPoint(gridSize).Y <= Width && location.Y - Start.ToPoint(gridSize).Y >= 0))
+                return true;
+
+            if ((location.X - End.ToPoint(gridSize).X <= Width && location.X - End.ToPoint(gridSize).X >= 0) &&
+                (location.Y - End.ToPoint(gridSize).Y <= Width && location.Y - End.ToPoint(gridSize).Y >= 0))
+                return true;
+
+            return false;
+        }
+
+        public override Container GetBounds()
+        {
+            return base.GetBounds();
+        }
     }
 }
