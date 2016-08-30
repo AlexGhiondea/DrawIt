@@ -294,7 +294,7 @@ namespace DrawIt
                 using (JsonReader jr = new JsonTextReader(sw))
                 {
                     _drawing = s.Deserialize<Drawing>(jr);
-
+                    stsDocData.Text = string.Format("1 square = {1} {0}", _drawing.Unit, _drawing.ConversionRatio);
                     CreateNewSegment();
                 }
 
