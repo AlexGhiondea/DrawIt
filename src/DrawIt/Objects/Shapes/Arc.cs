@@ -79,10 +79,6 @@ namespace DrawIt
                     {
                         startDegrees = 0;
                     }
-                    else
-                    {
-                        startDegrees = 180;
-                    }
                 }
 
                 g.Transform = transformMatrix;
@@ -118,7 +114,17 @@ namespace DrawIt
 
         public override Container GetBounds()
         {
-            return base.GetBounds();
+            // we are going to be very conservative and assume that we need 2xRadius
+            var topLeft = new Entry(Math.Min(Start.X, End.X) - Radius, Math.Min(Start.Y, End.Y) - Radius);
+            var bottomRight = new Entry(Math.Max(Start.X, End.X) + Radius, Math.Max(Start.Y, End.Y) + Radius);
+
+            // TODO: these need to be adjusted for the angle of the line.
+
+            Container c = new Container();
+            c.TopLeft = topLeft;
+            c.BottomRight = bottomRight;
+
+            return c;
         }
     }
 }
