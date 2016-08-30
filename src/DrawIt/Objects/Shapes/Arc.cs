@@ -6,8 +6,8 @@ namespace DrawIt
 {
     public class Arc : Segment
     {
-        public int Radius;
-        public Arc(Entry start, Entry end, int radius, Color color, float width)
+        public double Radius;
+        public Arc(Entry start, Entry end, double radius, Color color, float width)
             : base(start, end, color, width)
         {
             this.Radius = radius;
@@ -115,8 +115,8 @@ namespace DrawIt
         public override Container GetBounds()
         {
             // we are going to be very conservative and assume that we need 2xRadius
-            var topLeft = new Entry(Math.Min(Start.X, End.X) - Radius, Math.Min(Start.Y, End.Y) - Radius);
-            var bottomRight = new Entry(Math.Max(Start.X, End.X) + Radius, Math.Max(Start.Y, End.Y) + Radius);
+            var topLeft = new Entry((int)(Math.Min(Start.X, End.X) - Radius), (int)(Math.Min(Start.Y, End.Y) - Radius));
+            var bottomRight = new Entry((int)(Math.Max(Start.X, End.X) + Radius), (int)(Math.Max(Start.Y, End.Y) + Radius));
 
             // TODO: these need to be adjusted for the angle of the line.
 

@@ -78,7 +78,7 @@ namespace DrawIt
                         if (previousEntry.X - x != 0 || previousEntry.Y - y != 0)
                         {
                             // create an arc from the 2 points and the specified width
-                            _drawing.AddShape(new Arc(previousEntry.Clone(), new Entry(x, y), (int)nupArcSize.Value, lblDrawColor.BackColor, (float)nupDrawWidth.Value));
+                            _drawing.AddShape(new Arc(previousEntry.Clone(), new Entry(x, y), (double)nupArcSize.Value / _drawing.ConversionRatio, lblDrawColor.BackColor, (float)nupDrawWidth.Value));
 
                             previousEntry = null;
                         }
