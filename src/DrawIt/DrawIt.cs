@@ -295,6 +295,10 @@ namespace DrawIt
                 {
                     _drawing = s.Deserialize<Drawing>(jr);
                     stsDocData.Text = string.Format("1 square = {1} {0}", _drawing.Unit, _drawing.ConversionRatio);
+                    //setup data bindings
+                    lblNupArcUnits.DataBindings.Clear();
+                    lblNupArcUnits.DataBindings.Add("Text", _drawing, "Unit", false, DataSourceUpdateMode.OnPropertyChanged);
+
                     CreateNewSegment();
                 }
 
