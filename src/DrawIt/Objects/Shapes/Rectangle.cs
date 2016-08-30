@@ -22,7 +22,7 @@ namespace DrawIt
             Pen p = new Pen(new SolidBrush(Color), Width);
 
             g.DrawRectangle(p, new System.Drawing.Rectangle(TopLeft.ToPoint(gridSize),
-                new Size(Math.Abs((TopLeft.X - BottomRight.X) * gridSize), Math.Abs( (TopLeft.Y - BottomRight.Y) * gridSize))));
+                new Size(Math.Abs((TopLeft.X - BottomRight.X) * gridSize), Math.Abs((TopLeft.Y - BottomRight.Y) * gridSize))));
         }
 
         public override bool ContainsPoint(int gridSize, Point p)

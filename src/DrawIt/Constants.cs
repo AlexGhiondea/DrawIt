@@ -21,6 +21,11 @@ namespace DrawIt
             public const string Color = "Draw_Color";
             public const string Width = "Draw_Width";
             public const string DrawObject = "Draw_DrawObject";
+
+            public static class Arc
+            {
+                public const string Radius = "Draw_Arc_Radius";
+            }
         }
         public static class Text
         {

@@ -59,6 +59,8 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grpDraw = new System.Windows.Forms.GroupBox();
+            this.lblNupArcUnits = new System.Windows.Forms.Label();
+            this.nupArcSize = new System.Windows.Forms.NumericUpDown();
             this.cboDrawElements = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -74,6 +76,7 @@
             this.lblMeasureColor = new System.Windows.Forms.Label();
             this.rtbMove = new System.Windows.Forms.RadioButton();
             this.rtbText = new System.Windows.Forms.RadioButton();
+            this.lblNupArcDescription = new System.Windows.Forms.Label();
             lblHorizontal = new System.Windows.Forms.Label();
             lblVertical = new System.Windows.Forms.Label();
             lblZoom = new System.Windows.Forms.Label();
@@ -82,6 +85,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nupDrawWidth)).BeginInit();
             this.mnuMainMenu.SuspendLayout();
             this.grpDraw.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupArcSize)).BeginInit();
             this.grpText.SuspendLayout();
             this.grpMeasure.SuspendLayout();
             this.SuspendLayout();
@@ -137,9 +141,9 @@
             // 
             // btnNewSegment
             // 
-            this.btnNewSegment.Location = new System.Drawing.Point(298, 17);
+            this.btnNewSegment.Location = new System.Drawing.Point(351, 17);
             this.btnNewSegment.Name = "btnNewSegment";
-            this.btnNewSegment.Size = new System.Drawing.Size(73, 23);
+            this.btnNewSegment.Size = new System.Drawing.Size(43, 23);
             this.btnNewSegment.TabIndex = 3;
             this.btnNewSegment.Text = "New";
             this.btnNewSegment.UseVisualStyleBackColor = true;
@@ -259,7 +263,7 @@
             // 
             // nupDrawWidth
             // 
-            this.nupDrawWidth.Location = new System.Drawing.Point(113, 17);
+            this.nupDrawWidth.Location = new System.Drawing.Point(108, 17);
             this.nupDrawWidth.Maximum = new decimal(new int[] {
             20,
             0,
@@ -393,6 +397,9 @@
             // 
             this.grpDraw.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpDraw.Controls.Add(this.lblNupArcDescription);
+            this.grpDraw.Controls.Add(this.lblNupArcUnits);
+            this.grpDraw.Controls.Add(this.nupArcSize);
             this.grpDraw.Controls.Add(this.cboDrawElements);
             this.grpDraw.Controls.Add(this.label2);
             this.grpDraw.Controls.Add(this.label1);
@@ -406,20 +413,48 @@
             this.grpDraw.TabIndex = 24;
             this.grpDraw.TabStop = false;
             // 
+            // lblNupArcUnits
+            // 
+            this.lblNupArcUnits.AutoSize = true;
+            this.lblNupArcUnits.Location = new System.Drawing.Point(317, 21);
+            this.lblNupArcUnits.Name = "lblNupArcUnits";
+            this.lblNupArcUnits.Size = new System.Drawing.Size(18, 15);
+            this.lblNupArcUnits.TabIndex = 25;
+            this.lblNupArcUnits.Text = "in";
+            this.lblNupArcUnits.Visible = false;
+            // 
+            // nupArcSize
+            // 
+            this.nupArcSize.Location = new System.Drawing.Point(281, 17);
+            this.nupArcSize.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nupArcSize.Name = "nupArcSize";
+            this.nupArcSize.Size = new System.Drawing.Size(36, 23);
+            this.nupArcSize.TabIndex = 24;
+            this.nupArcSize.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.nupArcSize.Visible = false;
+            // 
             // cboDrawElements
             // 
             this.cboDrawElements.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDrawElements.FormattingEnabled = true;
-            this.cboDrawElements.Location = new System.Drawing.Point(171, 17);
+            this.cboDrawElements.Location = new System.Drawing.Point(151, 17);
             this.cboDrawElements.Name = "cboDrawElements";
-            this.cboDrawElements.Size = new System.Drawing.Size(121, 23);
+            this.cboDrawElements.Size = new System.Drawing.Size(77, 23);
             this.cboDrawElements.TabIndex = 23;
             this.cboDrawElements.SelectedValueChanged += new System.EventHandler(this.cboDrawElements_SelectedValueChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(80, 21);
+            this.label2.Location = new System.Drawing.Point(75, 21);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(28, 15);
             this.label2.TabIndex = 22;
@@ -566,6 +601,16 @@
             this.rtbText.UseVisualStyleBackColor = true;
             this.rtbText.CheckedChanged += new System.EventHandler(this.rtbDraw_CheckedChanged);
             // 
+            // lblNupArcDescription
+            // 
+            this.lblNupArcDescription.AutoSize = true;
+            this.lblNupArcDescription.Location = new System.Drawing.Point(236, 21);
+            this.lblNupArcDescription.Name = "lblNupArcDescription";
+            this.lblNupArcDescription.Size = new System.Drawing.Size(45, 15);
+            this.lblNupArcDescription.TabIndex = 26;
+            this.lblNupArcDescription.Text = "Radius";
+            this.lblNupArcDescription.Visible = false;
+            // 
             // DrawIt
             // 
             this.AllowDrop = true;
@@ -582,9 +627,9 @@
             this.Controls.Add(this.rtbDraw);
             this.Controls.Add(this.drawSurface);
             this.Controls.Add(this.rtbMove);
-            this.Controls.Add(this.grpText);
             this.Controls.Add(this.grpDraw);
             this.Controls.Add(this.grpMeasure);
+            this.Controls.Add(this.grpText);
             this.KeyPreview = true;
             this.MainMenuStrip = this.mnuMainMenu;
             this.Name = "DrawIt";
@@ -602,6 +647,7 @@
             this.mnuMainMenu.PerformLayout();
             this.grpDraw.ResumeLayout(false);
             this.grpDraw.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nupArcSize)).EndInit();
             this.grpText.ResumeLayout(false);
             this.grpText.PerformLayout();
             this.grpMeasure.ResumeLayout(false);
@@ -656,6 +702,9 @@
         private System.Windows.Forms.Label lblTextColor;
         private System.Windows.Forms.Label lblFont;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown nupArcSize;
+        private System.Windows.Forms.Label lblNupArcUnits;
+        private System.Windows.Forms.Label lblNupArcDescription;
     }
 }
 
