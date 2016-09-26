@@ -5,4 +5,4 @@ Draw scale pictures with ease
 
 ## Download
 
-You can download the latest version from [here](https://1drv.ms/f/s!AnTMh2FpJASna1436ku-0D-5NiM)
+You can download the latest version from [here](https://github.com/AlexGhiondea/DrawIt/releases/download/v1.0.0.11/DrawIt_v1.0.0.11.zip)
