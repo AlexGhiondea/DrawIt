@@ -24,7 +24,7 @@ namespace DrawIt
 
             public static class Defaults
             {
-                public const int LogoHeight = 5;
+                public const int LogoHeight = 8;
                 public const float HeaderTextSize = 22f;
             }
         }

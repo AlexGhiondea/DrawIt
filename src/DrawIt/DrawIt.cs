@@ -365,7 +365,7 @@ namespace DrawIt
         private void DrawToFile(ImageFormat format, string fileName)
         {
             // add the logo
-            int LogoHeight = Configuration.GetSettingOrDefault(Constants.Application.Logo.Height, int.TryParse, Constants.Application.Defaults.LogoHeight);
+            int LogoHeight = Configuration.GetSettingOrDefault(Constants.Application.Logo.Height, int.TryParse, 0); // default to zero if it is not set.
             string LogoEncodedImage = Configuration.GetSetting(Constants.Application.Logo.Image) ?? string.Empty;
             int headerHeight = 0; // we don't assume we have a header
 
