@@ -53,7 +53,7 @@ namespace DrawIt
         {
             HeaderText = Configuration.GetSetting(Constants.Application.Header.Text) ?? string.Empty;
             EncodedLogo = Configuration.GetSetting(Constants.Application.Logo.Image) ?? string.Empty;
-            LogoHeight = Configuration.GetSettingOrDefault(Constants.Application.Logo.Height, int.TryParse, Constants.Application.Defaults.LogoHeight);
+            LogoHeight = Configuration.GetSettingOrDefault(Constants.Application.Logo.Height, int.TryParse, 0);
             Unit = Configuration.GetSetting(Constants.Document.MeasurementUnit) ?? Constants.Document.Defaults.MeasurementUnitDefault;
 
             // Header Text
