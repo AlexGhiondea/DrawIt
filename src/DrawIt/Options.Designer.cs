@@ -39,11 +39,11 @@
             this.btnSelectLogo = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.lblFont = new System.Windows.Forms.Label();
-            this.lblTextColor = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnRemoveHeader = new System.Windows.Forms.Button();
+            this.btnChangeFont = new System.Windows.Forms.Button();
+            this.btnColor = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupLogoHeight)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -56,7 +56,7 @@
             this.btnSave.Location = new System.Drawing.Point(465, 262);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 0;
+            this.btnSave.TabIndex = 6;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
@@ -84,7 +84,7 @@
             this.btnCancel.Location = new System.Drawing.Point(546, 262);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 5;
+            this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -121,7 +121,7 @@
             this.btnRemoveLogo.Location = new System.Drawing.Point(105, 19);
             this.btnRemoveLogo.Name = "btnRemoveLogo";
             this.btnRemoveLogo.Size = new System.Drawing.Size(93, 23);
-            this.btnRemoveLogo.TabIndex = 8;
+            this.btnRemoveLogo.TabIndex = 2;
             this.btnRemoveLogo.Text = "Remove logo";
             this.btnRemoveLogo.UseVisualStyleBackColor = true;
             this.btnRemoveLogo.Click += new System.EventHandler(this.btnRemoveLogo_Click);
@@ -131,7 +131,7 @@
             this.btnSelectLogo.Location = new System.Drawing.Point(6, 19);
             this.btnSelectLogo.Name = "btnSelectLogo";
             this.btnSelectLogo.Size = new System.Drawing.Size(93, 23);
-            this.btnSelectLogo.TabIndex = 9;
+            this.btnSelectLogo.TabIndex = 1;
             this.btnSelectLogo.Text = "Select logo";
             this.btnSelectLogo.UseVisualStyleBackColor = true;
             this.btnSelectLogo.Click += new System.EventHandler(this.btnSelectLogo_Click);
@@ -139,47 +139,28 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(11, 76);
+            this.label4.Location = new System.Drawing.Point(6, 77);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(145, 13);
+            this.label4.Size = new System.Drawing.Size(63, 13);
             this.label4.TabIndex = 10;
-            this.label4.Text = "Header font (click to change)";
+            this.label4.Text = "Header font";
             // 
             // lblFont
             // 
             this.lblFont.AutoSize = true;
-            this.lblFont.Location = new System.Drawing.Point(54, 102);
+            this.lblFont.Location = new System.Drawing.Point(27, 128);
             this.lblFont.Name = "lblFont";
-            this.lblFont.Size = new System.Drawing.Size(102, 13);
+            this.lblFont.Size = new System.Drawing.Size(42, 13);
             this.lblFont.TabIndex = 26;
-            this.lblFont.Text = "Calibri, 9.75 Regular";
-            this.lblFont.Click += new System.EventHandler(this.lblFont_Click);
-            // 
-            // lblTextColor
-            // 
-            this.lblTextColor.BackColor = System.Drawing.Color.Black;
-            this.lblTextColor.Location = new System.Drawing.Point(43, 148);
-            this.lblTextColor.Name = "lblTextColor";
-            this.lblTextColor.Size = new System.Drawing.Size(53, 20);
-            this.lblTextColor.TabIndex = 27;
-            this.lblTextColor.Click += new System.EventHandler(this.lblTextColor_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 148);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 13);
-            this.label5.TabIndex = 28;
-            this.label5.Text = "Color";
+            this.lblFont.Text = "Sample";
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnColor);
+            this.groupBox1.Controls.Add(this.btnChangeFont);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtHeaderText);
-            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.lblTextColor);
             this.groupBox1.Controls.Add(this.lblFont);
             this.groupBox1.Location = new System.Drawing.Point(319, 12);
             this.groupBox1.Name = "groupBox1";
@@ -207,10 +188,30 @@
             this.btnRemoveHeader.Location = new System.Drawing.Point(13, 262);
             this.btnRemoveHeader.Name = "btnRemoveHeader";
             this.btnRemoveHeader.Size = new System.Drawing.Size(109, 23);
-            this.btnRemoveHeader.TabIndex = 31;
+            this.btnRemoveHeader.TabIndex = 8;
             this.btnRemoveHeader.Text = "Remove header";
             this.btnRemoveHeader.UseVisualStyleBackColor = true;
             this.btnRemoveHeader.Click += new System.EventHandler(this.btnRemoveHeader_Click);
+            // 
+            // btnChangeFont
+            // 
+            this.btnChangeFont.Location = new System.Drawing.Point(9, 93);
+            this.btnChangeFont.Name = "btnChangeFont";
+            this.btnChangeFont.Size = new System.Drawing.Size(86, 23);
+            this.btnChangeFont.TabIndex = 4;
+            this.btnChangeFont.Text = "Change font";
+            this.btnChangeFont.UseVisualStyleBackColor = true;
+            this.btnChangeFont.Click += new System.EventHandler(this.btnChangeFont_Click);
+            // 
+            // btnColor
+            // 
+            this.btnColor.Location = new System.Drawing.Point(101, 93);
+            this.btnColor.Name = "btnColor";
+            this.btnColor.Size = new System.Drawing.Size(86, 23);
+            this.btnColor.TabIndex = 5;
+            this.btnColor.Text = "Change color";
+            this.btnColor.UseVisualStyleBackColor = true;
+            this.btnColor.Click += new System.EventHandler(this.btnColor_Click);
             // 
             // Options
             // 
@@ -251,10 +252,10 @@
         private System.Windows.Forms.Button btnSelectLogo;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblFont;
-        private System.Windows.Forms.Label lblTextColor;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnRemoveHeader;
+        private System.Windows.Forms.Button btnChangeFont;
+        private System.Windows.Forms.Button btnColor;
     }
 }
