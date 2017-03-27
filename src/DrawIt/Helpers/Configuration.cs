@@ -6,9 +6,12 @@ namespace DrawIt
 
     public static class Configuration
     {
+        private static System.Configuration.Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
         public static string GetSetting(string key)
         {
-            return ConfigurationManager.AppSettings[key];
+            //var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            return configuration.AppSettings.Settings[key]?.Value;
         }
 
         public static T GetSettingOrDefault<T>(string key, TryValueConvertor<T> convertor, T defaultValue)
@@ -21,10 +24,14 @@ namespace DrawIt
             return value;
         }
 
-        public static void SaveSetting(string key, string value)
+        public static void SetSettingIfNotEmpty(string key, string value)
         {
-            var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            if (!string.IsNullOrWhiteSpace(value))
+                SetSetting(key, value);
+        }
 
+        public static void SetSetting(string key, string value)
+        {
             if (configuration.AppSettings.Settings[key] == null)
             {
                 configuration.AppSettings.Settings.Add(key, value);
@@ -33,6 +40,10 @@ namespace DrawIt
             {
                 configuration.AppSettings.Settings[key].Value = value;
             }
+        }
+
+        public static void SaveToDisk()
+        {
             configuration.Save(ConfigurationSaveMode.Full, true);
         }
     }

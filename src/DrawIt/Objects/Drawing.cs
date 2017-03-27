@@ -122,7 +122,7 @@ namespace DrawIt
             TranslateSegments(Shapes, x, y);
         }
 
-        internal Size GetContainingRectangle(int gridSize, out Entry startPoint)
+        internal Size GetContainingRectangleForSaving(int gridSize, out Entry startPoint, int additionalHeight)
         {
             if (Shapes.Count == 0)
             {
@@ -165,6 +165,9 @@ namespace DrawIt
             // for good measure, add 10% more grid sizes.
             maxWidth = (int)(maxWidth * 1.1);
             maxHeight = (int)(maxHeight * 1.1);
+
+            // If we have specified a header, make room for it
+            maxHeight += additionalHeight;
 
             System.Diagnostics.Debug.WriteLine("Container size: w:{0},h:{1}", maxWidth, maxHeight);
 

@@ -22,6 +22,7 @@ namespace DrawIt
 
             if (previousDrawing == null)
             {
+                //TODO: Turn these into constants
                 Ratio = 0.5;
                 Unit = "ft";
             }
@@ -44,10 +45,12 @@ namespace DrawIt
         private void btnOk_Click(object sender, EventArgs e)
         {
             // persist the value
-            Configuration.SaveSetting(Constants.Document.MeasurementUnit, Unit);
-            Configuration.SaveSetting(Constants.Document.ConversionRate, Ratio.ToString());
+            Configuration.SetSetting(Constants.Document.MeasurementUnit, Unit);
+            Configuration.SetSetting(Constants.Document.ConversionRate, Ratio.ToString());
 
+            // we are going with a header height of 0 if the value is not specified.
             Document = new Drawing(Ratio, Unit);
+
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 

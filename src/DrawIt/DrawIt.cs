@@ -364,15 +364,21 @@ namespace DrawIt
 
         private void DrawToFile(ImageFormat format, string fileName)
         {
+            // add the logo
+            int LogoHeight = Configuration.GetSettingOrDefault(Constants.Application.Logo.Height, int.TryParse, Constants.Application.Defaults.LogoHeight);
+            string LogoEncodedImage = Configuration.GetSetting(Constants.Application.Logo.Image) ?? string.Empty;
+            int headerHeight = 0; // we don't assume we have a header
+
+            if (LogoHeight > 0)
+            {
+                headerHeight = LogoHeight + 2; //we add 2 to provide space below and above for the logo.
+            }
+
             // I want to get the largest between the size of the screen and the size that needs to be drawn.
 
             Entry startPoint;
-            Size requiredSize = _drawing.GetContainingRectangle(gridSize, out startPoint);
-            Size saveSize = new Size(
-                Math.Max(requiredSize.Width, drawSurface.Width),
-                Math.Max(requiredSize.Height, drawSurface.Height));
+            var saveRectangle = ComputeSaveRectangle(headerHeight, out startPoint);
 
-            var saveRectangle = new System.Drawing.Rectangle(new Point(0, 0), saveSize);
             using (Bitmap bmp = new Bitmap(saveRectangle.Width, saveRectangle.Height))
             using (Graphics g = Graphics.FromImage(bmp))
             {
@@ -388,11 +394,96 @@ namespace DrawIt
                 // we need to translate the drawing if we have entries that are hidden
                 Drawing translatedDrawing = _drawing.Clone();
                 translatedDrawing.TranslateDrawing(-startPoint.X, -startPoint.Y);
-                translatedDrawing.Draw(gridSize, g);
 
+                // If we have a header, add it
+                if (headerHeight > 0)
+                {
+                    //translate everything so that we have space for the logo
+                    translatedDrawing.TranslateDrawing(0, headerHeight);
+
+                    // white out the place for the logo
+                    g.FillRectangle(Brushes.White, 0, 0, bmp.Width, headerHeight * gridSize);
+
+                    AddLogoShapesToDocument(LogoHeight, LogoEncodedImage, headerHeight, saveRectangle, translatedDrawing, g);
+                }
+
+                translatedDrawing.Draw(gridSize, g);
                 //drawSurface.DrawToBitmap(bmp, saveRectangle);
                 bmp.Save(fileName, format);
             }
+        }
+
+        private void AddLogoShapesToDocument(int LogoHeight, string LogoEncodedImage, int headerHeight, System.Drawing.Rectangle saveRectangle, Drawing translatedDrawing, Graphics g)
+        {
+            // add a line between the header and the actual drawing.
+            translatedDrawing.AddShape(new Line(new Entry(0, headerHeight), new Entry(saveRectangle.Width / gridSize, headerHeight), Color.DarkGray, 2));
+
+            if (!string.IsNullOrEmpty(LogoEncodedImage))
+            {
+                translatedDrawing.AddShape(new LogoImage(new Entry(1, 1), new Entry(1, 1), LogoEncodedImage, LogoHeight));
+            }
+
+            string headerText = Configuration.GetSetting(Constants.Application.Header.Text) ?? string.Empty;
+
+            if (!string.IsNullOrEmpty(headerText))
+            {
+                Font headerFont = FontHelpers.GetHeaderFont();
+                Color color = Color.FromArgb(Configuration.GetSettingOrDefault<int>(Constants.Application.Header.TextColor, int.TryParse, Constants.Measurement.Defaults.Black));
+                //sadly, we need to create the image here as well, to see how big it is...
+                // consider moving this in the logoimage
+
+                int newWidth = GetLogoWidth(LogoHeight, LogoEncodedImage);
+
+                // the size of the remaining space is:
+                int remainingWidth = saveRectangle.Width - newWidth;
+
+                var stringSize = g.MeasureString(headerText, headerFont);
+
+                //compute the top corner for the text.
+                float x = ((newWidth / gridSize) * gridSize) + (remainingWidth - stringSize.Width) / 2;
+                float y = ((headerHeight * gridSize) - stringSize.Height) / 2;
+
+                var top = new Point((int)x, (int)y).ToEntry(gridSize);
+                var bottom = new Entry(top.X + (int)(stringSize.Width / gridSize), top.Y + (int)(stringSize.Height / gridSize));
+
+                translatedDrawing.AddShape(new Text(top, bottom, headerText, headerFont.Size, headerFont.FontFamily.Name, headerFont.Style, color));
+            }
+        }
+
+        private int GetLogoWidth(int LogoHeight, string LogoEncodedImage)
+        {
+            if (string.IsNullOrEmpty(LogoEncodedImage))
+                return 0;
+
+            int newWidth;
+            using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(LogoEncodedImage)))
+            using (Bitmap bmp = new Bitmap(ms))
+            {
+                int allowedHeight = LogoHeight * gridSize;
+                double scaleFactor = (double)bmp.Height / (double)allowedHeight;
+
+                newWidth = (int)(bmp.Width / scaleFactor);
+            }
+
+            return newWidth;
+        }
+
+        private System.Drawing.Rectangle ComputeSaveRectangle(int headerHeight, out Entry startPoint)
+        {
+            Size requiredSize = _drawing.GetContainingRectangleForSaving(gridSize, out startPoint, headerHeight);
+
+            // the saveSize is the max between the size shown on the screen and the size of the rectangle containing the drawing.
+            Size saveSize = new Size(
+                Math.Max(requiredSize.Width, drawSurface.Width),
+                Math.Max(requiredSize.Height, drawSurface.Height));
+
+            // we want to end at a grid boundary -- this makes it look a bit nicer.
+            saveSize.Height = (saveSize.Height / gridSize) * gridSize;
+            saveSize.Width = (saveSize.Width / gridSize) * gridSize;
+
+            // create the saveRectangle
+            var saveRectangle = new System.Drawing.Rectangle(new Point(0, 0), saveSize);
+            return saveRectangle;
         }
 
         private void DrawIt_DragDrop(object sender, DragEventArgs e)
@@ -435,7 +526,6 @@ namespace DrawIt
                 lblNupArcUnits.Visible = true;
                 lblNupArcDescription.Visible = true;
             }
-
         }
 
         private void DrawIt_FormClosing(object sender, FormClosingEventArgs e)
@@ -454,20 +544,21 @@ namespace DrawIt
 
         private void SaveUserPreferences()
         {
-            Configuration.SaveSetting(Constants.Measurement.BelowOrAbove, cboHorizontalAlignment.SelectedItem.ToString());
-            Configuration.SaveSetting(Constants.Measurement.LeftOrRight, cboVerticalAlignment.SelectedItem.ToString());
-            Configuration.SaveSetting(Constants.Measurement.Color, lblMeasureColor.BackColor.ToArgb().ToString());
+            Configuration.SetSetting(Constants.Measurement.BelowOrAbove, cboHorizontalAlignment.SelectedItem.ToString());
+            Configuration.SetSetting(Constants.Measurement.LeftOrRight, cboVerticalAlignment.SelectedItem.ToString());
+            Configuration.SetSetting(Constants.Measurement.Color, lblMeasureColor.BackColor.ToArgb().ToString());
 
-            Configuration.SaveSetting(Constants.Draw.Color, lblDrawColor.BackColor.ToArgb().ToString());
-            Configuration.SaveSetting(Constants.Draw.Width, nupDrawWidth.Value.ToString());
-            Configuration.SaveSetting(Constants.Draw.DrawObject, cboDrawElements.SelectedItem.ToString());
+            Configuration.SetSetting(Constants.Draw.Color, lblDrawColor.BackColor.ToArgb().ToString());
+            Configuration.SetSetting(Constants.Draw.Width, nupDrawWidth.Value.ToString());
+            Configuration.SetSetting(Constants.Draw.DrawObject, cboDrawElements.SelectedItem.ToString());
 
-            Configuration.SaveSetting(Constants.Text.Color, lblTextColor.BackColor.ToArgb().ToString());
-            Configuration.SaveSetting(Constants.Text.FontName, _textFont.Name);
-            Configuration.SaveSetting(Constants.Text.FontSize, _textFont.Size.ToString());
-            Configuration.SaveSetting(Constants.Text.FontStyle, _textFont.Style.ToString());
+            Configuration.SetSetting(Constants.Text.Color, lblTextColor.BackColor.ToArgb().ToString());
+            Configuration.SetSetting(Constants.Text.FontName, _textFont.Name);
+            Configuration.SetSetting(Constants.Text.FontSize, _textFont.Size.ToString());
+            Configuration.SetSetting(Constants.Text.FontStyle, _textFont.Style.ToString());
 
-            Configuration.SaveSetting(Constants.Draw.Arc.Radius, nupArcSize.Value.ToString());
+            Configuration.SetSetting(Constants.Draw.Arc.Radius, nupArcSize.Value.ToString());
+            Configuration.SaveToDisk();
         }
 
         private void LoadUserPreferences()
@@ -475,23 +566,23 @@ namespace DrawIt
             // Measure
             cboHorizontalAlignment.SelectedItem = Configuration.GetSettingOrDefault<MeasurementLocation>(Constants.Measurement.BelowOrAbove, Enum.TryParse<MeasurementLocation>, MeasurementLocation.Below);
             cboVerticalAlignment.SelectedItem = Configuration.GetSettingOrDefault<MeasurementLocation>(Constants.Measurement.LeftOrRight, Enum.TryParse<MeasurementLocation>, MeasurementLocation.Left);
-            lblMeasureColor.BackColor = Color.FromArgb(Configuration.GetSettingOrDefault<int>(Constants.Measurement.Color, int.TryParse, unchecked((int)0xff008000))); //  green
+            lblMeasureColor.BackColor = Color.FromArgb(Configuration.GetSettingOrDefault<int>(Constants.Measurement.Color, int.TryParse, Constants.Measurement.Defaults.Green));
 
             // Draw
             cboDrawElements.SelectedItem = Configuration.GetSettingOrDefault<DrawObject>(Constants.Draw.DrawObject, Enum.TryParse<DrawObject>, DrawObject.Line);
-            lblDrawColor.BackColor = Color.FromArgb(Configuration.GetSettingOrDefault<int>(Constants.Draw.Color, int.TryParse, unchecked((int)0xff000000))); // black
-            nupDrawWidth.Value = Configuration.GetSettingOrDefault<int>(Constants.Draw.Width, int.TryParse, 2);
+            lblDrawColor.BackColor = Color.FromArgb(Configuration.GetSettingOrDefault<int>(Constants.Draw.Color, int.TryParse, Constants.Measurement.Defaults.Black));
+            nupDrawWidth.Value = Configuration.GetSettingOrDefault<int>(Constants.Draw.Width, int.TryParse, Constants.Measurement.Defaults.DrawWidth);
 
             // Text
-            lblTextColor.BackColor = Color.FromArgb(Configuration.GetSettingOrDefault<int>(Constants.Text.Color, int.TryParse, unchecked((int)0xff000000))); // black
-            float fontSize = Configuration.GetSettingOrDefault<float>(Constants.Text.FontSize, float.TryParse, 10f);
-            string fontName = Configuration.GetSetting(Constants.Text.FontName) ?? "Calibri";
+            lblTextColor.BackColor = Color.FromArgb(Configuration.GetSettingOrDefault<int>(Constants.Text.Color, int.TryParse, Constants.Measurement.Defaults.Black));
+            float fontSize = Configuration.GetSettingOrDefault<float>(Constants.Text.FontSize, float.TryParse, Constants.Measurement.Defaults.FontSize);
+            string fontName = Configuration.GetSetting(Constants.Text.FontName) ?? Constants.Measurement.Defaults.FontFamily;
             FontStyle fontStyle = Configuration.GetSettingOrDefault<FontStyle>(Constants.Text.FontStyle, Enum.TryParse<FontStyle>, FontStyle.Regular);
             _textFont = new Font(fontName, fontSize, fontStyle);
             lblFont.Text = string.Format("{0}, {1} {2}", _textFont.Name, _textFont.Size, _textFont.Style);
 
             // Arc
-            nupArcSize.Value = Configuration.GetSettingOrDefault<int>(Constants.Draw.Arc.Radius, int.TryParse, 4);
+            nupArcSize.Value = Configuration.GetSettingOrDefault<int>(Constants.Draw.Arc.Radius, int.TryParse, Constants.Measurement.Defaults.ArcSize);
         }
 
         private Font _textFont = null;
@@ -505,6 +596,12 @@ namespace DrawIt
                 _textFont = fd.Font;
                 lblFont.Text = string.Format("{0}, {1} {2}", _textFont.Name, _textFont.Size, _textFont.Style);
             }
+        }
+
+        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Options opt = new Options();
+            opt.ShowDialog(this);
         }
     }
 }
