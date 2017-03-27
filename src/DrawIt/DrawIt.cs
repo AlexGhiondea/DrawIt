@@ -246,7 +246,7 @@ namespace DrawIt
             LoadUserPreferences();
 
             // Read the configuration defaults from the app.config.
-            string unit = Configuration.GetSetting(Constants.Document.MeasurementUnit) ?? "in";
+            string unit = Configuration.GetSetting(Constants.Document.MeasurementUnit) ?? "square foot";
             float conversionRate = Configuration.GetSettingOrDefault<float>(Constants.Document.ConversionRate, float.TryParse, 1);
 
             CreateNewDocument(new Drawing(conversionRate, unit));
