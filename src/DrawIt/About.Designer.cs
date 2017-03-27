@@ -33,6 +33,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lnkEmail = new System.Windows.Forms.LinkLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblAppVersion = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,6 +91,14 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
+            // lblAppVersion
+            // 
+            this.lblAppVersion.AutoSize = true;
+            this.lblAppVersion.Location = new System.Drawing.Point(318, 317);
+            this.lblAppVersion.Name = "lblAppVersion";
+            this.lblAppVersion.Size = new System.Drawing.Size(0, 13);
+            this.lblAppVersion.TabIndex = 6;
+            // 
             // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -97,6 +106,7 @@
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(704, 333);
             this.ControlBox = false;
+            this.Controls.Add(this.lblAppVersion);
             this.Controls.Add(this.lnkEmail);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -119,5 +129,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.LinkLabel lnkEmail;
+        private System.Windows.Forms.Label lblAppVersion;
     }
 }
