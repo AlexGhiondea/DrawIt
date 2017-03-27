@@ -42,7 +42,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(9, 15);
+            label1.Location = new System.Drawing.Point(12, 15);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(26, 13);
             label1.TabIndex = 20;
@@ -51,7 +51,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(81, 15);
+            label2.Location = new System.Drawing.Point(12, 41);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(57, 13);
             label2.TabIndex = 21;
@@ -59,7 +59,7 @@
             // 
             // txtRatio
             // 
-            this.txtRatio.Location = new System.Drawing.Point(144, 12);
+            this.txtRatio.Location = new System.Drawing.Point(75, 37);
             this.txtRatio.Name = "txtRatio";
             this.txtRatio.Size = new System.Drawing.Size(28, 20);
             this.txtRatio.TabIndex = 19;
@@ -70,14 +70,14 @@
             // 
             this.txtUnit.Location = new System.Drawing.Point(41, 12);
             this.txtUnit.Name = "txtUnit";
-            this.txtUnit.Size = new System.Drawing.Size(28, 20);
+            this.txtUnit.Size = new System.Drawing.Size(160, 20);
             this.txtUnit.TabIndex = 18;
             this.txtUnit.Text = "ft";
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(126, 47);
+            this.btnCancel.Location = new System.Drawing.Point(126, 68);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 22;
@@ -87,7 +87,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(32, 47);
+            this.btnOk.Location = new System.Drawing.Point(32, 68);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 23;
@@ -98,7 +98,7 @@
             // lblUnit
             // 
             this.lblUnit.AutoSize = true;
-            this.lblUnit.Location = new System.Drawing.Point(178, 15);
+            this.lblUnit.Location = new System.Drawing.Point(109, 41);
             this.lblUnit.Name = "lblUnit";
             this.lblUnit.Size = new System.Drawing.Size(0, 13);
             this.lblUnit.TabIndex = 24;
@@ -109,7 +109,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(236, 81);
+            this.ClientSize = new System.Drawing.Size(236, 101);
             this.ControlBox = false;
             this.Controls.Add(this.lblUnit);
             this.Controls.Add(this.btnOk);

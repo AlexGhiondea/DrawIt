@@ -56,9 +56,12 @@
             this.jpegToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bmpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grpDraw = new System.Windows.Forms.GroupBox();
+            this.lblNupArcDescription = new System.Windows.Forms.Label();
             this.lblNupArcUnits = new System.Windows.Forms.Label();
             this.nupArcSize = new System.Windows.Forms.NumericUpDown();
             this.cboDrawElements = new System.Windows.Forms.ComboBox();
@@ -76,7 +79,6 @@
             this.lblMeasureColor = new System.Windows.Forms.Label();
             this.rtbMove = new System.Windows.Forms.RadioButton();
             this.rtbText = new System.Windows.Forms.RadioButton();
-            this.lblNupArcDescription = new System.Windows.Forms.Label();
             lblHorizontal = new System.Windows.Forms.Label();
             lblVertical = new System.Windows.Forms.Label();
             lblZoom = new System.Windows.Forms.Label();
@@ -288,6 +290,7 @@
             this.mnuMainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.exportToolStripMenuItem,
+            this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.mnuMainMenu.Location = new System.Drawing.Point(0, 0);
             this.mnuMainMenu.Name = "mnuMainMenu";
@@ -377,6 +380,21 @@
             this.pngToolStripMenuItem.Text = "Png";
             this.pngToolStripMenuItem.Click += new System.EventHandler(this.pngToolStripMenuItem_Click);
             // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -412,6 +430,16 @@
             this.grpDraw.Size = new System.Drawing.Size(406, 49);
             this.grpDraw.TabIndex = 24;
             this.grpDraw.TabStop = false;
+            // 
+            // lblNupArcDescription
+            // 
+            this.lblNupArcDescription.AutoSize = true;
+            this.lblNupArcDescription.Location = new System.Drawing.Point(236, 21);
+            this.lblNupArcDescription.Name = "lblNupArcDescription";
+            this.lblNupArcDescription.Size = new System.Drawing.Size(45, 15);
+            this.lblNupArcDescription.TabIndex = 26;
+            this.lblNupArcDescription.Text = "Radius";
+            this.lblNupArcDescription.Visible = false;
             // 
             // lblNupArcUnits
             // 
@@ -601,16 +629,6 @@
             this.rtbText.UseVisualStyleBackColor = true;
             this.rtbText.CheckedChanged += new System.EventHandler(this.rtbDraw_CheckedChanged);
             // 
-            // lblNupArcDescription
-            // 
-            this.lblNupArcDescription.AutoSize = true;
-            this.lblNupArcDescription.Location = new System.Drawing.Point(236, 21);
-            this.lblNupArcDescription.Name = "lblNupArcDescription";
-            this.lblNupArcDescription.Size = new System.Drawing.Size(45, 15);
-            this.lblNupArcDescription.TabIndex = 26;
-            this.lblNupArcDescription.Text = "Radius";
-            this.lblNupArcDescription.Visible = false;
-            // 
             // DrawIt
             // 
             this.AllowDrop = true;
@@ -627,9 +645,9 @@
             this.Controls.Add(this.rtbDraw);
             this.Controls.Add(this.drawSurface);
             this.Controls.Add(this.rtbMove);
+            this.Controls.Add(this.grpText);
             this.Controls.Add(this.grpDraw);
             this.Controls.Add(this.grpMeasure);
-            this.Controls.Add(this.grpText);
             this.KeyPreview = true;
             this.MainMenuStrip = this.mnuMainMenu;
             this.Name = "DrawIt";
@@ -705,6 +723,8 @@
         private System.Windows.Forms.NumericUpDown nupArcSize;
         private System.Windows.Forms.Label lblNupArcUnits;
         private System.Windows.Forms.Label lblNupArcDescription;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
     }
 }
 

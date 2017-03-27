@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Deployment.Application;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -16,6 +17,11 @@ namespace DrawIt
         public About()
         {
             InitializeComponent();
+
+            if (ApplicationDeployment.IsNetworkDeployed)
+                lblAppVersion.Text = $"Version {ApplicationDeployment.CurrentDeployment.CurrentVersion}";
+            else
+                lblAppVersion.Text = "Version <local>";
         }
 
         private void btnClose_Click(object sender, EventArgs e)
