@@ -24,13 +24,14 @@ namespace DrawIt
             {
                 //TODO: Turn these into constants
                 Ratio = 0.5;
-                Unit = "ft";
             }
             else
             {
                 Ratio = previousDrawing.ConversionRatio;
-                Unit = previousDrawing.Unit;
             }
+
+            Unit = Configuration.GetSetting(Constants.Document.MeasurementUnit) ?? Constants.Document.Defaults.MeasurementUnitDefault;
+     
 
             txtRatio.DataBindings.Add("Text", this, "Ratio", false, DataSourceUpdateMode.OnValidation);
             txtUnit.DataBindings.Add("Text", this, "Unit", false, DataSourceUpdateMode.OnPropertyChanged);

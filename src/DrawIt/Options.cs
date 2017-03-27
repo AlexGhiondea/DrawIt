@@ -15,6 +15,7 @@ namespace DrawIt
     {
         public string HeaderText { get; set; }
         public int LogoHeight { get; set; }
+        public string Unit { get; set; }
 
         private string EncodedLogo;
         private Font HeaderFont;
@@ -41,6 +42,8 @@ namespace DrawIt
             Configuration.SetSetting(Constants.Application.Header.FontSize, HeaderFont.Size.ToString());
             Configuration.SetSetting(Constants.Application.Header.FontStyle, HeaderFont.Style.ToString());
 
+            Configuration.SetSetting(Constants.Document.MeasurementUnit, Unit);
+
             Configuration.SaveToDisk();
         }
 
@@ -51,6 +54,7 @@ namespace DrawIt
             HeaderText = Configuration.GetSetting(Constants.Application.Header.Text) ?? string.Empty;
             EncodedLogo = Configuration.GetSetting(Constants.Application.Logo.Image) ?? string.Empty;
             LogoHeight = Configuration.GetSettingOrDefault(Constants.Application.Logo.Height, int.TryParse, Constants.Application.Defaults.LogoHeight);
+            Unit = Configuration.GetSetting(Constants.Document.MeasurementUnit) ?? Constants.Document.Defaults.MeasurementUnitDefault;
 
             // Header Text
             _backColor = Color.FromArgb(Configuration.GetSettingOrDefault<int>(Constants.Application.Header.TextColor, int.TryParse, Constants.Measurement.Defaults.Black));
@@ -62,6 +66,8 @@ namespace DrawIt
 
             txtHeaderText.DataBindings.Add("Text", this, "HeaderText");
             nupLogoHeight.DataBindings.Add("Value", this, "LogoHeight");
+            txtUnit.DataBindings.Add("Text", this, "Unit");
+
             if (!string.IsNullOrEmpty(EncodedLogo))
                 LoadImageFromEncodedString(Convert.FromBase64String(EncodedLogo));
         }
@@ -121,7 +127,7 @@ namespace DrawIt
 
         private void lblTextColor_Click(object sender, EventArgs e)
         {
-  
+
         }
 
         private void btnRemoveHeader_Click(object sender, EventArgs e)

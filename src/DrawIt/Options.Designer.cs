@@ -44,16 +44,20 @@
             this.btnRemoveHeader = new System.Windows.Forms.Button();
             this.btnChangeFont = new System.Windows.Forms.Button();
             this.btnColor = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtUnit = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupLogoHeight)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(465, 262);
+            this.btnSave.Location = new System.Drawing.Point(464, 295);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 6;
@@ -64,7 +68,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 25);
+            this.label1.Location = new System.Drawing.Point(9, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(62, 13);
             this.label1.TabIndex = 1;
@@ -81,7 +85,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(546, 262);
+            this.btnCancel.Location = new System.Drawing.Point(546, 295);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 7;
@@ -139,7 +143,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 77);
+            this.label4.Location = new System.Drawing.Point(9, 77);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 13);
             this.label4.TabIndex = 10;
@@ -171,6 +175,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnRemoveHeader);
             this.groupBox2.Controls.Add(this.btnSelectLogo);
             this.groupBox2.Controls.Add(this.pbLogo);
             this.groupBox2.Controls.Add(this.btnRemoveLogo);
@@ -185,7 +190,7 @@
             // 
             // btnRemoveHeader
             // 
-            this.btnRemoveHeader.Location = new System.Drawing.Point(13, 262);
+            this.btnRemoveHeader.Location = new System.Drawing.Point(184, 204);
             this.btnRemoveHeader.Name = "btnRemoveHeader";
             this.btnRemoveHeader.Size = new System.Drawing.Size(109, 23);
             this.btnRemoveHeader.TabIndex = 8;
@@ -213,13 +218,40 @@
             this.btnColor.UseVisualStyleBackColor = true;
             this.btnColor.Click += new System.EventHandler(this.btnColor_Click);
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.txtUnit);
+            this.groupBox3.Location = new System.Drawing.Point(12, 258);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(301, 60);
+            this.groupBox3.TabIndex = 31;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "General settings";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(8, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(60, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "1 square = ";
+            // 
+            // txtUnit
+            // 
+            this.txtUnit.Location = new System.Drawing.Point(76, 22);
+            this.txtUnit.Name = "txtUnit";
+            this.txtUnit.Size = new System.Drawing.Size(217, 20);
+            this.txtUnit.TabIndex = 5;
+            // 
             // Options
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(633, 297);
-            this.Controls.Add(this.btnRemoveHeader);
+            this.ClientSize = new System.Drawing.Size(633, 325);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancel);
@@ -235,6 +267,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -257,5 +291,8 @@
         private System.Windows.Forms.Button btnRemoveHeader;
         private System.Windows.Forms.Button btnChangeFont;
         private System.Windows.Forms.Button btnColor;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtUnit;
     }
 }

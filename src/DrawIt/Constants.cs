@@ -33,6 +33,11 @@ namespace DrawIt
         {
             public const string MeasurementUnit = "MeasurementUnit";
             public const string ConversionRate = "ConversionRate";
+
+            public static class Defaults
+            {
+                public const string MeasurementUnitDefault = "square foot";
+            }
         }
 
         public static class Measurement
