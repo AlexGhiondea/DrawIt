@@ -313,6 +313,7 @@ namespace DrawIt
         private void PickColor(Label sender)
         {
             ColorDialog cd = new ColorDialog();
+            cd.Color = sender.BackColor;
             if (cd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 sender.BackColor = cd.Color;
