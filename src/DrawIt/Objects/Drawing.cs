@@ -102,13 +102,7 @@ namespace DrawIt
         {
             try
             {
-                var s = JsonSerializer.CreateDefault();
-                s.TypeNameHandling = TypeNameHandling.All;
-                using (StreamWriter sw = new StreamWriter(fileName))
-                using (JsonWriter jw = new JsonTextWriter(sw))
-                {
-                    s.Serialize(jw, this);
-                }
+                FileHelpers.SaveObjectToDisk(fileName, this);
                 _hasChanges = false;
             }
             catch

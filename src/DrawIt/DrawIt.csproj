@@ -51,10 +51,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>C26A00EE47C87ED2C3A46B80914B5D81A7339600</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>8088BCF1CE016D4025C469F89598E1A59E92B2BF</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>DrawIt_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>DrawIt_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Helpers\DrawFacts.cs" />
     <Compile Include="Helpers\Configuration.cs" />
+    <Compile Include="Helpers\FileHelpers.cs" />
     <Compile Include="Helpers\FontHelpers.cs" />
     <Compile Include="Helpers\PointExtensions.cs" />
     <Compile Include="Objects\Drawing.cs" />
@@ -164,6 +165,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="DrawIt_1_TemporaryKey.pfx" />
     <None Include="DrawIt_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
