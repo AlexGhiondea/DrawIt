@@ -1,4 +1,8 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Xml.Serialization;
 
 namespace DrawIt
 {
@@ -6,12 +10,68 @@ namespace DrawIt
 
     public static class Configuration
     {
-        private static System.Configuration.Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+        private static Dictionary<string, string> s_settings = LoadSettings();
+
+        private static Dictionary<string, string> LoadSettings()
+        {
+            var configFile = GetConfigFilePath();
+
+            // does the config file exists?
+            if (!File.Exists(configFile))
+            {
+                // the folder does not exist, not point in trying to load the settings file.
+                return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            }
+
+            try
+            {
+                var dict = FileHelpers.LoadObjectFromDisk<Dictionary<string, string>>(configFile);
+                return dict;
+            }
+            catch
+            {
+                // could not load the dictionary, use a new one.
+                return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            }
+        }
+
+        private static void SaveSettings()
+        {
+            string configFile = GetConfigFilePath();
+
+            try
+            {
+                FileHelpers.SaveObjectToDisk(configFile, s_settings);
+            }
+            catch
+            {
+                // do nothing..
+            }
+        }
+
+        static string GetConfigFilePath()
+        {
+            //compute the config file
+            string localAppDataRoot = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string drawItFolder = Path.Combine(localAppDataRoot, "DrawIt");
+
+            // does the DrawIt folder exist?
+            if (!Directory.Exists(drawItFolder))
+            {
+                Directory.CreateDirectory(drawItFolder);
+            }
+
+            return Path.Combine(drawItFolder, "DrawIt.config");
+        }
+
         public static string GetSetting(string key)
         {
-            //var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-            return configuration.AppSettings.Settings[key]?.Value;
+            string value;
+            if (s_settings.TryGetValue(key, out value))
+            {
+                return value;
+            }
+            return null;
         }
 
         public static T GetSettingOrDefault<T>(string key, TryValueConvertor<T> convertor, T defaultValue)
@@ -24,27 +84,14 @@ namespace DrawIt
             return value;
         }
 
-        public static void SetSettingIfNotEmpty(string key, string value)
-        {
-            if (!string.IsNullOrWhiteSpace(value))
-                SetSetting(key, value);
-        }
-
         public static void SetSetting(string key, string value)
         {
-            if (configuration.AppSettings.Settings[key] == null)
-            {
-                configuration.AppSettings.Settings.Add(key, value);
-            }
-            else
-            {
-                configuration.AppSettings.Settings[key].Value = value;
-            }
+            s_settings[key] = value;
         }
 
         public static void SaveToDisk()
         {
-            configuration.Save(ConfigurationSaveMode.Full, true);
+            SaveSettings();
         }
     }
 }
