@@ -172,6 +172,7 @@ namespace DrawIt
             else if (radioButton == rtbDelete) _state = EditorState.Delete;
             else if (radioButton == rtbMove) _state = EditorState.Move;
             else if (radioButton == rtbText) _state = EditorState.Text;
+            else if (radioButton == rtbImage) _state = EditorState.Image;
             else throw new InvalidOperationException("Unknown state");
 
             // get rid of temporary line
@@ -188,6 +189,12 @@ namespace DrawIt
                 case EditorState.Measure:
                     {
                         ShowControl(grpMeasure);
+                        previousEntry = null;
+                        break;
+                    }
+                case EditorState.Image:
+                    {
+                        ShowControl(grpImage);
                         previousEntry = null;
                         break;
                     }
@@ -416,7 +423,7 @@ namespace DrawIt
 
             if (!string.IsNullOrEmpty(LogoEncodedImage))
             {
-                translatedDrawing.AddShape(new LogoImage(new Entry(1, 1), new Entry(1, 1), LogoEncodedImage, LogoHeight));
+                translatedDrawing.AddShape(new Image(new Entry(1, 1), new Entry(1, 1 + LogoHeight), LogoEncodedImage));
             }
 
             string headerText = Configuration.GetSetting(Constants.Application.Header.Text) ?? string.Empty;
@@ -528,7 +535,7 @@ namespace DrawIt
         {
             if (_drawing.HasChanges())
             {
-                if (MessageBox.Show("Save changes to the document?", "", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.No)
+                if (!(MessageBox.Show("Save changes to the document?", "", MessageBoxButtons.YesNoCancel) == System.Windows.Forms.DialogResult.No))
                 {
                     e.Cancel = true;
                 }
@@ -598,6 +605,21 @@ namespace DrawIt
         {
             Options opt = new Options();
             opt.ShowDialog(this);
+        }
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.CheckFileExists = true;
+                ofd.CheckPathExists = true;
+                ofd.Filter = "Image files|*.jpg;*.bmp;*.png";
+                if (ofd.ShowDialog(this) == DialogResult.OK)
+                {
+                    //get the file
+                    txtImagePath.Text = ofd.FileName;
+                }
+            }
         }
     }
 }

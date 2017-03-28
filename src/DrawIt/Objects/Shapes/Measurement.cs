@@ -28,7 +28,6 @@ namespace DrawIt
             int distanceInGridSize = horizontal ? Math.Abs(Start.X - End.X) : Math.Abs(Start.Y - End.Y);
 
             // Always draw the line where it was selected
-            // g.DrawLine(s_measurePen, new Point(Start.X, Start.Y), new Point(End.X, End.Y));
             measurePen.Color = Color;
             g.DrawLine(measurePen, Start.ToPoint(gridSize), End.ToPoint(gridSize));
 

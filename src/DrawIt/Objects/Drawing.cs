@@ -62,6 +62,7 @@ namespace DrawIt
             return segments.Count > 0 ? segments : null;
         }
 
+        //tOdo: refactor this
         internal void AddMeasurement(Measurement measurement)
         {
             if (measurement.Start.Equals(measurement.End) || (measurement.Start.X != measurement.End.X && measurement.Start.Y != measurement.End.Y))
@@ -71,6 +72,32 @@ namespace DrawIt
 
             Shapes.Add(measurement);
 
+            _hasChanges = true;
+        }
+
+        internal void AddImage(Image image)
+        {
+            if (image.Start.Equals(image.End) || (image.Start.X != image.End.X && image.Start.Y != image.End.Y))
+            {
+                return;
+            }
+
+            // regardless of how you draw the line, you want to see the image correctly
+            if (image.Start.X > image.End.X)
+            {
+                //swap them?
+                var x = image.Start.X;
+                image.Start.X = image.End.X;
+                image.End.X = x;
+            }
+            if (image.Start.Y > image.End.Y)
+            {
+                var y = image.Start.Y;
+                image.Start.Y = image.End.Y;
+                image.End.Y = y;
+            }
+
+            Shapes.Add(image);
             _hasChanges = true;
         }
 

@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Windows.Forms;
 
 namespace DrawIt
@@ -83,6 +84,19 @@ namespace DrawIt
                 _drawing.AddMeasurement(measurement);
 
                 // for measurements always reset
+                previousEntry = null;
+            }
+            else if (_state == EditorState.Image)
+            {
+                string file = txtImagePath.Text;
+
+                if (!string.IsNullOrWhiteSpace(file) && File.Exists(file))
+                {
+                    var img = new Image(previousEntry, new Entry(x, y), Convert.ToBase64String(File.ReadAllBytes(file)));
+                    _drawing.AddImage(img);
+                }
+
+                // for image drawing always reset
                 previousEntry = null;
             }
 
