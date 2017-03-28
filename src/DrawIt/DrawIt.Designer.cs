@@ -233,7 +233,7 @@
             // 
             this.stsPosition.AutoSize = false;
             this.stsPosition.Name = "stsPosition";
-            this.stsPosition.Size = new System.Drawing.Size(275, 20);
+            this.stsPosition.Size = new System.Drawing.Size(375, 20);
             // 
             // tssActiveStatus
             // 
@@ -385,7 +385,7 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // optionsToolStripMenuItem
