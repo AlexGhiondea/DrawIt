@@ -41,7 +41,7 @@ namespace DrawIt
         public static bool PointInsideRectangle(Point topLeft, Point bottomRight, Point pt)
         {
             return (pt.X >= topLeft.X && pt.X <= bottomRight.X) &&
-                   (pt.Y >= topLeft.Y && pt.X <= bottomRight.Y);
+                   (pt.Y >= topLeft.Y && pt.Y <= bottomRight.Y);
         }
     }
 }

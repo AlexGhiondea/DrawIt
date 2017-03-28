@@ -79,6 +79,11 @@
             this.lblMeasureColor = new System.Windows.Forms.Label();
             this.rtbMove = new System.Windows.Forms.RadioButton();
             this.rtbText = new System.Windows.Forms.RadioButton();
+            this.rtbImage = new System.Windows.Forms.RadioButton();
+            this.grpImage = new System.Windows.Forms.GroupBox();
+            this.btnBrowse = new System.Windows.Forms.Button();
+            this.txtImagePath = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             lblHorizontal = new System.Windows.Forms.Label();
             lblVertical = new System.Windows.Forms.Label();
             lblZoom = new System.Windows.Forms.Label();
@@ -90,6 +95,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nupArcSize)).BeginInit();
             this.grpText.SuspendLayout();
             this.grpMeasure.SuspendLayout();
+            this.grpImage.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblHorizontal
@@ -117,7 +123,7 @@
             lblZoom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             lblZoom.AutoSize = true;
             lblZoom.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            lblZoom.Location = new System.Drawing.Point(679, 4);
+            lblZoom.Location = new System.Drawing.Point(729, 4);
             lblZoom.Name = "lblZoom";
             lblZoom.Size = new System.Drawing.Size(34, 13);
             lblZoom.TabIndex = 14;
@@ -133,7 +139,7 @@
             this.drawSurface.Cursor = System.Windows.Forms.Cursors.Cross;
             this.drawSurface.Location = new System.Drawing.Point(0, 79);
             this.drawSurface.Name = "drawSurface";
-            this.drawSurface.Size = new System.Drawing.Size(799, 287);
+            this.drawSurface.Size = new System.Drawing.Size(849, 287);
             this.drawSurface.TabIndex = 2;
             this.drawSurface.Paint += new System.Windows.Forms.PaintEventHandler(this.drawSurface_Paint);
             this.drawSurface.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawSurface_MouseDown);
@@ -155,7 +161,7 @@
             // 
             this.rtbDraw.Checked = true;
             this.rtbDraw.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbDraw.Location = new System.Drawing.Point(16, 39);
+            this.rtbDraw.Location = new System.Drawing.Point(11, 39);
             this.rtbDraw.Name = "rtbDraw";
             this.rtbDraw.Size = new System.Drawing.Size(78, 28);
             this.rtbDraw.TabIndex = 1;
@@ -167,7 +173,7 @@
             // rtbMeasure
             // 
             this.rtbMeasure.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbMeasure.Location = new System.Drawing.Point(86, 39);
+            this.rtbMeasure.Location = new System.Drawing.Point(76, 39);
             this.rtbMeasure.Name = "rtbMeasure";
             this.rtbMeasure.Size = new System.Drawing.Size(97, 28);
             this.rtbMeasure.TabIndex = 2;
@@ -201,7 +207,7 @@
             this.tbZoom.AutoSize = false;
             this.tbZoom.BackColor = System.Drawing.SystemColors.Control;
             this.tbZoom.LargeChange = 10;
-            this.tbZoom.Location = new System.Drawing.Point(716, 0);
+            this.tbZoom.Location = new System.Drawing.Point(766, 0);
             this.tbZoom.Maximum = 50;
             this.tbZoom.Minimum = 5;
             this.tbZoom.Name = "tbZoom";
@@ -220,7 +226,7 @@
             this.tssActiveStatus});
             this.stsStatus.Location = new System.Drawing.Point(0, 366);
             this.stsStatus.Name = "stsStatus";
-            this.stsStatus.Size = new System.Drawing.Size(799, 25);
+            this.stsStatus.Size = new System.Drawing.Size(849, 25);
             this.stsStatus.TabIndex = 13;
             // 
             // stsDocData
@@ -233,7 +239,7 @@
             // 
             this.stsPosition.AutoSize = false;
             this.stsPosition.Name = "stsPosition";
-            this.stsPosition.Size = new System.Drawing.Size(275, 20);
+            this.stsPosition.Size = new System.Drawing.Size(375, 20);
             // 
             // tssActiveStatus
             // 
@@ -246,7 +252,7 @@
             // 
             this.rtbDelete.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.rtbDelete.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbDelete.Location = new System.Drawing.Point(182, 39);
+            this.rtbDelete.Location = new System.Drawing.Point(170, 39);
             this.rtbDelete.Name = "rtbDelete";
             this.rtbDelete.Size = new System.Drawing.Size(70, 28);
             this.rtbDelete.TabIndex = 3;
@@ -294,7 +300,7 @@
             this.helpToolStripMenuItem});
             this.mnuMainMenu.Location = new System.Drawing.Point(0, 0);
             this.mnuMainMenu.Name = "mnuMainMenu";
-            this.mnuMainMenu.Size = new System.Drawing.Size(799, 24);
+            this.mnuMainMenu.Size = new System.Drawing.Size(849, 24);
             this.mnuMainMenu.TabIndex = 23;
             this.mnuMainMenu.Text = "menuStrip1";
             // 
@@ -385,7 +391,7 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // optionsToolStripMenuItem
@@ -413,8 +419,7 @@
             // 
             // grpDraw
             // 
-            this.grpDraw.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpDraw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.grpDraw.Controls.Add(this.lblNupArcDescription);
             this.grpDraw.Controls.Add(this.lblNupArcUnits);
             this.grpDraw.Controls.Add(this.nupArcSize);
@@ -425,7 +430,7 @@
             this.grpDraw.Controls.Add(this.lblDrawColor);
             this.grpDraw.Controls.Add(this.nupDrawWidth);
             this.grpDraw.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpDraw.Location = new System.Drawing.Point(387, 24);
+            this.grpDraw.Location = new System.Drawing.Point(437, 28);
             this.grpDraw.Name = "grpDraw";
             this.grpDraw.Size = new System.Drawing.Size(406, 49);
             this.grpDraw.TabIndex = 24;
@@ -499,8 +504,7 @@
             // 
             // grpText
             // 
-            this.grpText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.grpText.Controls.Add(this.label4);
             this.grpText.Controls.Add(this.lblFont);
             this.grpText.Controls.Add(this.label7);
@@ -508,7 +512,7 @@
             this.grpText.Controls.Add(this.label5);
             this.grpText.Controls.Add(this.lblTextColor);
             this.grpText.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpText.Location = new System.Drawing.Point(387, 24);
+            this.grpText.Location = new System.Drawing.Point(435, 28);
             this.grpText.Name = "grpText";
             this.grpText.Size = new System.Drawing.Size(406, 49);
             this.grpText.TabIndex = 27;
@@ -570,8 +574,7 @@
             // 
             // grpMeasure
             // 
-            this.grpMeasure.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpMeasure.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.grpMeasure.Controls.Add(this.label3);
             this.grpMeasure.Controls.Add(this.lblMeasureColor);
             this.grpMeasure.Controls.Add(this.cboHorizontalAlignment);
@@ -579,7 +582,7 @@
             this.grpMeasure.Controls.Add(lblHorizontal);
             this.grpMeasure.Controls.Add(lblVertical);
             this.grpMeasure.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpMeasure.Location = new System.Drawing.Point(387, 24);
+            this.grpMeasure.Location = new System.Drawing.Point(437, 28);
             this.grpMeasure.Name = "grpMeasure";
             this.grpMeasure.Size = new System.Drawing.Size(406, 49);
             this.grpMeasure.TabIndex = 25;
@@ -609,7 +612,7 @@
             // 
             this.rtbMove.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.rtbMove.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbMove.Location = new System.Drawing.Point(258, 39);
+            this.rtbMove.Location = new System.Drawing.Point(245, 39);
             this.rtbMove.Name = "rtbMove";
             this.rtbMove.Size = new System.Drawing.Size(68, 28);
             this.rtbMove.TabIndex = 4;
@@ -621,7 +624,7 @@
             // 
             this.rtbText.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.rtbText.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbText.Location = new System.Drawing.Point(332, 39);
+            this.rtbText.Location = new System.Drawing.Point(314, 39);
             this.rtbText.Name = "rtbText";
             this.rtbText.Size = new System.Drawing.Size(51, 28);
             this.rtbText.TabIndex = 26;
@@ -629,12 +632,69 @@
             this.rtbText.UseVisualStyleBackColor = true;
             this.rtbText.CheckedChanged += new System.EventHandler(this.rtbDraw_CheckedChanged);
             // 
+            // rtbImage
+            // 
+            this.rtbImage.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.rtbImage.Font = new System.Drawing.Font("Calibri", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbImage.Location = new System.Drawing.Point(365, 39);
+            this.rtbImage.Name = "rtbImage";
+            this.rtbImage.Size = new System.Drawing.Size(66, 28);
+            this.rtbImage.TabIndex = 28;
+            this.rtbImage.Text = "Image";
+            this.rtbImage.UseVisualStyleBackColor = true;
+            this.rtbImage.CheckedChanged += new System.EventHandler(this.rtbDraw_CheckedChanged);
+            // 
+            // grpImage
+            // 
+            this.grpImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpImage.Controls.Add(this.btnBrowse);
+            this.grpImage.Controls.Add(this.txtImagePath);
+            this.grpImage.Controls.Add(this.label6);
+            this.grpImage.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpImage.Location = new System.Drawing.Point(437, 28);
+            this.grpImage.Name = "grpImage";
+            this.grpImage.Size = new System.Drawing.Size(406, 49);
+            this.grpImage.TabIndex = 28;
+            this.grpImage.TabStop = false;
+            this.grpImage.Visible = false;
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowse.Location = new System.Drawing.Point(337, 19);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(63, 23);
+            this.btnBrowse.TabIndex = 2;
+            this.btnBrowse.Text = "Browse";
+            this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
+            // 
+            // txtImagePath
+            // 
+            this.txtImagePath.Location = new System.Drawing.Point(55, 19);
+            this.txtImagePath.Name = "txtImagePath";
+            this.txtImagePath.ReadOnly = true;
+            this.txtImagePath.Size = new System.Drawing.Size(276, 23);
+            this.txtImagePath.TabIndex = 1;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(12, 22);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(32, 15);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Path";
+            // 
             // DrawIt
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(799, 391);
+            this.ClientSize = new System.Drawing.Size(849, 391);
+            this.Controls.Add(this.grpText);
+            this.Controls.Add(this.grpImage);
+            this.Controls.Add(this.rtbImage);
             this.Controls.Add(this.rtbText);
             this.Controls.Add(this.tbZoom);
             this.Controls.Add(lblZoom);
@@ -645,7 +705,6 @@
             this.Controls.Add(this.rtbDraw);
             this.Controls.Add(this.drawSurface);
             this.Controls.Add(this.rtbMove);
-            this.Controls.Add(this.grpText);
             this.Controls.Add(this.grpDraw);
             this.Controls.Add(this.grpMeasure);
             this.KeyPreview = true;
@@ -670,6 +729,8 @@
             this.grpText.PerformLayout();
             this.grpMeasure.ResumeLayout(false);
             this.grpMeasure.PerformLayout();
+            this.grpImage.ResumeLayout(false);
+            this.grpImage.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -725,6 +786,11 @@
         private System.Windows.Forms.Label lblNupArcDescription;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.RadioButton rtbImage;
+        private System.Windows.Forms.GroupBox grpImage;
+        private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.TextBox txtImagePath;
+        private System.Windows.Forms.Label label6;
     }
 }
 
