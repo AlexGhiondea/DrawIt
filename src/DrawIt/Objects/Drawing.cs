@@ -65,7 +65,7 @@ namespace DrawIt
         //tOdo: refactor this
         internal void AddMeasurement(Measurement measurement)
         {
-            if (measurement.Start.Equals(measurement.End) || (measurement.Start.X != measurement.End.X && measurement.Start.Y != measurement.End.Y))
+            if (measurement.Start.Equals(measurement.End))
             {
                 return;
             }

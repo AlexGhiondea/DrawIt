@@ -23,65 +23,67 @@ namespace DrawIt
 
         public override void Draw(int gridSize, Graphics g)
         {
-            // we only support measurements on horizontal and vertical lines
-            bool horizontal = Start.Y == End.Y;
-            int distanceInGridSize = horizontal ? Math.Abs(Start.X - End.X) : Math.Abs(Start.Y - End.Y);
-
-            // Always draw the line where it was selected
-            measurePen.Color = Color;
-            g.DrawLine(measurePen, Start.ToPoint(gridSize), End.ToPoint(gridSize));
-
-            // find the middle
-            float middle;
-            PointF StartText;
-
-            string text = string.Format("{0} {1}", distanceInGridSize * ConversionRate, Unit);
-            SizeF textSize = g.MeasureString(text, measureFont);
-
             Point StartPoint = Start.ToPoint(gridSize);
             Point EndPoint = End.ToPoint(gridSize);
 
-            if (horizontal)
+            g.DrawLine(measurePen, Start.ToPoint(gridSize), End.ToPoint(gridSize));
+
+            // figure out the angle
+            double degrees = DrawFacts.ComputeSlopeInDegrees(Start, End);
+
+            // we need to translate the ends at each of the points (start and end)
+            DrawEndLine(gridSize, g, Start, degrees);
+            DrawEndLine(gridSize, g, End, degrees);
+
+            DrawRotatedMeasureText(gridSize, g, degrees);
+        }
+
+        private void DrawRotatedMeasureText(int gridSize, Graphics g, double degrees)
+        {
+            string text = string.Format("{0} {1}", (double)(Math.Round(Length * ConversionRate, 1)), Unit);
+            SizeF textSize = g.MeasureString(text, measureFont);
+
+            // Calculate the middle part of the segment
+            Point start, end;
+            start = Start.ToPoint(gridSize);
+            end = End.ToPoint(gridSize);
+            PointF middlePoint = new PointF((start.X + end.X) / 2f, (start.Y + end.Y) / 2f);
+
+            // we should find the middle of the segment and rotate based on that
+            // at that point, we can easily translate it to not overlap the line
+            using (System.Drawing.Drawing2D.Matrix transformMatrix = new System.Drawing.Drawing2D.Matrix())
             {
-                //draw End lines
-                g.DrawLine(measurePen, StartPoint.AddToY(-(gridSize / 2)), StartPoint.AddToY((gridSize / 2)));
-                g.DrawLine(measurePen, EndPoint.AddToY(-(gridSize / 2)), EndPoint.AddToY((gridSize / 2)));
+                // we rotate the text to match the slope of the line.
+                transformMatrix.RotateAt((float)degrees, middlePoint);
 
-                middle = Math.Min(Start.X, End.X) * gridSize + (Math.Abs(Start.X - End.X) * gridSize / 2);
-                middle -= textSize.Width / 2;
+                // translate by half the width
+                transformMatrix.Translate(-textSize.Width / 2, 0);
 
-                StartText = new PointF(middle, ((float)Start.Y * gridSize));
-
+                // if we want to put the text above the line, we need to translate the height as well.
                 if ((Location & MeasurementLocation.Above) == MeasurementLocation.Above)
                 {
-                    StartText.Y -= textSize.Height;
+                    transformMatrix.Translate(0, -textSize.Height);
                 }
-                else
-                {
-                    StartText.Y += 2 * measurePen.Width;
-                }
+
+                g.Transform = transformMatrix;
+
+                g.DrawString(text, measureFont, new SolidBrush(Color), middlePoint);
+
+                g.ResetTransform();
             }
-            else
+        }
+
+        private void DrawEndLine(int gridSize, Graphics g, Entry location, double degrees)
+        {
+            using (System.Drawing.Drawing2D.Matrix transformMatrix = new System.Drawing.Drawing2D.Matrix())
             {
-                //draw End lines
-                g.DrawLine(measurePen, StartPoint.AddToX(-(gridSize / 2)), StartPoint.AddToX(+(gridSize / 2)));
-                g.DrawLine(measurePen, EndPoint.AddToX(-(gridSize / 2)), EndPoint.AddToX(+(gridSize / 2)));
+                transformMatrix.RotateAt((float)degrees, location.ToPoint(gridSize));
 
-                middle = Math.Min(Start.Y, End.Y) * gridSize + (Math.Abs(Start.Y - End.Y) * gridSize / 2);
-                middle -= textSize.Height / 2;
+                g.Transform = transformMatrix;
+                g.DrawLine(measurePen, location.ToPoint(gridSize).AddToY(-(gridSize / 2)), location.ToPoint(gridSize).AddToY((gridSize / 2)));
 
-                StartText = new PointF(((float)Start.X * gridSize + 2 * measurePen.Width), middle);
-                if ((Location & MeasurementLocation.Left) == MeasurementLocation.Left)
-                {
-                    StartText.X -= textSize.Width + 2 * measurePen.Width;
-                }
-                else
-                {
-                    StartText.X += measurePen.Width;
-                }
+                g.ResetTransform();
             }
-
-            g.DrawString(text, measureFont, new SolidBrush(Color), StartText);
         }
 
         public override Shape DeepClone()
