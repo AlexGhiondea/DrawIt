@@ -13,6 +13,7 @@ namespace DrawIt
     {
         private bool _hasChanges;
         public List<Shape> Shapes;
+        public Dictionary<string, string> Images;
 
         public string Unit { get; set; }
         public double ConversionRatio;
@@ -25,6 +26,7 @@ namespace DrawIt
             Unit = unit;
 
             Shapes = new List<Shape>();
+            Images = new Dictionary<string, string>();
         }
 
         internal void AddShape(Shape shape)
@@ -75,12 +77,34 @@ namespace DrawIt
             _hasChanges = true;
         }
 
+        private string ResolveImage(string key)
+        {
+            return Images[key];
+        }
+
+        private string AddImage(string imageData)
+        {
+            string hashOfFile = FileHelpers.ComputeSHA2Hash(imageData);
+
+            // do we have this in the dictionary?
+            if (!Images.ContainsKey(hashOfFile))
+            {
+                Images.Add(hashOfFile, imageData);
+            }
+
+            return hashOfFile;
+        }
+
         internal void AddImage(Image image)
         {
             if (image.Start.Equals(image.End) || (image.Start.X != image.End.X && image.Start.Y != image.End.Y))
             {
                 return;
             }
+
+            // make the image use the image resolver when an image is added.
+            image.SetImageResolver(this.ResolveImage);
+            image.EncodedImage = AddImage(image.EncodedImage);
 
             // regardless of how you draw the line, you want to see the image correctly
             if (image.Start.X > image.End.X)
@@ -112,6 +136,12 @@ namespace DrawIt
             foreach (var item in Shapes)
             {
                 newDrawing.AddShape(item.DeepClone());
+            }
+
+            // clone the list of images as well.
+            foreach (var item in Images)
+            {
+                newDrawing.Images.Add(item.Key, item.Value);
             }
 
             return newDrawing;
