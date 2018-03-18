@@ -9,6 +9,17 @@ namespace DrawIt
         public Entry End;
         public float Width;
 
+        protected double Length
+        {
+            get
+            {
+                //compute the length of the line
+                int deltaX = (End.X - Start.X);
+                int deltaY = (End.Y - Start.Y);
+                return Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
+            }
+        }
+
         public Segment(Entry start, Entry end, Color color, float width)
             : base(color)
         {

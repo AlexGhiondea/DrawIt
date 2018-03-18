@@ -15,13 +15,11 @@ namespace DrawIt
 
         public override void Draw(int gridSize, Graphics g)
         {
-            //compute the length of the line
             int deltaX = (End.X - Start.X);
             int deltaY = (End.Y - Start.Y);
-            double length = Math.Sqrt((deltaX * deltaX) + (deltaY * deltaY));
 
             // This is the size of the rectangle that will hold the ellipse
-            SizeF arcSizeRotate = new SizeF((float)length * gridSize, (float)(Radius * 2 * gridSize));
+            SizeF arcSizeRotate = new SizeF((float)Length * gridSize, (float)(Radius * 2 * gridSize));
 
             // Perform the rotations and translations.
             using (System.Drawing.Drawing2D.Matrix transformMatrix = new System.Drawing.Drawing2D.Matrix())
@@ -65,20 +63,9 @@ namespace DrawIt
                 //figure out the angle
 
                 int startDegrees = 180;
-                if (signX == 1)
-                {
-                    startDegrees = 180;
-                }
-                else if (signX == -1)
+                if (signX == -1 || (signX == 0 && signY == 1))
                 {
                     startDegrees = 0;
-                }
-                else if (signX == 0)
-                {
-                    if (signY == 1)
-                    {
-                        startDegrees = 0;
-                    }
                 }
 
                 g.Transform = transformMatrix;
