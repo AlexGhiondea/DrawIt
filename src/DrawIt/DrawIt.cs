@@ -25,6 +25,7 @@ namespace DrawIt
         private Drawing _drawing;
         private static Pen s_gridPen = new Pen(new SolidBrush(Color.LightGray), 1);
         private static Entry previousEntry = null;
+        private static string s_loadedFile=null;
 
         private EditorState _state = EditorState.Draw;
 
@@ -40,6 +41,13 @@ namespace DrawIt
 
         private void SaveProject()
         {
+            if (s_loadedFile != null)
+            {
+                _drawing.Save(s_loadedFile);
+                tssActiveStatus.Text = "Saved " + s_loadedFile;
+                return;
+            }
+
             using (SaveFileDialog sfd = new SaveFileDialog())
             {
                 sfd.AddExtension = true;
@@ -50,6 +58,9 @@ namespace DrawIt
                     string fileName = sfd.FileName;
                     _drawing.Save(fileName);
                     tssActiveStatus.Text = "Saved " + fileName;
+
+                    // keep track of what is the current file name in use.
+                    s_loadedFile = fileName;
                 }
             }
         }
@@ -302,6 +313,8 @@ namespace DrawIt
                 CreateNewSegment();
 
                 tssActiveStatus.Text = "Loaded " + fileName;
+
+                s_loadedFile = fileName;
             }
             catch
             {
@@ -333,6 +346,9 @@ namespace DrawIt
             //setup data bindings
             lblNupArcUnits.DataBindings.Clear();
             lblNupArcUnits.DataBindings.Add("Text", _drawing, "Unit", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            // make sure we don't overwrite existing docs
+            s_loadedFile = null;
         }
 
         private void DrawIt_KeyUp(object sender, KeyEventArgs e)
