@@ -238,9 +238,6 @@ namespace DrawIt
             cboHorizontalAlignment.Items.Add(MeasurementLocation.Above);
             cboHorizontalAlignment.Items.Add(MeasurementLocation.Below);
 
-            cboVerticalAlignment.Items.Add(MeasurementLocation.Left);
-            cboVerticalAlignment.Items.Add(MeasurementLocation.Right);
-
             // populate the list of objects it can draw.
             Array enumValues = Enum.GetValues(typeof(DrawObject));
 
@@ -548,7 +545,6 @@ namespace DrawIt
         private void SaveUserPreferences()
         {
             Configuration.SetSetting(Constants.Measurement.BelowOrAbove, cboHorizontalAlignment.SelectedItem.ToString());
-            Configuration.SetSetting(Constants.Measurement.LeftOrRight, cboVerticalAlignment.SelectedItem.ToString());
             Configuration.SetSetting(Constants.Measurement.Color, lblMeasureColor.BackColor.ToArgb().ToString());
 
             Configuration.SetSetting(Constants.Draw.Color, lblDrawColor.BackColor.ToArgb().ToString());
@@ -568,7 +564,6 @@ namespace DrawIt
         {
             // Measure
             cboHorizontalAlignment.SelectedItem = Configuration.GetSettingOrDefault<MeasurementLocation>(Constants.Measurement.BelowOrAbove, Enum.TryParse<MeasurementLocation>, MeasurementLocation.Below);
-            cboVerticalAlignment.SelectedItem = Configuration.GetSettingOrDefault<MeasurementLocation>(Constants.Measurement.LeftOrRight, Enum.TryParse<MeasurementLocation>, MeasurementLocation.Left);
             lblMeasureColor.BackColor = Color.FromArgb(Configuration.GetSettingOrDefault<int>(Constants.Measurement.Color, int.TryParse, Constants.Measurement.Defaults.Green));
 
             // Draw

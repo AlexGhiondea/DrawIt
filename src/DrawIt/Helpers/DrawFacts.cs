@@ -43,5 +43,25 @@ namespace DrawIt
             return (pt.X >= topLeft.X && pt.X <= bottomRight.X) &&
                    (pt.Y >= topLeft.Y && pt.Y <= bottomRight.Y);
         }
+
+        public static double ComputeSlopeInDegrees(Entry segmentStart, Entry segmentEnd)
+        {
+            // we are using a translation to point using a constant as the gridSize is irrelevant to the slope of the segment
+            Point start = segmentStart.ToPoint(1);
+            Point end = segmentEnd.ToPoint(1);
+
+            // We might need to swap what we consider as start/end.
+            if (segmentStart.X > segmentEnd.X || segmentStart.Y < segmentEnd.Y)
+            {
+                start = segmentEnd.ToPoint(1);
+                end = segmentStart.ToPoint(1);
+            }
+
+            // Calculate angle from offset.
+            double radians = Math.Atan((double)(end.Y - start.Y) / (double)(end.X - start.X));
+
+            double degrees = radians * ((double)180 / Math.PI);
+            return degrees;
+        }
     }
 }

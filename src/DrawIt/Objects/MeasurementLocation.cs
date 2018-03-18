@@ -4,8 +4,8 @@ namespace DrawIt{
     [Flags]
     public enum MeasurementLocation
     {
-        Left = 1,
-        Right = 2,
+        Left = 1, // Not used
+        Right = 2, // Not used
         Above = 4,
         Below = 8
     }

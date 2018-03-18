@@ -76,7 +76,7 @@ namespace DrawIt
             else if (_state == EditorState.Measure)
             {
                 var measurement = new Measurement(previousEntry, new Entry(x, y), lblMeasureColor.BackColor,
-                    ((MeasurementLocation)cboHorizontalAlignment.SelectedItem) | ((MeasurementLocation)cboVerticalAlignment.SelectedItem),
+                    (MeasurementLocation)cboHorizontalAlignment.SelectedItem,
                     _drawing.ConversionRatio,
                     _drawing.Unit
                 );
