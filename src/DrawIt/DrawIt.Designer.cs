@@ -29,13 +29,11 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.Label lblHorizontal;
-            System.Windows.Forms.Label lblVertical;
             System.Windows.Forms.Label lblZoom;
             this.drawSurface = new System.Windows.Forms.Panel();
             this.btnNewSegment = new System.Windows.Forms.Button();
             this.rtbDraw = new System.Windows.Forms.RadioButton();
             this.rtbMeasure = new System.Windows.Forms.RadioButton();
-            this.cboVerticalAlignment = new System.Windows.Forms.ComboBox();
             this.cboHorizontalAlignment = new System.Windows.Forms.ComboBox();
             this.tbZoom = new System.Windows.Forms.TrackBar();
             this.stsStatus = new System.Windows.Forms.StatusStrip();
@@ -85,7 +83,6 @@
             this.txtImagePath = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             lblHorizontal = new System.Windows.Forms.Label();
-            lblVertical = new System.Windows.Forms.Label();
             lblZoom = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tbZoom)).BeginInit();
             this.stsStatus.SuspendLayout();
@@ -104,19 +101,9 @@
             lblHorizontal.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             lblHorizontal.Location = new System.Drawing.Point(87, 21);
             lblHorizontal.Name = "lblHorizontal";
-            lblHorizontal.Size = new System.Drawing.Size(65, 15);
+            lblHorizontal.Size = new System.Drawing.Size(86, 15);
             lblHorizontal.TabIndex = 10;
-            lblHorizontal.Text = "Horizontal";
-            // 
-            // lblVertical
-            // 
-            lblVertical.AutoSize = true;
-            lblVertical.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            lblVertical.Location = new System.Drawing.Point(227, 21);
-            lblVertical.Name = "lblVertical";
-            lblVertical.Size = new System.Drawing.Size(48, 15);
-            lblVertical.TabIndex = 11;
-            lblVertical.Text = "Vertical";
+            lblHorizontal.Text = "Text alignment";
             // 
             // lblZoom
             // 
@@ -181,24 +168,14 @@
             this.rtbMeasure.UseVisualStyleBackColor = true;
             this.rtbMeasure.CheckedChanged += new System.EventHandler(this.rtbDraw_CheckedChanged);
             // 
-            // cboVerticalAlignment
-            // 
-            this.cboVerticalAlignment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboVerticalAlignment.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboVerticalAlignment.FormattingEnabled = true;
-            this.cboVerticalAlignment.Location = new System.Drawing.Point(274, 17);
-            this.cboVerticalAlignment.Name = "cboVerticalAlignment";
-            this.cboVerticalAlignment.Size = new System.Drawing.Size(60, 23);
-            this.cboVerticalAlignment.TabIndex = 8;
-            // 
             // cboHorizontalAlignment
             // 
             this.cboHorizontalAlignment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboHorizontalAlignment.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboHorizontalAlignment.FormattingEnabled = true;
-            this.cboHorizontalAlignment.Location = new System.Drawing.Point(154, 17);
+            this.cboHorizontalAlignment.Location = new System.Drawing.Point(179, 16);
             this.cboHorizontalAlignment.Name = "cboHorizontalAlignment";
-            this.cboHorizontalAlignment.Size = new System.Drawing.Size(60, 23);
+            this.cboHorizontalAlignment.Size = new System.Drawing.Size(76, 23);
             this.cboHorizontalAlignment.TabIndex = 9;
             // 
             // tbZoom
@@ -206,13 +183,11 @@
             this.tbZoom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbZoom.AutoSize = false;
             this.tbZoom.BackColor = System.Drawing.SystemColors.Control;
-            this.tbZoom.LargeChange = 10;
             this.tbZoom.Location = new System.Drawing.Point(766, 0);
             this.tbZoom.Maximum = 50;
-            this.tbZoom.Minimum = 5;
+            this.tbZoom.Minimum = 1;
             this.tbZoom.Name = "tbZoom";
             this.tbZoom.Size = new System.Drawing.Size(83, 24);
-            this.tbZoom.SmallChange = 5;
             this.tbZoom.TabIndex = 12;
             this.tbZoom.TickFrequency = 5;
             this.tbZoom.Value = 15;
@@ -391,7 +366,7 @@
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // optionsToolStripMenuItem
@@ -578,9 +553,7 @@
             this.grpMeasure.Controls.Add(this.label3);
             this.grpMeasure.Controls.Add(this.lblMeasureColor);
             this.grpMeasure.Controls.Add(this.cboHorizontalAlignment);
-            this.grpMeasure.Controls.Add(this.cboVerticalAlignment);
             this.grpMeasure.Controls.Add(lblHorizontal);
-            this.grpMeasure.Controls.Add(lblVertical);
             this.grpMeasure.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpMeasure.Location = new System.Drawing.Point(437, 28);
             this.grpMeasure.Name = "grpMeasure";
@@ -692,6 +665,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(849, 391);
+            this.Controls.Add(this.grpMeasure);
             this.Controls.Add(this.grpText);
             this.Controls.Add(this.grpImage);
             this.Controls.Add(this.rtbImage);
@@ -706,7 +680,6 @@
             this.Controls.Add(this.drawSurface);
             this.Controls.Add(this.rtbMove);
             this.Controls.Add(this.grpDraw);
-            this.Controls.Add(this.grpMeasure);
             this.KeyPreview = true;
             this.MainMenuStrip = this.mnuMainMenu;
             this.Name = "DrawIt";
@@ -742,7 +715,6 @@
         private System.Windows.Forms.Button btnNewSegment;
         private System.Windows.Forms.RadioButton rtbDraw;
         private System.Windows.Forms.RadioButton rtbMeasure;
-        private System.Windows.Forms.ComboBox cboVerticalAlignment;
         private System.Windows.Forms.ComboBox cboHorizontalAlignment;
         private System.Windows.Forms.TrackBar tbZoom;
         private System.Windows.Forms.StatusStrip stsStatus;

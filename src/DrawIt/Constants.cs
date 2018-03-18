@@ -43,7 +43,6 @@ namespace DrawIt
         public static class Measurement
         {
             public const string BelowOrAbove = "Measurement_BelowOrAbove";
-            public const string LeftOrRight = "Measurement_LeftOrRight";
             public const string Color = "Measurement_Color";
 
             public static class Defaults
