@@ -46,6 +46,7 @@ namespace DrawIt
             foreach (var toRemove in segment)
             {
                 Shapes.Remove(toRemove);
+
                 _hasChanges = true;
             }
         }
@@ -77,7 +78,7 @@ namespace DrawIt
             _hasChanges = true;
         }
 
-        private string ResolveImage(string key)
+        internal string ResolveImage(string key)
         {
             return Images[key];
         }
@@ -159,7 +160,7 @@ namespace DrawIt
         {
             try
             {
-                FileHelpers.SaveObjectToDisk(fileName, this);
+                FileHelpers.SaveDrawing(this, fileName);
                 _hasChanges = false;
             }
             catch
