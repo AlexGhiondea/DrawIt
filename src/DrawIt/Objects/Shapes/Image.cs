@@ -15,10 +15,16 @@ namespace DrawIt
 
         private Entry BottomRight; // this is computed.
 
+        internal Func<string, string> resolveImageFromDocument = null;
+
+        internal void SetImageResolver(Func<string, string> f)
+        {
+            resolveImageFromDocument = f;
+        }
+
         public Image(Entry topLeft, Entry bottomRight, string encodedImage)
             : base(Color.Black) // hardcode the value as we don't actually use it.
         {
-
             this.Start = topLeft;
             this.End = bottomRight;
             this.EncodedImage = encodedImage;
@@ -26,8 +32,14 @@ namespace DrawIt
 
         public override void Draw(int gridSize, Graphics g)
         {
+            string imageData = EncodedImage;
+            if (resolveImageFromDocument != null)
+            {
+                imageData = resolveImageFromDocument(imageData);
+            }
+
             //create the image from the encodedString.
-            byte[] imageBytes = Convert.FromBase64String(EncodedImage);
+            byte[] imageBytes = Convert.FromBase64String(imageData);
 
             using (MemoryStream ms = new MemoryStream(imageBytes))
             using (Bitmap bmp = new Bitmap(ms))

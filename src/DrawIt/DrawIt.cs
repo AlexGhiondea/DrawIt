@@ -25,7 +25,7 @@ namespace DrawIt
         private Drawing _drawing;
         private static Pen s_gridPen = new Pen(new SolidBrush(Color.LightGray), 1);
         private static Entry previousEntry = null;
-        private static string s_loadedFile=null;
+        private static string s_loadedFile = null;
 
         private EditorState _state = EditorState.Draw;
 
@@ -278,7 +278,7 @@ namespace DrawIt
 
         private void ShowOpenFileDialog()
         {
-            if (_drawing.HasChanges())
+            if (_drawing != null && _drawing.HasChanges())
             {
                 if (MessageBox.Show("Abandon changes?", "Are you sure?", MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
                 {
@@ -303,7 +303,7 @@ namespace DrawIt
         {
             try
             {
-                _drawing = FileHelpers.LoadObjectFromDisk<Drawing>(fileName);
+                _drawing = FileHelpers.LoadDrawing(fileName);
 
                 stsDocData.Text = string.Format("1 square = {1} {0}", _drawing.Unit, _drawing.ConversionRatio);
                 //setup data bindings
