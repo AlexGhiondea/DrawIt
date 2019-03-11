@@ -107,6 +107,7 @@
     <Compile Include="Helpers\FileHelpers.cs" />
     <Compile Include="Helpers\FontHelpers.cs" />
     <Compile Include="Helpers\PointExtensions.cs" />
+    <Compile Include="Importer\ImportForBeads.cs" />
     <Compile Include="Objects\Drawing.cs" />
     <Compile Include="DrawIt.cs">
       <SubType>Form</SubType>
