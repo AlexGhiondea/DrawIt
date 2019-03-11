@@ -11,6 +11,7 @@ namespace DrawIt.Objects
         Line,
         Rectangle,
         Circle,
-        Arc
+        Arc,
+        FilledRectangle
     }
 }

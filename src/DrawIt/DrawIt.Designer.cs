@@ -238,7 +238,7 @@
             // lblDrawColor
             // 
             this.lblDrawColor.BackColor = System.Drawing.Color.Black;
-            this.lblDrawColor.Location = new System.Drawing.Point(50, 18);
+            this.lblDrawColor.Location = new System.Drawing.Point(46, 18);
             this.lblDrawColor.Name = "lblDrawColor";
             this.lblDrawColor.Size = new System.Drawing.Size(20, 20);
             this.lblDrawColor.TabIndex = 19;
@@ -246,7 +246,7 @@
             // 
             // nupDrawWidth
             // 
-            this.nupDrawWidth.Location = new System.Drawing.Point(108, 17);
+            this.nupDrawWidth.Location = new System.Drawing.Point(104, 17);
             this.nupDrawWidth.Maximum = new decimal(new int[] {
             20,
             0,
@@ -396,7 +396,6 @@
             // 
             this.grpDraw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.grpDraw.Controls.Add(this.lblNupArcDescription);
-            this.grpDraw.Controls.Add(this.lblNupArcUnits);
             this.grpDraw.Controls.Add(this.nupArcSize);
             this.grpDraw.Controls.Add(this.cboDrawElements);
             this.grpDraw.Controls.Add(this.label2);
@@ -404,6 +403,7 @@
             this.grpDraw.Controls.Add(this.btnNewSegment);
             this.grpDraw.Controls.Add(this.lblDrawColor);
             this.grpDraw.Controls.Add(this.nupDrawWidth);
+            this.grpDraw.Controls.Add(this.lblNupArcUnits);
             this.grpDraw.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpDraw.Location = new System.Drawing.Point(437, 28);
             this.grpDraw.Name = "grpDraw";
@@ -414,7 +414,7 @@
             // lblNupArcDescription
             // 
             this.lblNupArcDescription.AutoSize = true;
-            this.lblNupArcDescription.Location = new System.Drawing.Point(236, 21);
+            this.lblNupArcDescription.Location = new System.Drawing.Point(245, 21);
             this.lblNupArcDescription.Name = "lblNupArcDescription";
             this.lblNupArcDescription.Size = new System.Drawing.Size(45, 15);
             this.lblNupArcDescription.TabIndex = 26;
@@ -424,7 +424,7 @@
             // lblNupArcUnits
             // 
             this.lblNupArcUnits.AutoSize = true;
-            this.lblNupArcUnits.Location = new System.Drawing.Point(317, 21);
+            this.lblNupArcUnits.Location = new System.Drawing.Point(326, 21);
             this.lblNupArcUnits.Name = "lblNupArcUnits";
             this.lblNupArcUnits.Size = new System.Drawing.Size(18, 15);
             this.lblNupArcUnits.TabIndex = 25;
@@ -433,7 +433,7 @@
             // 
             // nupArcSize
             // 
-            this.nupArcSize.Location = new System.Drawing.Point(281, 17);
+            this.nupArcSize.Location = new System.Drawing.Point(290, 17);
             this.nupArcSize.Minimum = new decimal(new int[] {
             1,
             0,
@@ -453,16 +453,16 @@
             // 
             this.cboDrawElements.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDrawElements.FormattingEnabled = true;
-            this.cboDrawElements.Location = new System.Drawing.Point(151, 17);
+            this.cboDrawElements.Location = new System.Drawing.Point(143, 17);
             this.cboDrawElements.Name = "cboDrawElements";
-            this.cboDrawElements.Size = new System.Drawing.Size(77, 23);
+            this.cboDrawElements.Size = new System.Drawing.Size(95, 23);
             this.cboDrawElements.TabIndex = 23;
             this.cboDrawElements.SelectedValueChanged += new System.EventHandler(this.cboDrawElements_SelectedValueChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(75, 21);
+            this.label2.Location = new System.Drawing.Point(70, 21);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(28, 15);
             this.label2.TabIndex = 22;
@@ -665,6 +665,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(849, 391);
+            this.Controls.Add(this.grpDraw);
             this.Controls.Add(this.grpMeasure);
             this.Controls.Add(this.grpText);
             this.Controls.Add(this.grpImage);
@@ -679,7 +680,6 @@
             this.Controls.Add(this.rtbDraw);
             this.Controls.Add(this.drawSurface);
             this.Controls.Add(this.rtbMove);
-            this.Controls.Add(this.grpDraw);
             this.KeyPreview = true;
             this.MainMenuStrip = this.mnuMainMenu;
             this.Name = "DrawIt";

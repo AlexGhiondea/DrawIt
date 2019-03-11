@@ -107,6 +107,18 @@ namespace DrawIt
                         previousEntry = null;
                         break;
                     }
+                case DrawObject.FilledRectangle:
+                    {
+                        // only add it if we have something there..
+                        if (previousEntry.X - x == 0 || previousEntry.Y - y == 0)
+                        {
+                            return;
+                        }
+
+                        _drawing.AddShape(new FilledRectangle(previousEntry.Clone(), new Entry(x, y), (float)nupDrawWidth.Value, lblDrawColor.BackColor));
+                        previousEntry = null;
+                        break;
+                    }
                 case DrawObject.Circle:
                     {
                         int deltaX = x - previousEntry.X;
