@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -39,16 +38,17 @@ namespace DrawIt.Importer
                             (int)(g / (sizeInPixelHeight * sizeInPixelWidth)),
                             (int)(b / (sizeInPixelHeight * sizeInPixelWidth)));
 
-                        dr.AddShape(new FilledRectangle(new Entry(i, j), new Entry(i + 1, j + 1), 1, c));
+                        Color normalizedColor = ColorNormalizer.Normalize(c);
+
+                        dr.AddShape(new FilledRectangle(new Entry(i, j), new Entry(i + 1, j + 1), 1, normalizedColor));
                     }
                 }
 
-                dr.Save(imagePath + ".dit");
+                //dr.Save(imagePath + ".dit");
 
             }
 
-
-            return null;
+            return dr;
         }
     }
 }
