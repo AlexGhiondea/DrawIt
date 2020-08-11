@@ -33,6 +33,6 @@ jobs:
       uses: fixpoint/azblob-upload-artifact@v4
       with:
         connection-string: ${{ secrets.ConnectionString }}
-        name: 'installer/drawit/'
+        name: 'installer/drawit'
         container: 'installer'
         path: ./src/DrawIt/bin/Release/app.publish/
