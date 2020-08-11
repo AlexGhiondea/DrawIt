@@ -13,8 +13,6 @@ namespace DrawIt
 
         public override void Draw(int gridSize, Graphics g)
         {
-            //Pen p = new Pen(new SolidBrush(Color), Width);
-
             g.FillRectangle(new SolidBrush(Color), new System.Drawing.Rectangle(TopLeft.ToPoint(gridSize),
                 new Size(Math.Abs((TopLeft.X - BottomRight.X) * gridSize), Math.Abs((TopLeft.Y - BottomRight.Y) * gridSize))));
         }
