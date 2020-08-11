@@ -409,6 +409,7 @@ namespace DrawIt
             int LogoHeight = Configuration.GetSettingOrDefault(Constants.Application.Logo.Height, int.TryParse, 0); // default to zero if it is not set.
             string LogoEncodedImage = Configuration.GetSetting(Constants.Application.Logo.Image) ?? string.Empty;
             int headerHeight = 0; // we don't assume we have a header
+            bool drawGrid = Configuration.GetSettingOrDefault(Constants.Document.DrawGridOnExport, bool.TryParse, true); // default to drawing the grid if not set
 
             if (LogoHeight > 0)
             {
@@ -430,7 +431,10 @@ namespace DrawIt
                 // start  with a white background.
                 g.FillRectangle(Brushes.White, 0, 0, bmp.Width, bmp.Height);
 
-                DrawGrid(saveRectangle.Size, g);
+                if (drawGrid)
+                {
+                    DrawGrid(saveRectangle.Size, g);
+                }
 
                 // we need to translate the drawing if we have entries that are hidden
                 Drawing translatedDrawing = _drawing.Clone();

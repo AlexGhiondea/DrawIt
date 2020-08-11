@@ -40,13 +40,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.lblFont = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnColor = new System.Windows.Forms.Button();
+            this.btnChangeFont = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnRemoveHeader = new System.Windows.Forms.Button();
-            this.btnChangeFont = new System.Windows.Forms.Button();
-            this.btnColor = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtUnit = new System.Windows.Forms.TextBox();
+            this.chkDrawGridOnExport = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nupLogoHeight)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -57,7 +58,7 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(464, 295);
+            this.btnSave.Location = new System.Drawing.Point(464, 310);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 6;
@@ -85,7 +86,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(546, 295);
+            this.btnCancel.Location = new System.Drawing.Point(546, 310);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 7;
@@ -173,6 +174,26 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Header";
             // 
+            // btnColor
+            // 
+            this.btnColor.Location = new System.Drawing.Point(101, 93);
+            this.btnColor.Name = "btnColor";
+            this.btnColor.Size = new System.Drawing.Size(86, 23);
+            this.btnColor.TabIndex = 5;
+            this.btnColor.Text = "Change color";
+            this.btnColor.UseVisualStyleBackColor = true;
+            this.btnColor.Click += new System.EventHandler(this.btnColor_Click);
+            // 
+            // btnChangeFont
+            // 
+            this.btnChangeFont.Location = new System.Drawing.Point(9, 93);
+            this.btnChangeFont.Name = "btnChangeFont";
+            this.btnChangeFont.Size = new System.Drawing.Size(86, 23);
+            this.btnChangeFont.TabIndex = 4;
+            this.btnChangeFont.Text = "Change font";
+            this.btnChangeFont.UseVisualStyleBackColor = true;
+            this.btnChangeFont.Click += new System.EventHandler(this.btnChangeFont_Click);
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.btnRemoveHeader);
@@ -198,33 +219,14 @@
             this.btnRemoveHeader.UseVisualStyleBackColor = true;
             this.btnRemoveHeader.Click += new System.EventHandler(this.btnRemoveHeader_Click);
             // 
-            // btnChangeFont
-            // 
-            this.btnChangeFont.Location = new System.Drawing.Point(9, 93);
-            this.btnChangeFont.Name = "btnChangeFont";
-            this.btnChangeFont.Size = new System.Drawing.Size(86, 23);
-            this.btnChangeFont.TabIndex = 4;
-            this.btnChangeFont.Text = "Change font";
-            this.btnChangeFont.UseVisualStyleBackColor = true;
-            this.btnChangeFont.Click += new System.EventHandler(this.btnChangeFont_Click);
-            // 
-            // btnColor
-            // 
-            this.btnColor.Location = new System.Drawing.Point(101, 93);
-            this.btnColor.Name = "btnColor";
-            this.btnColor.Size = new System.Drawing.Size(86, 23);
-            this.btnColor.TabIndex = 5;
-            this.btnColor.Text = "Change color";
-            this.btnColor.UseVisualStyleBackColor = true;
-            this.btnColor.Click += new System.EventHandler(this.btnColor_Click);
-            // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.chkDrawGridOnExport);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.txtUnit);
             this.groupBox3.Location = new System.Drawing.Point(12, 258);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(301, 60);
+            this.groupBox3.Size = new System.Drawing.Size(301, 75);
             this.groupBox3.TabIndex = 31;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "General settings";
@@ -245,12 +247,24 @@
             this.txtUnit.Size = new System.Drawing.Size(217, 20);
             this.txtUnit.TabIndex = 5;
             // 
+            // chkDrawGridOnExport
+            // 
+            this.chkDrawGridOnExport.AutoSize = true;
+            this.chkDrawGridOnExport.Checked = true;
+            this.chkDrawGridOnExport.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkDrawGridOnExport.Location = new System.Drawing.Point(9, 48);
+            this.chkDrawGridOnExport.Name = "chkDrawGridOnExport";
+            this.chkDrawGridOnExport.Size = new System.Drawing.Size(118, 17);
+            this.chkDrawGridOnExport.TabIndex = 32;
+            this.chkDrawGridOnExport.Text = "Draw grid on export";
+            this.chkDrawGridOnExport.UseVisualStyleBackColor = true;
+            // 
             // Options
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(633, 325);
+            this.ClientSize = new System.Drawing.Size(633, 340);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -294,5 +308,6 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtUnit;
+        private System.Windows.Forms.CheckBox chkDrawGridOnExport;
     }
 }
