@@ -425,7 +425,7 @@ namespace DrawIt
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 // anti-aliasing
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
                 g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
                 // start  with a white background.
