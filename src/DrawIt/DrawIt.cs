@@ -1,20 +1,13 @@
 ﻿using DrawIt.Objects;
 using DrawIt.Objects.Shapes;
-using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DrawIt
@@ -107,6 +100,18 @@ namespace DrawIt
                         previousEntry = null;
                         break;
                     }
+                case DrawObject.FilledRectangle:
+                    {
+                        // only add it if we have something there..
+                        if (previousEntry.X - x == 0 || previousEntry.Y - y == 0)
+                        {
+                            return;
+                        }
+
+                        _drawing.AddShape(new FilledRectangle(previousEntry.Clone(), new Entry(x, y), (float)nupDrawWidth.Value, lblDrawColor.BackColor));
+                        previousEntry = null;
+                        break;
+                    }
                 case DrawObject.Circle:
                     {
                         int deltaX = x - previousEntry.X;
@@ -178,13 +183,34 @@ namespace DrawIt
             }
 
             // update current state
-            if (radioButton == rtbDraw) _state = EditorState.Draw;
-            else if (radioButton == rtbMeasure) _state = EditorState.Measure;
-            else if (radioButton == rtbDelete) _state = EditorState.Delete;
-            else if (radioButton == rtbMove) _state = EditorState.Move;
-            else if (radioButton == rtbText) _state = EditorState.Text;
-            else if (radioButton == rtbImage) _state = EditorState.Image;
-            else throw new InvalidOperationException("Unknown state");
+            if (radioButton == rtbDraw)
+            {
+                _state = EditorState.Draw;
+            }
+            else if (radioButton == rtbMeasure)
+            {
+                _state = EditorState.Measure;
+            }
+            else if (radioButton == rtbDelete)
+            {
+                _state = EditorState.Delete;
+            }
+            else if (radioButton == rtbMove)
+            {
+                _state = EditorState.Move;
+            }
+            else if (radioButton == rtbText)
+            {
+                _state = EditorState.Text;
+            }
+            else if (radioButton == rtbImage)
+            {
+                _state = EditorState.Image;
+            }
+            else
+            {
+                throw new InvalidOperationException("Unknown state");
+            }
 
             // get rid of temporary line
             drawSurface.Refresh();
@@ -267,7 +293,6 @@ namespace DrawIt
             CreateNewDocument(new Drawing(conversionRate, unit));
 
             drawSurface.MouseWheel += drawSurface_MouseWheel;
-
         }
 
         private void tbZoom_Scroll(object sender, EventArgs e)
@@ -469,7 +494,9 @@ namespace DrawIt
         private int GetLogoWidth(int LogoHeight, string LogoEncodedImage)
         {
             if (string.IsNullOrEmpty(LogoEncodedImage))
+            {
                 return 0;
+            }
 
             int newWidth;
             using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(LogoEncodedImage)))
@@ -522,13 +549,18 @@ namespace DrawIt
 
         private void DrawIt_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
         }
 
         private void cboDrawElements_SelectedValueChanged(object sender, EventArgs e)
         {
             if (_drawing != null)
+            {
                 CreateNewSegment();
+            }
 
             // if drawing an arc, show the control.
             // if drawing a line, show the new button
@@ -630,6 +662,17 @@ namespace DrawIt
                     //get the file
                     txtImagePath.Text = ofd.FileName;
                 }
+            }
+        }
+
+        private void beadifyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            int widthInBeads = 100, heightInBeads = 100;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                Importer.ImportForBeads id = new Importer.ImportForBeads();
+                CreateNewDocument(id.CreateFromImage(ofd.FileName, widthInBeads, heightInBeads));
             }
         }
     }

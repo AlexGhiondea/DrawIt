@@ -60,11 +60,11 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grpDraw = new System.Windows.Forms.GroupBox();
             this.lblNupArcDescription = new System.Windows.Forms.Label();
-            this.lblNupArcUnits = new System.Windows.Forms.Label();
             this.nupArcSize = new System.Windows.Forms.NumericUpDown();
             this.cboDrawElements = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.lblNupArcUnits = new System.Windows.Forms.Label();
             this.grpText = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.lblFont = new System.Windows.Forms.Label();
@@ -82,6 +82,8 @@
             this.btnBrowse = new System.Windows.Forms.Button();
             this.txtImagePath = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.beadifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             lblHorizontal = new System.Windows.Forms.Label();
             lblZoom = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tbZoom)).BeginInit();
@@ -238,7 +240,7 @@
             // lblDrawColor
             // 
             this.lblDrawColor.BackColor = System.Drawing.Color.Black;
-            this.lblDrawColor.Location = new System.Drawing.Point(50, 18);
+            this.lblDrawColor.Location = new System.Drawing.Point(46, 18);
             this.lblDrawColor.Name = "lblDrawColor";
             this.lblDrawColor.Size = new System.Drawing.Size(20, 20);
             this.lblDrawColor.TabIndex = 19;
@@ -246,7 +248,7 @@
             // 
             // nupDrawWidth
             // 
-            this.nupDrawWidth.Location = new System.Drawing.Point(108, 17);
+            this.nupDrawWidth.Location = new System.Drawing.Point(104, 17);
             this.nupDrawWidth.Maximum = new decimal(new int[] {
             20,
             0,
@@ -364,6 +366,8 @@
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.beadifyToolStripMenuItem,
+            this.toolStripMenuItem2,
             this.optionsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
@@ -372,7 +376,7 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
@@ -396,7 +400,6 @@
             // 
             this.grpDraw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.grpDraw.Controls.Add(this.lblNupArcDescription);
-            this.grpDraw.Controls.Add(this.lblNupArcUnits);
             this.grpDraw.Controls.Add(this.nupArcSize);
             this.grpDraw.Controls.Add(this.cboDrawElements);
             this.grpDraw.Controls.Add(this.label2);
@@ -404,6 +407,7 @@
             this.grpDraw.Controls.Add(this.btnNewSegment);
             this.grpDraw.Controls.Add(this.lblDrawColor);
             this.grpDraw.Controls.Add(this.nupDrawWidth);
+            this.grpDraw.Controls.Add(this.lblNupArcUnits);
             this.grpDraw.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpDraw.Location = new System.Drawing.Point(437, 28);
             this.grpDraw.Name = "grpDraw";
@@ -414,26 +418,16 @@
             // lblNupArcDescription
             // 
             this.lblNupArcDescription.AutoSize = true;
-            this.lblNupArcDescription.Location = new System.Drawing.Point(236, 21);
+            this.lblNupArcDescription.Location = new System.Drawing.Point(245, 21);
             this.lblNupArcDescription.Name = "lblNupArcDescription";
             this.lblNupArcDescription.Size = new System.Drawing.Size(45, 15);
             this.lblNupArcDescription.TabIndex = 26;
             this.lblNupArcDescription.Text = "Radius";
             this.lblNupArcDescription.Visible = false;
             // 
-            // lblNupArcUnits
-            // 
-            this.lblNupArcUnits.AutoSize = true;
-            this.lblNupArcUnits.Location = new System.Drawing.Point(317, 21);
-            this.lblNupArcUnits.Name = "lblNupArcUnits";
-            this.lblNupArcUnits.Size = new System.Drawing.Size(18, 15);
-            this.lblNupArcUnits.TabIndex = 25;
-            this.lblNupArcUnits.Text = "in";
-            this.lblNupArcUnits.Visible = false;
-            // 
             // nupArcSize
             // 
-            this.nupArcSize.Location = new System.Drawing.Point(281, 17);
+            this.nupArcSize.Location = new System.Drawing.Point(290, 17);
             this.nupArcSize.Minimum = new decimal(new int[] {
             1,
             0,
@@ -453,16 +447,16 @@
             // 
             this.cboDrawElements.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDrawElements.FormattingEnabled = true;
-            this.cboDrawElements.Location = new System.Drawing.Point(151, 17);
+            this.cboDrawElements.Location = new System.Drawing.Point(143, 17);
             this.cboDrawElements.Name = "cboDrawElements";
-            this.cboDrawElements.Size = new System.Drawing.Size(77, 23);
+            this.cboDrawElements.Size = new System.Drawing.Size(95, 23);
             this.cboDrawElements.TabIndex = 23;
             this.cboDrawElements.SelectedValueChanged += new System.EventHandler(this.cboDrawElements_SelectedValueChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(75, 21);
+            this.label2.Location = new System.Drawing.Point(70, 21);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(28, 15);
             this.label2.TabIndex = 22;
@@ -476,6 +470,16 @@
             this.label1.Size = new System.Drawing.Size(37, 15);
             this.label1.TabIndex = 21;
             this.label1.Text = "Color";
+            // 
+            // lblNupArcUnits
+            // 
+            this.lblNupArcUnits.AutoSize = true;
+            this.lblNupArcUnits.Location = new System.Drawing.Point(326, 21);
+            this.lblNupArcUnits.Name = "lblNupArcUnits";
+            this.lblNupArcUnits.Size = new System.Drawing.Size(18, 15);
+            this.lblNupArcUnits.TabIndex = 25;
+            this.lblNupArcUnits.Text = "in";
+            this.lblNupArcUnits.Visible = false;
             // 
             // grpText
             // 
@@ -659,12 +663,25 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Path";
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // beadifyToolStripMenuItem
+            // 
+            this.beadifyToolStripMenuItem.Name = "beadifyToolStripMenuItem";
+            this.beadifyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.beadifyToolStripMenuItem.Text = "Beadify";
+            this.beadifyToolStripMenuItem.Click += new System.EventHandler(this.beadifyToolStripMenuItem_Click);
+            // 
             // DrawIt
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(849, 391);
+            this.Controls.Add(this.grpDraw);
             this.Controls.Add(this.grpMeasure);
             this.Controls.Add(this.grpText);
             this.Controls.Add(this.grpImage);
@@ -679,7 +696,6 @@
             this.Controls.Add(this.rtbDraw);
             this.Controls.Add(this.drawSurface);
             this.Controls.Add(this.rtbMove);
-            this.Controls.Add(this.grpDraw);
             this.KeyPreview = true;
             this.MainMenuStrip = this.mnuMainMenu;
             this.Name = "DrawIt";
@@ -763,6 +779,8 @@
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.TextBox txtImagePath;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ToolStripMenuItem beadifyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
     }
 }
 

@@ -60,7 +60,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>Custom</TargetZone>
@@ -107,6 +107,8 @@
     <Compile Include="Helpers\FileHelpers.cs" />
     <Compile Include="Helpers\FontHelpers.cs" />
     <Compile Include="Helpers\PointExtensions.cs" />
+    <Compile Include="Importer\ColorNormalizer.cs" />
+    <Compile Include="Importer\ImportForBeads.cs" />
     <Compile Include="Objects\Drawing.cs" />
     <Compile Include="DrawIt.cs">
       <SubType>Form</SubType>
@@ -126,6 +128,7 @@
     <Compile Include="Objects\Entry.cs" />
     <Compile Include="Objects\Shapes\Arc.cs" />
     <Compile Include="Objects\Shapes\Image.cs" />
+    <Compile Include="Objects\Shapes\FilledRectangle.cs" />
     <Compile Include="Objects\Shapes\Rectangle.cs" />
     <Compile Include="Objects\Shapes\Circle.cs" />
     <Compile Include="Objects\Shapes\Measurement.cs" />
