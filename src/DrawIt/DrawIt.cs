@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Drawing.Printing;
 
 namespace DrawIt
 {
@@ -405,6 +406,14 @@ namespace DrawIt
 
         private void DrawToFile(ImageFormat format, string fileName)
         {
+            using (Bitmap bmp = CreateBitmapFromDocument())
+            {
+                bmp.Save(fileName, format);
+            }
+        }
+
+        private Bitmap CreateBitmapFromDocument()
+        {
             // add the logo
             int LogoHeight = Configuration.GetSettingOrDefault(Constants.Application.Logo.Height, int.TryParse, 0); // default to zero if it is not set.
             string LogoEncodedImage = Configuration.GetSetting(Constants.Application.Logo.Image) ?? string.Empty;
@@ -417,15 +426,15 @@ namespace DrawIt
             }
 
             // I want to get the largest between the size of the screen and the size that needs to be drawn.
+            var saveRectangle = ComputeSaveRectangle(headerHeight, out Entry startPoint);
 
-            Entry startPoint;
-            var saveRectangle = ComputeSaveRectangle(headerHeight, out startPoint);
-
-            using (Bitmap bmp = new Bitmap(saveRectangle.Width, saveRectangle.Height))
+            Bitmap bmp = new Bitmap(saveRectangle.Width, saveRectangle.Height);
             using (Graphics g = Graphics.FromImage(bmp))
             {
                 // anti-aliasing
-                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
                 g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
                 // start  with a white background.
@@ -453,9 +462,9 @@ namespace DrawIt
                 }
 
                 translatedDrawing.Draw(gridSize, g);
-                //drawSurface.DrawToBitmap(bmp, saveRectangle);
-                bmp.Save(fileName, format);
             }
+
+            return bmp;
         }
 
         private void AddLogoShapesToDocument(int LogoHeight, string LogoEncodedImage, int headerHeight, System.Drawing.Rectangle saveRectangle, Drawing translatedDrawing, Graphics g)
@@ -677,6 +686,39 @@ namespace DrawIt
             {
                 Importer.ImportForBeads id = new Importer.ImportForBeads();
                 CreateNewDocument(id.CreateFromImage(ofd.FileName, widthInBeads, heightInBeads));
+            }
+        }
+
+        private void printToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrintDialog pd = new PrintDialog();
+            PrintDocument printDoc = new PrintDocument();
+            printDoc.PrintPage += PrintDoc_PrintPage;
+            pd.Document = printDoc;
+
+            if (pd.ShowDialog() == DialogResult.OK)
+            {
+                pd.Document.PrinterSettings = pd.PrinterSettings;
+                pd.Document.Print();
+            }
+        }
+
+        private void PrintDoc_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            using (Bitmap image = CreateBitmapFromDocument())
+            {
+                // we need to resize the image to fit in the page.
+                float imageWidth = image.Width, imageHeight = image.Height;
+                float pageWidth = e.PageSettings.Landscape ? e.PageSettings.PrintableArea.Height : e.PageSettings.PrintableArea.Width;
+
+                if (image.Width > pageWidth)
+                {
+                    // we are scaling to fit the width
+                    imageWidth = pageWidth;
+                    imageHeight = image.Height * (float)(imageWidth / image.Width);
+                }
+
+                e.Graphics.DrawImage(image, 0, 0, imageWidth, imageHeight);
             }
         }
     }
