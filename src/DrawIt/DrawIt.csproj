@@ -27,8 +27,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <UpdateUrl>https://installeralexghi.blob.core.windows.net/installer/installer/drawit/</UpdateUrl>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>10</ApplicationRevision>
-    <ApplicationVersion>1.2.1.%2a</ApplicationVersion>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.2.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
