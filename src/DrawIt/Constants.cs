@@ -33,6 +33,7 @@ namespace DrawIt
         {
             public const string MeasurementUnit = "MeasurementUnit";
             public const string ConversionRate = "ConversionRate";
+            public const string DrawGridOnExport = "DrawGridOnExport";
 
             public static class Defaults
             {

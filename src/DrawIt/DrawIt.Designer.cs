@@ -48,6 +48,8 @@
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
+            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,6 +57,8 @@
             this.bmpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.beadifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,8 +86,6 @@
             this.btnBrowse = new System.Windows.Forms.Button();
             this.txtImagePath = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.beadifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             lblHorizontal = new System.Windows.Forms.Label();
             lblZoom = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.tbZoom)).BeginInit();
@@ -287,6 +289,8 @@
             this.newToolStripMenuItem,
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.printToolStripMenuItem,
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -316,6 +320,19 @@
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
             this.saveToolStripMenuItem.Text = "Save Drawing";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(190, 6);
+            // 
+            // printToolStripMenuItem
+            // 
+            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
+            this.printToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.printToolStripMenuItem.Text = "&Print";
+            this.printToolStripMenuItem.Click += new System.EventHandler(this.printToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -373,10 +390,22 @@
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
+            // beadifyToolStripMenuItem
+            // 
+            this.beadifyToolStripMenuItem.Name = "beadifyToolStripMenuItem";
+            this.beadifyToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.beadifyToolStripMenuItem.Text = "Beadify";
+            this.beadifyToolStripMenuItem.Click += new System.EventHandler(this.beadifyToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(113, 6);
+            // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
@@ -663,18 +692,6 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Path";
             // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
-            // 
-            // beadifyToolStripMenuItem
-            // 
-            this.beadifyToolStripMenuItem.Name = "beadifyToolStripMenuItem";
-            this.beadifyToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.beadifyToolStripMenuItem.Text = "Beadify";
-            this.beadifyToolStripMenuItem.Click += new System.EventHandler(this.beadifyToolStripMenuItem_Click);
-            // 
             // DrawIt
             // 
             this.AllowDrop = true;
@@ -781,6 +798,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ToolStripMenuItem beadifyToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
     }
 }
 

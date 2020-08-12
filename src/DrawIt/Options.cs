@@ -44,6 +44,8 @@ namespace DrawIt
 
             Configuration.SetSetting(Constants.Document.MeasurementUnit, Unit);
 
+            Configuration.SetSetting(Constants.Document.DrawGridOnExport, chkDrawGridOnExport.Checked.ToString());
+
             Configuration.SaveToDisk();
         }
 
@@ -55,6 +57,9 @@ namespace DrawIt
             EncodedLogo = Configuration.GetSetting(Constants.Application.Logo.Image) ?? string.Empty;
             LogoHeight = Configuration.GetSettingOrDefault(Constants.Application.Logo.Height, int.TryParse, 0);
             Unit = Configuration.GetSetting(Constants.Document.MeasurementUnit) ?? Constants.Document.Defaults.MeasurementUnitDefault;
+
+            // draw grid on export
+            Configuration.GetSettingOrDefault(Constants.Document.DrawGridOnExport, bool.TryParse, true);
 
             // Header Text
             _backColor = Color.FromArgb(Configuration.GetSettingOrDefault<int>(Constants.Application.Header.TextColor, int.TryParse, Constants.Measurement.Defaults.Black));

@@ -8,6 +8,7 @@ namespace DrawIt
         public double ConversionRate;
         public string Unit;
         private const float MeasurementWidth = 1f;
+        private static Font measureFont = new Font("Calibri", 10, FontStyle.Bold);
 
         public Measurement(Entry start, Entry end, Color color, MeasurementLocation location, double rate, string unit)
             : base(start, end, color, MeasurementWidth)
@@ -17,25 +18,24 @@ namespace DrawIt
             this.Location = location;
         }
 
-        private static Font measureFont = new Font("Calibri", 10, FontStyle.Bold);
-        private static Pen measurePen = new Pen(new SolidBrush(Color.Green), MeasurementWidth);
+
         public MeasurementLocation Location;
 
         public override void Draw(int gridSize, Graphics g)
         {
-            Point StartPoint = Start.ToPoint(gridSize);
-            Point EndPoint = End.ToPoint(gridSize);
+            using (Pen pen = new Pen(new SolidBrush(Color), MeasurementWidth))
+            {
+                g.DrawLine(pen, Start.ToPoint(gridSize), End.ToPoint(gridSize));
 
-            g.DrawLine(measurePen, Start.ToPoint(gridSize), End.ToPoint(gridSize));
+                // figure out the angle
+                double degrees = DrawFacts.ComputeSlopeInDegrees(Start, End);
 
-            // figure out the angle
-            double degrees = DrawFacts.ComputeSlopeInDegrees(Start, End);
+                // we need to translate the ends at each of the points (start and end)
+                DrawEndLine(gridSize, g, Start, degrees, pen);
+                DrawEndLine(gridSize, g, End, degrees, pen);
 
-            // we need to translate the ends at each of the points (start and end)
-            DrawEndLine(gridSize, g, Start, degrees);
-            DrawEndLine(gridSize, g, End, degrees);
-
-            DrawRotatedMeasureText(gridSize, g, degrees);
+                DrawRotatedMeasureText(gridSize, g, degrees);
+            }
         }
 
         private void DrawRotatedMeasureText(int gridSize, Graphics g, double degrees)
@@ -73,14 +73,14 @@ namespace DrawIt
             }
         }
 
-        private void DrawEndLine(int gridSize, Graphics g, Entry location, double degrees)
+        private void DrawEndLine(int gridSize, Graphics g, Entry location, double degrees, Pen pen)
         {
             using (System.Drawing.Drawing2D.Matrix transformMatrix = new System.Drawing.Drawing2D.Matrix())
             {
                 transformMatrix.RotateAt((float)degrees, location.ToPoint(gridSize));
 
                 g.Transform = transformMatrix;
-                g.DrawLine(measurePen, location.ToPoint(gridSize).AddToY(-(gridSize / 2)), location.ToPoint(gridSize).AddToY((gridSize / 2)));
+                g.DrawLine(pen, location.ToPoint(gridSize).AddToY(-(gridSize / 2)), location.ToPoint(gridSize).AddToY((gridSize / 2)));
 
                 g.ResetTransform();
             }

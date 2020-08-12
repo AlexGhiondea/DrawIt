@@ -47,10 +47,10 @@ namespace DrawIt
         public override Container GetBounds()
         {
             int leftMostPoint = Math.Min(Start.X, End.X);
-            int topMostPoint = Math.Max(Start.Y, End.Y);
+            int topMostPoint = Math.Min(Start.Y, End.Y);
 
             int rightMostPoint = Math.Max(Start.X, End.X);
-            int bottomMostPoint = Math.Min(Start.Y, End.Y);
+            int bottomMostPoint = Math.Max(Start.Y, End.Y);
 
             Container bounds = new Container();
             bounds.TopLeft = new Entry(leftMostPoint, topMostPoint);
